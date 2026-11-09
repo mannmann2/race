@@ -1,0 +1,1664 @@
+[
+  {
+    "expected": "utmb:157506",
+    "incoming": {
+      "id": "worldsmarathons:2026:endurancelife-dorset-marathon:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2026:endurancelife-dorset-marathon:marathon",
+      "eventId": "worldsmarathons:event:endurancelife-dorset-marathon",
+      "editionId": "worldsmarathons:2026:endurancelife-dorset-marathon",
+      "name": "Endurancelife Dorset",
+      "eventName": "Endurancelife Dorset",
+      "date": "2026-12-05",
+      "dateEnd": "2026-12-05",
+      "datePrecision": "event-day",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "Swanage",
+      "countryCode": "GB",
+      "country": "United Kingdom",
+      "continent": "Europe",
+      "longitude": -1.960769,
+      "latitude": 50.608277,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:endurancelife-dorset-marathon",
+      "geonamesId": "2636445",
+      "website": "https://www.endurancelife.com/dorset",
+      "sourceUrl": "https://worldsmarathons.com/marathon/endurancelife-dorset-marathon",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/endurancelife-dorset-marathon/endurancelife-dorset-marathon_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/endurancelife-dorset-marathon",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "trail",
+          "sourceSurface": "Terrain",
+          "courseDifficulty": "hilly",
+          "listingType": "marathon-event",
+          "tags": [
+            "coastal",
+            "national-park",
+            "nature",
+            "picturesque",
+            "scenic",
+            "sea",
+            "unesco-world-heritage-site",
+            "beach_ahotu",
+            "nature_ahotu",
+            "downhill_ahotu",
+            "forest_ahotu",
+            "grass_ahotu",
+            "mud_ahotu",
+            "river_ahotu",
+            "scenic_ahotu",
+            "beginner_friendly_ahotu",
+            "eco_friendly_ahotu",
+            "fun_ahotu",
+            "ocean_view_ahotu",
+            "countryside_ahotu",
+            "wildlife_ahotu",
+            "multi_terrain_ahotu"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2026:endurancelife-dorset-marathon:marathon",
+          "url": "https://worldsmarathons.com/marathon/endurancelife-dorset-marathon",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "Endurancelife Dorset",
+            "eventName": "Endurancelife Dorset",
+            "date": "2026-12-05",
+            "dateEnd": "2026-12-05",
+            "datePrecision": "event-day",
+            "distanceKm": 42.195,
+            "place": "Swanage",
+            "countryCode": "GB"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "utmb:157506",
+        "sourceId": "157506",
+        "source": "utmb",
+        "eventId": "utmb:event:29720",
+        "editionId": "utmb:event:29720:2026",
+        "name": "Marathon",
+        "eventName": "Endurancelife | Dorset",
+        "date": "2026-12-05",
+        "distanceKm": 43.5,
+        "elevationGainM": 1421,
+        "locationId": 3528,
+        "place": "Tyneham, United Kingdom",
+        "countryCode": "GB",
+        "country": "United Kingdom",
+        "continent": "Europe",
+        "longitude": null,
+        "latitude": null,
+        "locationPrecision": "unknown",
+        "geonamesId": null,
+        "website": "http://www.endurancelife.com/",
+        "image": null,
+        "sourceUrl": "https://utmb.world/utmb-index/races/29720.endurancelife-dorsetmarathon.2026",
+        "extensions": {
+          "utmb": {
+            "category": "50k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": null,
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "157506",
+            "url": "https://utmb.world/utmb-index/races/29720.endurancelife-dorsetmarathon.2026",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "Marathon",
+              "eventName": "Endurancelife | Dorset",
+              "date": "2026-12-05",
+              "distanceKm": 43.5,
+              "elevationGainM": 1421,
+              "place": "Tyneham, United Kingdom",
+              "countryCode": "GB"
+            }
+          }
+        ],
+        "searchText": "marathon endurancelife | dorset tyneham, united kingdom united kingdom europe marathon endurancelife | dorset"
+      }
+    ]
+  },
+  {
+    "expected": "utmb:147180",
+    "incoming": {
+      "id": "worldsmarathons:2026:ultra-bm:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2026:ultra-bm:marathon",
+      "eventId": "worldsmarathons:event:ultra-bm",
+      "editionId": "worldsmarathons:2026:ultra-bm",
+      "name": "Ultra BM",
+      "eventName": "Ultra BM",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-17",
+      "datePrecision": "event-day",
+      "distanceKm": 42.2,
+      "elevationGainM": null,
+      "place": "São Paulo",
+      "countryCode": "BR",
+      "country": "Brazil",
+      "continent": "South America",
+      "longitude": -46.1128619,
+      "latitude": -23.8298518,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:ultra-bm",
+      "geonamesId": "3448439",
+      "website": "https://ultrabm.com.br/",
+      "sourceUrl": "https://worldsmarathons.com/marathon/ultra-bm",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/ultra-bm/4Dz5vzX_ultra-bm_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/ultra-bm",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "mixed",
+          "sourceSurface": "Mixed",
+          "courseDifficulty": "flat",
+          "listingType": "marathon-event",
+          "tags": [
+            "beach",
+            "nature",
+            "scenic",
+            "point-to-point",
+            "1000-4999-participants"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2026:ultra-bm:marathon",
+          "url": "https://worldsmarathons.com/marathon/ultra-bm",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "Ultra BM",
+            "eventName": "Ultra BM",
+            "date": "2026-10-17",
+            "dateEnd": "2026-10-17",
+            "datePrecision": "event-day",
+            "distanceKm": 42.2,
+            "place": "São Paulo",
+            "countryCode": "BR"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "utmb:147180",
+        "sourceId": "147180",
+        "source": "utmb",
+        "eventId": "utmb:event:61470",
+        "editionId": "utmb:event:61470:2026",
+        "name": "42K Ultra BM",
+        "eventName": "Ultramaratona BM",
+        "date": "2026-10-17",
+        "distanceKm": 42,
+        "elevationGainM": 284,
+        "locationId": 8054,
+        "place": "Bertioga, Brazil",
+        "countryCode": "BR",
+        "country": "Brazil",
+        "continent": "South America",
+        "longitude": -46.13861,
+        "latitude": -23.85444,
+        "locationPrecision": "town",
+        "geonamesId": "3470052",
+        "website": "https://ultrabm.com.br/",
+        "image": null,
+        "sourceUrl": "https://utmb.world/utmb-index/races/61470.ultramaratonabm42kultrabm.2026",
+        "extensions": {
+          "utmb": {
+            "category": "20k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": null,
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "147180",
+            "url": "https://utmb.world/utmb-index/races/61470.ultramaratonabm42kultrabm.2026",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "42K Ultra BM",
+              "eventName": "Ultramaratona BM",
+              "date": "2026-10-17",
+              "distanceKm": 42,
+              "elevationGainM": 284,
+              "place": "Bertioga, Brazil",
+              "countryCode": "BR"
+            }
+          }
+        ],
+        "searchText": "42k ultra bm ultramaratona bm bertioga, brazil brazil south america 42k ultra bm ultramaratona bm"
+      }
+    ]
+  },
+  {
+    "expected": "utmb:158408",
+    "incoming": {
+      "id": "worldsmarathons:2026:superior-fall-trail-race:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2026:superior-fall-trail-race:marathon",
+      "eventId": "worldsmarathons:event:superior-fall-trail-race",
+      "editionId": "worldsmarathons:2026:superior-fall-trail-race",
+      "name": "Fall Superior Trail Races",
+      "eventName": "Fall Superior Trail Races",
+      "date": "2026-09-11",
+      "dateEnd": "2026-09-11",
+      "datePrecision": "event-day",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "Lutsen",
+      "countryCode": "US",
+      "country": "United States",
+      "continent": "North America",
+      "longitude": -90.66773,
+      "latitude": 47.64969,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:superior-fall-trail-race",
+      "geonamesId": null,
+      "website": "https://www.superiorfalltrailrace.com/",
+      "sourceUrl": "https://worldsmarathons.com/marathon/superior-fall-trail-race",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/superior-fall-trail-race/superior-fall-trail-race_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/superior-fall-trail-race",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "trail",
+          "sourceSurface": "Terrain",
+          "courseDifficulty": null,
+          "listingType": "marathon-event",
+          "tags": [
+            "scenic",
+            "picturesque",
+            "lake",
+            "state-park",
+            "national-forest",
+            "mountain-range",
+            "trail_ahotu"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2026:superior-fall-trail-race:marathon",
+          "url": "https://worldsmarathons.com/marathon/superior-fall-trail-race",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "Fall Superior Trail Races",
+            "eventName": "Fall Superior Trail Races",
+            "date": "2026-09-11",
+            "dateEnd": "2026-09-11",
+            "datePrecision": "event-day",
+            "distanceKm": 42.195,
+            "place": "Lutsen",
+            "countryCode": "US"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "utmb:158408",
+        "sourceId": "158408",
+        "source": "utmb",
+        "eventId": "utmb:event:15525",
+        "editionId": "utmb:event:15525:2026",
+        "name": "26.2m",
+        "eventName": "Superior Fall Trail Race",
+        "date": "2026-09-12",
+        "distanceKm": 42.2,
+        "elevationGainM": 1091,
+        "locationId": 1685,
+        "place": "Lutsen, United States of America",
+        "countryCode": "US",
+        "country": "United States",
+        "continent": "North America",
+        "longitude": null,
+        "latitude": null,
+        "locationPrecision": "unknown",
+        "geonamesId": null,
+        "website": "https://www.superiorfalltrailrace.com/",
+        "image": null,
+        "sourceUrl": "https://utmb.world/utmb-index/races/15525.superiorfalltrailrace26-2m.2026",
+        "extensions": {
+          "utmb": {
+            "category": "50k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": null,
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "158408",
+            "url": "https://utmb.world/utmb-index/races/15525.superiorfalltrailrace26-2m.2026",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "26.2m",
+              "eventName": "Superior Fall Trail Race",
+              "date": "2026-09-12",
+              "distanceKm": 42.2,
+              "elevationGainM": 1091,
+              "place": "Lutsen, United States of America",
+              "countryCode": "US"
+            }
+          }
+        ],
+        "searchText": "26.2m superior fall trail race lutsen, united states of america united states north america 26.2m superior fall trail race"
+      }
+    ]
+  },
+  {
+    "expected": "utmb:151630",
+    "incoming": {
+      "id": "worldsmarathons:2026:pelister-unique-trail-marathon:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2026:pelister-unique-trail-marathon:marathon",
+      "eventId": "worldsmarathons:event:pelister-unique-trail-marathon",
+      "editionId": "worldsmarathons:2026:pelister-unique-trail-marathon",
+      "name": "PUTM - Pelister Unique Trail Marathon",
+      "eventName": "PUTM - Pelister Unique Trail Marathon",
+      "date": "2026-06-13",
+      "dateEnd": "2026-06-13",
+      "datePrecision": "event-day",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "Bitola",
+      "countryCode": "MK",
+      "country": "North Macedonia",
+      "continent": "Europe",
+      "longitude": 21.2530344,
+      "latitude": 40.98002049999999,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:pelister-unique-trail-marathon",
+      "geonamesId": "792578",
+      "website": "https://www.pelisterultra.run",
+      "sourceUrl": "https://worldsmarathons.com/marathon/pelister-unique-trail-marathon",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/pelister-unique-trail-marathon/45SRgAt_pelister-unique-trail-marathon_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/pelister-unique-trail-marathon",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "trail",
+          "sourceSurface": "Trail",
+          "courseDifficulty": "hilly",
+          "listingType": "marathon-event",
+          "tags": [
+            "beginner-friendly",
+            "city",
+            "colour-run",
+            "countryside",
+            "downhill",
+            "forest",
+            "historical",
+            "mountain-range",
+            "nature",
+            "park",
+            "rural",
+            "scenic",
+            "single-track",
+            "wild-life",
+            "itra-point-1",
+            "itra-point-2",
+            "itra-point-3",
+            "out-and-back",
+            "100-999-participants",
+            "kids-run"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2026:pelister-unique-trail-marathon:marathon",
+          "url": "https://worldsmarathons.com/marathon/pelister-unique-trail-marathon",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "PUTM - Pelister Unique Trail Marathon",
+            "eventName": "PUTM - Pelister Unique Trail Marathon",
+            "date": "2026-06-13",
+            "dateEnd": "2026-06-13",
+            "datePrecision": "event-day",
+            "distanceKm": 42.195,
+            "place": "Bitola",
+            "countryCode": "MK"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "utmb:151630",
+        "sourceId": "151630",
+        "source": "utmb",
+        "eventId": "utmb:event:63314",
+        "editionId": "utmb:event:63314:2026",
+        "name": "Veternica Marathon",
+        "eventName": "Pelister Unique Trail Marathon",
+        "date": "2026-06-13",
+        "distanceKm": 42,
+        "elevationGainM": 2454,
+        "locationId": 236,
+        "place": "Nizepole, North Macedonia (Republic of)",
+        "countryCode": "MK",
+        "country": "North Macedonia",
+        "continent": "Europe",
+        "longitude": null,
+        "latitude": null,
+        "locationPrecision": "unknown",
+        "geonamesId": null,
+        "website": "https://www.pelisterultra.run/",
+        "image": null,
+        "sourceUrl": "https://utmb.world/utmb-index/races/63314.pelisteruniquetrailmarathonveternicamarathon.2026",
+        "extensions": {
+          "utmb": {
+            "category": "50k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": null,
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "151630",
+            "url": "https://utmb.world/utmb-index/races/63314.pelisteruniquetrailmarathonveternicamarathon.2026",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "Veternica Marathon",
+              "eventName": "Pelister Unique Trail Marathon",
+              "date": "2026-06-13",
+              "distanceKm": 42,
+              "elevationGainM": 2454,
+              "place": "Nizepole, North Macedonia (Republic of)",
+              "countryCode": "MK"
+            }
+          }
+        ],
+        "searchText": "veternica marathon pelister unique trail marathon nizepole, north macedonia (republic of) north macedonia europe veternica marathon pelister unique trail marathon"
+      }
+    ]
+  },
+  {
+    "expected": "itra:2027:120679",
+    "incoming": {
+      "id": "worldsmarathons:2027:annapurna-marathon:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2027:annapurna-marathon:marathon",
+      "eventId": "worldsmarathons:event:annapurna-marathon",
+      "editionId": "worldsmarathons:2027:annapurna-marathon",
+      "name": "Annapurna Marathon",
+      "eventName": "Annapurna Marathon",
+      "date": "2027-06-03",
+      "dateEnd": "2027-06-03",
+      "datePrecision": "event-day",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "Ghandruk",
+      "countryCode": "NP",
+      "country": "Nepal",
+      "continent": "Asia",
+      "longitude": 83.878,
+      "latitude": 28.53,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:annapurna-marathon",
+      "geonamesId": null,
+      "website": "https://www.annapurna-marathon.com/",
+      "sourceUrl": "https://worldsmarathons.com/marathon/annapurna-marathon",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/annapurna-marathon/4QxB8FV_annapurna-marathon_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/annapurna-marathon",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "trail",
+          "sourceSurface": "Trail",
+          "courseDifficulty": "hilly",
+          "listingType": "marathon-event",
+          "tags": [
+            "countryside",
+            "gravel",
+            "mountain-range",
+            "nature",
+            "rural",
+            "scenic",
+            "single-track",
+            "waterfalls",
+            "wild-life"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2027:annapurna-marathon:marathon",
+          "url": "https://worldsmarathons.com/marathon/annapurna-marathon",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "Annapurna Marathon",
+            "eventName": "Annapurna Marathon",
+            "date": "2027-06-03",
+            "dateEnd": "2027-06-03",
+            "datePrecision": "event-day",
+            "distanceKm": 42.195,
+            "place": "Ghandruk",
+            "countryCode": "NP"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "itra:2027:120679",
+        "sourceId": "2027:120679",
+        "source": "itra",
+        "sourceUrl": "https://itra.run/Races/RaceDetails/Annapurna.Marathon.42km/2027/120679",
+        "eventId": "itra:event:2027:120679",
+        "editionId": "itra:event:2027:120679",
+        "name": "Annapurna Marathon · 46 km",
+        "eventName": "Annapurna Marathon",
+        "date": "2027-06-03",
+        "datePrecision": "event-day",
+        "distanceKm": 46,
+        "elevationGainM": 2366,
+        "place": "Annapurna Base Camp",
+        "countryCode": "NP",
+        "website": null,
+        "image": "https://itra.run/Files/Events/06c1bda228734fccb4dc9fccc5387b15.jpg",
+        "imageSource": "https://itra.run/Races/RaceDetails/Annapurna.Marathon.42km/2027/120679",
+        "longitude": 83.87799835205078,
+        "latitude": 28.530000686645508,
+        "locationPrecision": "event",
+        "geonamesId": null,
+        "extensions": {
+          "itra": {
+            "endurancePoints": 1,
+            "mountainLevel": null,
+            "finisherLevel": null
+          }
+        },
+        "dateEnd": "2027-06-03",
+        "locationId": "itra:event:83.87799835205078,28.530000686645508",
+        "country": "Nepal",
+        "continent": "Asia",
+        "sources": [
+          {
+            "provider": "itra",
+            "id": "2027:120679",
+            "url": "https://itra.run/Races/RaceDetails/Annapurna.Marathon.42km/2027/120679",
+            "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+            "detailsFetchedAt": null,
+            "acquisition": "browser-calendar",
+            "values": {
+              "name": "Annapurna Marathon · 46 km",
+              "eventName": "Annapurna Marathon",
+              "date": "2027-06-03",
+              "dateEnd": "2027-06-03",
+              "datePrecision": "event-day",
+              "distanceKm": 46,
+              "elevationGainM": 2366,
+              "place": "Annapurna Base Camp",
+              "countryCode": "NP"
+            }
+          }
+        ],
+        "searchText": "annapurna marathon · 46 km annapurna marathon annapurna base camp nepal asia annapurna marathon · 46 km annapurna marathon"
+      }
+    ]
+  },
+  {
+    "expected": "utmb:143684",
+    "incoming": {
+      "id": "worldsmarathons:2026:ha-giang-discovery-marathon:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2026:ha-giang-discovery-marathon:marathon",
+      "eventId": "worldsmarathons:event:ha-giang-discovery-marathon",
+      "editionId": "worldsmarathons:2026:ha-giang-discovery-marathon",
+      "name": "Ha Giang Discovery Marathon",
+      "eventName": "Ha Giang Discovery Marathon",
+      "date": "2026-04-04",
+      "dateEnd": "2026-04-05",
+      "datePrecision": "event",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "Hà Giang",
+      "countryCode": "VN",
+      "country": "Vietnam",
+      "continent": "Asia",
+      "longitude": 104.97844940000004,
+      "latitude": 22.8025588,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:ha-giang-discovery-marathon",
+      "geonamesId": "1581349",
+      "website": "https://racejungle.com/products/ha-giang-discovery-marathon-2026",
+      "sourceUrl": "https://worldsmarathons.com/marathon/ha-giang-discovery-marathon",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/ha-giang-discovery-marathon/4WytPSA_ha-giang-discovery-marathon_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/ha-giang-discovery-marathon",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "trail",
+          "sourceSurface": "Trail",
+          "courseDifficulty": "hilly",
+          "listingType": "marathon-event",
+          "tags": [
+            "forest",
+            "nature",
+            "scenic",
+            "1000-4999-participants"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2026:ha-giang-discovery-marathon:marathon",
+          "url": "https://worldsmarathons.com/marathon/ha-giang-discovery-marathon",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "Ha Giang Discovery Marathon",
+            "eventName": "Ha Giang Discovery Marathon",
+            "date": "2026-04-04",
+            "dateEnd": "2026-04-05",
+            "datePrecision": "event",
+            "distanceKm": 42.195,
+            "place": "Hà Giang",
+            "countryCode": "VN"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "utmb:143684",
+        "sourceId": "143684",
+        "source": "utmb",
+        "eventId": "utmb:event:60010",
+        "editionId": "utmb:event:60010:2026",
+        "name": "UTHG42",
+        "eventName": "HA GIANG DISCOVERY MARATHON",
+        "date": "2026-04-04",
+        "distanceKm": 42,
+        "elevationGainM": 3413,
+        "locationId": 7206,
+        "place": "Mèo Vạc, Vietnam",
+        "countryCode": "VN",
+        "country": "Vietnam",
+        "continent": "Asia",
+        "longitude": 105.40993,
+        "latitude": 23.16411,
+        "locationPrecision": "town",
+        "geonamesId": "1574706",
+        "website": "https://racejungle.com/products/ha-giang-discovery-marathon-2026",
+        "image": null,
+        "sourceUrl": "https://utmb.world/utmb-index/races/60010.hagiangdiscoverymarathonuthg42.2026",
+        "extensions": {
+          "utmb": {
+            "category": "50k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": null,
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "143684",
+            "url": "https://utmb.world/utmb-index/races/60010.hagiangdiscoverymarathonuthg42.2026",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "UTHG42",
+              "eventName": "HA GIANG DISCOVERY MARATHON",
+              "date": "2026-04-04",
+              "distanceKm": 42,
+              "elevationGainM": 3413,
+              "place": "Mèo Vạc, Vietnam",
+              "countryCode": "VN"
+            }
+          }
+        ],
+        "searchText": "uthg42 ha giang discovery marathon meo vac, vietnam vietnam asia uthg42 ha giang discovery marathon"
+      }
+    ]
+  },
+  {
+    "expected": "utmb:158028",
+    "incoming": {
+      "id": "worldsmarathons:2027:guatemala-impact-marathon:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2027:guatemala-impact-marathon:marathon",
+      "eventId": "worldsmarathons:event:guatemala-impact-marathon",
+      "editionId": "worldsmarathons:2027:guatemala-impact-marathon",
+      "name": "Guatemala Impact Marathon",
+      "eventName": "Guatemala Impact Marathon",
+      "date": "2027-03-06",
+      "dateEnd": "2027-03-06",
+      "datePrecision": "event-day",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "Antigua Guatemala",
+      "countryCode": "GT",
+      "country": "Guatemala",
+      "continent": "North America",
+      "longitude": -90.7332,
+      "latitude": 14.55636,
+      "locationPrecision": "town",
+      "locationId": "worldsmarathons:place:GT:antigua guatemala",
+      "geonamesId": "3599699",
+      "website": "https://www.impactmarathon.com/products/guatemala-impact-marathon-2025",
+      "sourceUrl": "https://worldsmarathons.com/marathon/guatemala-impact-marathon",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/guatemala-impact-marathon/guatemala-impact-marathon_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/guatemala-impact-marathon",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "trail",
+          "sourceSurface": "Trail",
+          "courseDifficulty": "hilly",
+          "listingType": "marathon-event",
+          "tags": [
+            "nature",
+            "scenic",
+            "unesco-world-heritage-site",
+            "single-loop",
+            "100-999-participants",
+            "charity",
+            "eco-friendly",
+            "fun"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2027:guatemala-impact-marathon:marathon",
+          "url": "https://worldsmarathons.com/marathon/guatemala-impact-marathon",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "Guatemala Impact Marathon",
+            "eventName": "Guatemala Impact Marathon",
+            "date": "2027-03-06",
+            "dateEnd": "2027-03-06",
+            "datePrecision": "event-day",
+            "distanceKm": 42.195,
+            "place": "Antigua Guatemala",
+            "countryCode": "GT"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "utmb:158028",
+        "sourceId": "158028",
+        "source": "utmb",
+        "eventId": "utmb:event:66054",
+        "editionId": "utmb:event:66054:2027",
+        "name": "42km - The Beast of Pacaya",
+        "eventName": "Guatemala Impact Marathon",
+        "date": "2027-03-06",
+        "distanceKm": 42.2,
+        "elevationGainM": 1491,
+        "locationId": 8343,
+        "place": "Pacaya Volcano, Guatemala",
+        "countryCode": "GT",
+        "country": "Guatemala",
+        "continent": "North America",
+        "longitude": null,
+        "latitude": null,
+        "locationPrecision": "unknown",
+        "geonamesId": null,
+        "website": "https://www.impactmarathon.com/products/guatemala-impact-marathon-2027",
+        "image": "https://itra.run/Files/Events/eb85c161c9fb4ba49d38856ac1512de6.png",
+        "sourceUrl": "https://utmb.world/utmb-index/races/66054.guatemalaimpactmarathon42km-thebeastofpacaya.2027",
+        "extensions": {
+          "utmb": {
+            "category": "50k",
+            "level": "qualifier",
+            "stones": 0
+          },
+          "itra": {
+            "endurancePoints": 1,
+            "mountainLevel": null,
+            "finisherLevel": null
+          }
+        },
+        "imageSource": "https://itra.run/Races/RaceDetails/Guatemala.Impact.Marathon.The.Beast.of.Pacaya.Volcano/2027/125946",
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "158028",
+            "url": "https://utmb.world/utmb-index/races/66054.guatemalaimpactmarathon42km-thebeastofpacaya.2027",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "42km - The Beast of Pacaya",
+              "eventName": "Guatemala Impact Marathon",
+              "date": "2027-03-06",
+              "distanceKm": 42.2,
+              "elevationGainM": 1491,
+              "place": "Pacaya Volcano, Guatemala",
+              "countryCode": "GT"
+            }
+          },
+          {
+            "provider": "itra",
+            "id": "2027:125946",
+            "url": "https://itra.run/Races/RaceDetails/Guatemala.Impact.Marathon.The.Beast.of.Pacaya.Volcano/2027/125946",
+            "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+            "detailsFetchedAt": null,
+            "acquisition": "browser-calendar",
+            "values": {
+              "name": "Guatemala Impact Marathon · 41 km",
+              "eventName": "Guatemala Impact Marathon",
+              "date": "2027-03-06",
+              "dateEnd": "2027-03-06",
+              "datePrecision": "event-day",
+              "distanceKm": 41,
+              "elevationGainM": 1492,
+              "place": "Los Pocitos",
+              "countryCode": "GT"
+            }
+          }
+        ],
+        "searchText": "42km - the beast of pacaya guatemala impact marathon pacaya volcano, guatemala guatemala north america 42km - the beast of pacaya guatemala impact marathon guatemala impact marathon · 41 km guatemala impact marathon",
+        "conflicts": [
+          {
+            "field": "distanceKm",
+            "utmb": 42.2,
+            "itra": 41,
+            "primaryProvider": "utmb",
+            "incomingProvider": "itra",
+            "primaryValue": 42.2,
+            "incomingValue": 41
+          },
+          {
+            "field": "elevationGainM",
+            "utmb": 1491,
+            "itra": 1492,
+            "primaryProvider": "utmb",
+            "incomingProvider": "itra",
+            "primaryValue": 1491,
+            "incomingValue": 1492
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "expected": "utmb:142856",
+    "incoming": {
+      "id": "worldsmarathons:2027:endurancelife-south-devon-marathon:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2027:endurancelife-south-devon-marathon:marathon",
+      "eventId": "worldsmarathons:event:endurancelife-south-devon-marathon",
+      "editionId": "worldsmarathons:2027:endurancelife-south-devon-marathon",
+      "name": "Endurancelife South Devon",
+      "eventName": "Endurancelife South Devon",
+      "date": "2027-01-23",
+      "dateEnd": "2027-01-23",
+      "datePrecision": "event-day",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "Beesands",
+      "countryCode": "GB",
+      "country": "United Kingdom",
+      "continent": "Europe",
+      "longitude": -3.657526,
+      "latitude": 50.253229,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:endurancelife-south-devon-marathon",
+      "geonamesId": null,
+      "website": "https://www.endurancelife.com/south-devon/",
+      "sourceUrl": "https://worldsmarathons.com/marathon/endurancelife-south-devon-marathon",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/endurancelife-south-devon-marathon/endurancelife-south-devon-marathon_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/endurancelife-south-devon-marathon",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "trail",
+          "sourceSurface": "Terrain",
+          "courseDifficulty": "hilly",
+          "listingType": "marathon-event",
+          "tags": [
+            "coastal",
+            "mountain-range",
+            "nature",
+            "picturesque",
+            "scenic",
+            "sea",
+            "nature_ahotu",
+            "downhill_ahotu",
+            "forest_ahotu",
+            "mud_ahotu",
+            "scenic_ahotu",
+            "valley_ahotu",
+            "beginner_friendly_ahotu",
+            "fun_ahotu",
+            "ocean_view_ahotu",
+            "countryside_ahotu",
+            "single_track_ahotu",
+            "beach_ahotu",
+            "sand_ahotu",
+            "grass_ahotu",
+            "eco_friendly_ahotu",
+            "multi_terrain_ahotu"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2027:endurancelife-south-devon-marathon:marathon",
+          "url": "https://worldsmarathons.com/marathon/endurancelife-south-devon-marathon",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "Endurancelife South Devon",
+            "eventName": "Endurancelife South Devon",
+            "date": "2027-01-23",
+            "dateEnd": "2027-01-23",
+            "datePrecision": "event-day",
+            "distanceKm": 42.195,
+            "place": "Beesands",
+            "countryCode": "GB"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "utmb:142856",
+        "sourceId": "142856",
+        "source": "utmb",
+        "eventId": "utmb:event:29721",
+        "editionId": "utmb:event:29721:2027",
+        "name": "Marathon",
+        "eventName": "Endurancelife | South Devon",
+        "date": "2027-01-23",
+        "distanceKm": 44.3,
+        "elevationGainM": 1381,
+        "locationId": 918,
+        "place": "Beesands, United Kingdom",
+        "countryCode": "GB",
+        "country": "United Kingdom",
+        "continent": "Europe",
+        "longitude": null,
+        "latitude": null,
+        "locationPrecision": "unknown",
+        "geonamesId": null,
+        "website": "http://www.endurancelife.com/",
+        "image": null,
+        "sourceUrl": "https://utmb.world/utmb-index/races/29721.endurancelife-southdevonmarathon.2027",
+        "extensions": {
+          "utmb": {
+            "category": "50k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": null,
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "142856",
+            "url": "https://utmb.world/utmb-index/races/29721.endurancelife-southdevonmarathon.2027",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "Marathon",
+              "eventName": "Endurancelife | South Devon",
+              "date": "2027-01-23",
+              "distanceKm": 44.3,
+              "elevationGainM": 1381,
+              "place": "Beesands, United Kingdom",
+              "countryCode": "GB"
+            }
+          }
+        ],
+        "searchText": "marathon endurancelife | south devon beesands, united kingdom united kingdom europe marathon endurancelife | south devon"
+      }
+    ]
+  },
+  {
+    "expected": null,
+    "incoming": {
+      "id": "worldsmarathons:2026:sembalun-mountain-marathon:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2026:sembalun-mountain-marathon:marathon",
+      "eventId": "worldsmarathons:event:sembalun-mountain-marathon",
+      "editionId": "worldsmarathons:2026:sembalun-mountain-marathon",
+      "name": "Sembalun Mountain Marathon",
+      "eventName": "Sembalun Mountain Marathon",
+      "date": "2026-09-20",
+      "dateEnd": "2026-09-20",
+      "datePrecision": "event-day",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "West Nusa Tenggara",
+      "countryCode": "ID",
+      "country": "Indonesia",
+      "continent": "Asia",
+      "longitude": 116.5427728,
+      "latitude": -8.388333,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:sembalun-mountain-marathon",
+      "geonamesId": null,
+      "website": "https://mountainmarathonfestival.com/SMM",
+      "sourceUrl": "https://worldsmarathons.com/marathon/sembalun-mountain-marathon",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/sembalun-mountain-marathon/sembalun-mountain-marathon_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/sembalun-mountain-marathon",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "mixed",
+          "sourceSurface": "Mixed",
+          "courseDifficulty": "hilly",
+          "listingType": "marathon-event",
+          "tags": [
+            "countryside",
+            "gravel",
+            "mountain-range",
+            "nature",
+            "scenic",
+            "single-track",
+            "valley",
+            "itra-point-1",
+            "itra-point-2",
+            "single-loop"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2026:sembalun-mountain-marathon:marathon",
+          "url": "https://worldsmarathons.com/marathon/sembalun-mountain-marathon",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "Sembalun Mountain Marathon",
+            "eventName": "Sembalun Mountain Marathon",
+            "date": "2026-09-20",
+            "dateEnd": "2026-09-20",
+            "datePrecision": "event-day",
+            "distanceKm": 42.195,
+            "place": "West Nusa Tenggara",
+            "countryCode": "ID"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "utmb:157844",
+        "sourceId": "157844",
+        "source": "utmb",
+        "eventId": "utmb:event:65954",
+        "editionId": "utmb:event:65954:2026",
+        "name": "MARATHON",
+        "eventName": "SEMBALUN MOUNTAIN MARATHON",
+        "date": "2026-09-20",
+        "distanceKm": 42,
+        "elevationGainM": 2039,
+        "locationId": 7926,
+        "place": "Lombok, Indonesia",
+        "countryCode": "ID",
+        "country": "Indonesia",
+        "continent": "Asia",
+        "longitude": null,
+        "latitude": null,
+        "locationPrecision": "unknown",
+        "geonamesId": null,
+        "website": "https://mountainmarathonfestival.com/SMM",
+        "image": null,
+        "sourceUrl": "https://utmb.world/utmb-index/races/65954.sembalunmountainmarathonmarathon.2026",
+        "extensions": {
+          "utmb": {
+            "category": "50k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": null,
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "157844",
+            "url": "https://utmb.world/utmb-index/races/65954.sembalunmountainmarathonmarathon.2026",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "MARATHON",
+              "eventName": "SEMBALUN MOUNTAIN MARATHON",
+              "date": "2026-09-20",
+              "distanceKm": 42,
+              "elevationGainM": 2039,
+              "place": "Lombok, Indonesia",
+              "countryCode": "ID"
+            }
+          }
+        ],
+        "searchText": "marathon sembalun mountain marathon lombok, indonesia indonesia asia marathon sembalun mountain marathon"
+      },
+      {
+        "id": "utmb:155224",
+        "sourceId": "155224",
+        "source": "utmb",
+        "eventId": "utmb:event:64748",
+        "editionId": "utmb:event:64748:2026",
+        "name": "SMM Marathon",
+        "eventName": "Sembalun Mountain Marathon Festival",
+        "date": "2026-09-20",
+        "distanceKm": 42,
+        "elevationGainM": 2030,
+        "locationId": 1847,
+        "place": "Sembalun, Indonesia",
+        "countryCode": "ID",
+        "country": "Indonesia",
+        "continent": "Asia",
+        "longitude": null,
+        "latitude": null,
+        "locationPrecision": "unknown",
+        "geonamesId": null,
+        "website": "https://www.instagram.com/sembalunmountainmarathon",
+        "image": null,
+        "sourceUrl": "https://utmb.world/utmb-index/races/64748.sembalunmountainmarathonfestivalsmmmarathon.2026",
+        "extensions": {
+          "utmb": {
+            "category": "50k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": null,
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "155224",
+            "url": "https://utmb.world/utmb-index/races/64748.sembalunmountainmarathonfestivalsmmmarathon.2026",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "SMM Marathon",
+              "eventName": "Sembalun Mountain Marathon Festival",
+              "date": "2026-09-20",
+              "distanceKm": 42,
+              "elevationGainM": 2030,
+              "place": "Sembalun, Indonesia",
+              "countryCode": "ID"
+            }
+          }
+        ],
+        "searchText": "smm marathon sembalun mountain marathon festival sembalun, indonesia indonesia asia smm marathon sembalun mountain marathon festival"
+      }
+    ]
+  },
+  {
+    "expected": "utmb:147378",
+    "incoming": {
+      "id": "worldsmarathons:2026:tecumseh-trail-marathon:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2026:tecumseh-trail-marathon:marathon",
+      "eventId": "worldsmarathons:event:tecumseh-trail-marathon",
+      "editionId": "worldsmarathons:2026:tecumseh-trail-marathon",
+      "name": "Tecumseh Trail Marathon",
+      "eventName": "Tecumseh Trail Marathon",
+      "date": "2026-10-17",
+      "dateEnd": "2026-10-17",
+      "datePrecision": "event-day",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "Nashville",
+      "countryCode": "US",
+      "country": "United States",
+      "continent": "North America",
+      "longitude": -86.24695349999999,
+      "latitude": 39.2072501,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:tecumseh-trail-marathon",
+      "geonamesId": "4644585",
+      "website": "http://www.dinoseries.com/tecumseh-trail-marathon/",
+      "sourceUrl": "https://worldsmarathons.com/marathon/tecumseh-trail-marathon",
+      "image": null,
+      "imageSource": null,
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "trail",
+          "sourceSurface": "Terrain",
+          "courseDifficulty": null,
+          "listingType": "marathon-event",
+          "tags": [
+            "trail",
+            "walk",
+            "trail_ahotu"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2026:tecumseh-trail-marathon:marathon",
+          "url": "https://worldsmarathons.com/marathon/tecumseh-trail-marathon",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "Tecumseh Trail Marathon",
+            "eventName": "Tecumseh Trail Marathon",
+            "date": "2026-10-17",
+            "dateEnd": "2026-10-17",
+            "datePrecision": "event-day",
+            "distanceKm": 42.195,
+            "place": "Nashville",
+            "countryCode": "US"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "utmb:147376",
+        "sourceId": "147376",
+        "source": "utmb",
+        "eventId": "utmb:event:61564",
+        "editionId": "utmb:event:61564:2026",
+        "name": "Tecumseh Trail Challenge 50k",
+        "eventName": "Tecumseh Trail Challenge  ",
+        "date": "2026-10-17",
+        "distanceKm": 50,
+        "elevationGainM": 1030,
+        "locationId": 8058,
+        "place": "Nashville IN, United States of America",
+        "countryCode": "US",
+        "country": "United States",
+        "continent": "North America",
+        "longitude": null,
+        "latitude": null,
+        "locationPrecision": "unknown",
+        "geonamesId": null,
+        "website": "https://www.dinoseries.com/tecumseh-trail-marathon",
+        "image": null,
+        "sourceUrl": "https://utmb.world/utmb-index/races/61564.tecumsehtrailchallengetecumsehtrailchallenge50k.2026",
+        "extensions": {
+          "utmb": {
+            "category": "50k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": null,
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "147376",
+            "url": "https://utmb.world/utmb-index/races/61564.tecumsehtrailchallengetecumsehtrailchallenge50k.2026",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "Tecumseh Trail Challenge 50k",
+              "eventName": "Tecumseh Trail Challenge  ",
+              "date": "2026-10-17",
+              "distanceKm": 50,
+              "elevationGainM": 1030,
+              "place": "Nashville IN, United States of America",
+              "countryCode": "US"
+            }
+          }
+        ],
+        "searchText": "tecumseh trail challenge 50k tecumseh trail challenge   nashville in, united states of america united states north america tecumseh trail challenge 50k tecumseh trail challenge  "
+      },
+      {
+        "id": "utmb:147378",
+        "sourceId": "147378",
+        "source": "utmb",
+        "eventId": "utmb:event:61566",
+        "editionId": "utmb:event:61566:2026",
+        "name": "Tecumseh Trail Challenge 26.2",
+        "eventName": "Tecumseh Trail Challenge  ",
+        "date": "2026-10-17",
+        "distanceKm": 42.16,
+        "elevationGainM": 982,
+        "locationId": 8058,
+        "place": "Nashville IN, United States of America",
+        "countryCode": "US",
+        "country": "United States",
+        "continent": "North America",
+        "longitude": null,
+        "latitude": null,
+        "locationPrecision": "unknown",
+        "geonamesId": null,
+        "website": "https://www.dinoseries.com/tecumseh-trail-marathon",
+        "image": null,
+        "sourceUrl": "https://utmb.world/utmb-index/races/61566.tecumsehtrailchallengetecumsehtrailchallenge26-2.2026",
+        "extensions": {
+          "utmb": {
+            "category": "50k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": null,
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "147378",
+            "url": "https://utmb.world/utmb-index/races/61566.tecumsehtrailchallengetecumsehtrailchallenge26-2.2026",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "Tecumseh Trail Challenge 26.2",
+              "eventName": "Tecumseh Trail Challenge  ",
+              "date": "2026-10-17",
+              "distanceKm": 42.16,
+              "elevationGainM": 982,
+              "place": "Nashville IN, United States of America",
+              "countryCode": "US"
+            }
+          }
+        ],
+        "searchText": "tecumseh trail challenge 26.2 tecumseh trail challenge   nashville in, united states of america united states north america tecumseh trail challenge 26.2 tecumseh trail challenge  "
+      }
+    ]
+  },
+  {
+    "expected": "utmb:146044",
+    "incoming": {
+      "id": "worldsmarathons:2026:broadway-marathon:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2026:broadway-marathon:marathon",
+      "eventId": "worldsmarathons:event:broadway-marathon",
+      "editionId": "worldsmarathons:2026:broadway-marathon",
+      "name": "Broadway Marathon & Half",
+      "eventName": "Broadway Marathon & Half",
+      "date": "2026-11-15",
+      "dateEnd": "2026-11-15",
+      "datePrecision": "event-day",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "Broadway, Worcestershire",
+      "countryCode": "GB",
+      "country": "United Kingdom",
+      "continent": "Europe",
+      "longitude": -1.854492,
+      "latitude": 52.035467,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:broadway-marathon",
+      "geonamesId": null,
+      "website": "https://cotswoldtrailevents.co.uk/",
+      "sourceUrl": "https://worldsmarathons.com/marathon/broadway-marathon",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/broadway-marathon/broadway-marathon_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/broadway-marathon",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "trail",
+          "sourceSurface": "Terrain",
+          "courseDifficulty": "hilly",
+          "listingType": "marathon-event",
+          "tags": [
+            "hilly",
+            "trail",
+            "trail_ahotu"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2026:broadway-marathon:marathon",
+          "url": "https://worldsmarathons.com/marathon/broadway-marathon",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "Broadway Marathon & Half",
+            "eventName": "Broadway Marathon & Half",
+            "date": "2026-11-15",
+            "dateEnd": "2026-11-15",
+            "datePrecision": "event-day",
+            "distanceKm": 42.195,
+            "place": "Broadway, Worcestershire",
+            "countryCode": "GB"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "utmb:146044",
+        "sourceId": "146044",
+        "source": "utmb",
+        "eventId": "utmb:event:46132",
+        "editionId": "utmb:event:46132:2026",
+        "name": "Broadway Marathon",
+        "eventName": "Broadway Marathon 2026",
+        "date": "2026-11-15",
+        "distanceKm": 42,
+        "elevationGainM": 948,
+        "locationId": 5725,
+        "place": "Broadway, United Kingdom",
+        "countryCode": "GB",
+        "country": "United Kingdom",
+        "continent": "Europe",
+        "longitude": -1.86079,
+        "latitude": 52.03825,
+        "locationPrecision": "town",
+        "geonamesId": "2654628",
+        "website": "https://cotswoldtrailevents.co.uk/",
+        "image": "https://img1.wsimg.com/isteam/ip/e75c275a-5984-480c-aff3-894e5c69574b/blob-fe39412.png",
+        "sourceUrl": "https://utmb.world/utmb-index/races/46132.broadwaymarathon2026broadwaymarathon.2026",
+        "extensions": {
+          "utmb": {
+            "category": "50k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": "https://cotswoldtrailevents.co.uk/",
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "146044",
+            "url": "https://utmb.world/utmb-index/races/46132.broadwaymarathon2026broadwaymarathon.2026",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "Broadway Marathon",
+              "eventName": "Broadway Marathon 2026",
+              "date": "2026-11-15",
+              "distanceKm": 42,
+              "elevationGainM": 948,
+              "place": "Broadway, United Kingdom",
+              "countryCode": "GB"
+            }
+          }
+        ],
+        "searchText": "broadway marathon broadway marathon 2026 broadway, united kingdom united kingdom europe broadway marathon broadway marathon 2026"
+      }
+    ]
+  },
+  {
+    "expected": null,
+    "incoming": {
+      "id": "worldsmarathons:2026:ibiza-trail-marathon:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2026:ibiza-trail-marathon:marathon",
+      "eventId": "worldsmarathons:event:ibiza-trail-marathon",
+      "editionId": "worldsmarathons:2026:ibiza-trail-marathon",
+      "name": "3 Días Trail Ibiza - ULTRA IBIZA",
+      "eventName": "3 Días Trail Ibiza - ULTRA IBIZA",
+      "date": "2026-11-27",
+      "dateEnd": "2026-11-29",
+      "datePrecision": "event",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "Ibiza",
+      "countryCode": "ES",
+      "country": "Spain",
+      "continent": "Europe",
+      "longitude": 1.396924,
+      "latitude": 38.8911141,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:ibiza-trail-marathon",
+      "geonamesId": "2516479",
+      "website": "https://3diastrailibiza.com/",
+      "sourceUrl": "https://worldsmarathons.com/marathon/ibiza-trail-marathon",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/ibiza-trail-marathon/5lGSVEI_ibiza-trail-marathon_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/ibiza-trail-marathon",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "trail",
+          "sourceSurface": "Trail",
+          "courseDifficulty": "extreme",
+          "listingType": "marathon-event",
+          "tags": [
+            "coastal",
+            "scenic",
+            "itra-point-1",
+            "itra-point-2",
+            "itra-point-3",
+            "itra-point-4",
+            "itra-point-5",
+            "100-999-participants",
+            "charity",
+            "eco-friendly",
+            "fun"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2026:ibiza-trail-marathon:marathon",
+          "url": "https://worldsmarathons.com/marathon/ibiza-trail-marathon",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "3 Días Trail Ibiza - ULTRA IBIZA",
+            "eventName": "3 Días Trail Ibiza - ULTRA IBIZA",
+            "date": "2026-11-27",
+            "dateEnd": "2026-11-29",
+            "datePrecision": "event",
+            "distanceKm": 42.195,
+            "place": "Ibiza",
+            "countryCode": "ES"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "utmb:144124",
+        "sourceId": "144124",
+        "source": "utmb",
+        "eventId": "utmb:event:23781",
+        "editionId": "utmb:event:23781:2026",
+        "name": "1/2 Maraton 3 días Trail ibiza",
+        "eventName": "3 Días Trail Ibiza-Ultra Ibiza",
+        "date": "2026-11-27",
+        "distanceKm": 44,
+        "elevationGainM": 1380,
+        "locationId": 3545,
+        "place": "Ibiza, Spain",
+        "countryCode": "ES",
+        "country": "Spain",
+        "continent": "Europe",
+        "longitude": 1.43296,
+        "latitude": 38.90883,
+        "locationPrecision": "town",
+        "geonamesId": "2516479",
+        "website": "https://3diastrailibiza.com/",
+        "image": null,
+        "sourceUrl": "https://utmb.world/utmb-index/races/23781.3diastrailibiza-ultraibiza1-2maraton3diastrailibiza.2026",
+        "extensions": {
+          "utmb": {
+            "category": "20k",
+            "level": "qualifier",
+            "stones": 0
+          }
+        },
+        "imageSource": null,
+        "sources": [
+          {
+            "provider": "utmb",
+            "id": "144124",
+            "url": "https://utmb.world/utmb-index/races/23781.3diastrailibiza-ultraibiza1-2maraton3diastrailibiza.2026",
+            "fetchedAt": "2026-11-08T20:32:30.640391+00:00",
+            "values": {
+              "name": "1/2 Maraton 3 días Trail ibiza",
+              "eventName": "3 Días Trail Ibiza-Ultra Ibiza",
+              "date": "2026-11-27",
+              "distanceKm": 44,
+              "elevationGainM": 1380,
+              "place": "Ibiza, Spain",
+              "countryCode": "ES"
+            }
+          }
+        ],
+        "searchText": "1/2 maraton 3 dias trail ibiza 3 dias trail ibiza-ultra ibiza ibiza, spain spain europe 1/2 maraton 3 dias trail ibiza 3 dias trail ibiza-ultra ibiza"
+      },
+      {
+        "id": "itra:2026:115703",
+        "sourceId": "2026:115703",
+        "source": "itra",
+        "sourceUrl": "https://itra.run/Races/RaceDetails/3.D%C3%ADas.Trail.Ibiza.Ultra.Ibiza.Half.Maraton.3.d%C3%ADas/2026/115703",
+        "eventId": "itra:event:2026:115704",
+        "editionId": "itra:event:2026:115704",
+        "name": "3 Días Trail Ibiza-Ultra Ibiza · 40 km",
+        "eventName": "3 Días Trail Ibiza-Ultra Ibiza",
+        "date": "2026-11-27",
+        "datePrecision": "event",
+        "distanceKm": 40,
+        "elevationGainM": 1309,
+        "place": "Sant Josep de sa Talaia",
+        "countryCode": "ES",
+        "website": null,
+        "image": "https://itra.run/Files/Events/ab0c51f55b71488382e13a45ad09de34.png",
+        "imageSource": "https://itra.run/Races/RaceDetails/3.D%C3%ADas.Trail.Ibiza.Ultra.Ibiza.Half.Maraton.3.d%C3%ADas/2026/115703",
+        "longitude": 1.5911849737167358,
+        "latitude": 39.07569885253906,
+        "locationPrecision": "event",
+        "geonamesId": "2511352",
+        "extensions": {
+          "itra": {
+            "endurancePoints": 1,
+            "mountainLevel": null,
+            "finisherLevel": null
+          }
+        },
+        "dateEnd": "2026-11-28",
+        "locationId": "itra:event:1.5911849737167358,39.07569885253906",
+        "country": "Spain",
+        "continent": "Europe",
+        "sources": [
+          {
+            "provider": "itra",
+            "id": "2026:115703",
+            "url": "https://itra.run/Races/RaceDetails/3.D%C3%ADas.Trail.Ibiza.Ultra.Ibiza.Half.Maraton.3.d%C3%ADas/2026/115703",
+            "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+            "detailsFetchedAt": null,
+            "acquisition": "browser-calendar",
+            "values": {
+              "name": "3 Días Trail Ibiza-Ultra Ibiza · 40 km",
+              "eventName": "3 Días Trail Ibiza-Ultra Ibiza",
+              "date": "2026-11-27",
+              "dateEnd": "2026-11-28",
+              "datePrecision": "event",
+              "distanceKm": 40,
+              "elevationGainM": 1309,
+              "place": "Sant Josep de sa Talaia",
+              "countryCode": "ES"
+            }
+          }
+        ],
+        "searchText": "3 dias trail ibiza-ultra ibiza · 40 km 3 dias trail ibiza-ultra ibiza sant josep de sa talaia spain europe 3 dias trail ibiza-ultra ibiza · 40 km 3 dias trail ibiza-ultra ibiza"
+      }
+    ]
+  }
+]

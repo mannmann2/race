@@ -1,0 +1,3 @@
+# Acquisition runs visible Chromium under Xvfb; install its browser with:
+# python3 -m playwright install --with-deps chromium
+playwright==1.60.0

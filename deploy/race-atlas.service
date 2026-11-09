@@ -1,0 +1,13 @@
+[Unit]
+Description=Race Atlas at race.slopmaxx.ing (port 4173)
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/root/race
+ExecStart=/usr/bin/node /root/race/scripts/serve.mjs --production
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

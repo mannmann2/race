@@ -1,0 +1,47 @@
+{
+  "match": {
+    "itra:2026:116065": "utmb:144834",
+    "itra:2026:111751": "utmb:139392",
+    "itra:2026:116886": "utmb:149374",
+    "itra:2026:113534": "utmb:154494",
+    "itra:2026:116884": "utmb:149380",
+    "itra:2026:117674": "utmb:159608",
+    "itra:2026:116498": "utmb:153124",
+    "itra:2026:111753": "utmb:139394",
+    "itra:2027:115637": "utmb:142070",
+    "itra:2027:119477": "utmb:150042",
+    "itra:2027:119478": "utmb:150044",
+    "itra:2026:113956": "utmb:156240",
+    "itra:2026:113290": "utmb:161012",
+    "itra:2026:116497": "utmb:153120",
+    "itra:2026:116496": "utmb:153118",
+    "itra:2026:116499": "utmb:153122",
+    "itra:2026:118118": "utmb:147852",
+    "itra:2026:118117": "utmb:147848",
+    "itra:2026:112341": "utmb:139354",
+    "itra:2026:113513": "utmb:141000",
+    "itra:2027:125519": "utmb:159954",
+    "itra:2027:125776": "utmb:160670",
+    "itra:2027:125946": "utmb:158028"
+  },
+  "separate": [
+    [
+      "itra:2026:113882",
+      "utmb:152350"
+    ]
+  ],
+  "reviewedAt": "2026-11-09",
+  "reviewNotes": {
+    "itra:2026:113882": "CHONGYI 100 Ultra Trail in Chongyi is not LI RIVER TRAIL RUN in Guilin (UTMB 152350); the generic course name 50K is coincidental.",
+    "sameCourse": "Reviewed each pair against its source course name, edition, date, country, distance and elevation. Sponsor/name/locality differences retained in source values.",
+    "itra:2026:116496": "Malnad 50K-Day maps only to UTMB 153118; the 50K-Night course is separate (153122).",
+    "itra:2026:113956": "Pokhara ULTRA 100K: same named course, edition, town and exact 6258 m gain. Sources disagree on date by one day and distance; show both values in details.",
+    "itra:2026:112341": "Ultra-Trail Chiangmai WH40: same named course and edition; 40.89 vs 40.7 km, 1450 vs 1400 m. Sources disagree on date by one day; retain conflict.",
+    "itra:2026:111751": "Sagalassos Sky Marathon: exact date, course name, distance and elevation. ITRA event locality differs from UTMB start town; retain UTMB location.",
+    "itra:2026:111753": "Sagalassos Trail Run: exact date, course name, distance and elevation. Retain UTMB start-town location.",
+    "itra:2026:113513": "Marcona Wind Trail 42K: same edition, date, town and named 42K course in ITRA URL; keep differing distance and elevation.",
+    "itra:2027:125519": "7 Cidades Ultimate Trail: same 7CUT40 course in ITRA URL, event and edition date; retain differing elevation.",
+    "itra:2027:125776": "Hobbit 42km Mountain Marathon: same named course in ITRA URL, Hogsback, edition and overlapping dates; retain distance/gain conflicts.",
+    "itra:2027:125946": "Guatemala Impact Marathon: same Beast of Pacaya Volcano course in ITRA URL, edition date and 1491/1492 m gain; retain locality and distance differences."
+  }
+}

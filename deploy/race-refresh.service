@@ -1,0 +1,11 @@
+[Unit]
+Description=Refresh and publish Race Atlas rolling race calendar
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+WorkingDirectory=/root/race
+Environment=RACE_PYTHON=/root/.venv/bin/python3
+ExecStart=/usr/bin/flock -n /root/race/.cache/catalog-refresh.lock /usr/bin/node /root/race/scripts/refresh-all.mjs --publish --itra-bulk-max-age-days=7
+TimeoutStartSec=2h

@@ -1,0 +1,50 @@
+{
+  "utmb-20k.svg": {
+    "url": "https://img.utmb.world/image/upload/v1/Common/categories/20K",
+    "contentType": "image/svg+xml",
+    "adaptation": "Transparent SVG with a light mountain mark in dark mode; original category colors and lettering retained."
+  },
+  "utmb-50k.svg": {
+    "url": "https://img.utmb.world/image/upload/v1/Common/categories/50K",
+    "contentType": "image/svg+xml",
+    "adaptation": "Transparent SVG with a light mountain mark in dark mode; original category colors and lettering retained."
+  },
+  "utmb-100k.svg": {
+    "url": "https://img.utmb.world/image/upload/v1/Common/categories/100K",
+    "contentType": "image/svg+xml",
+    "adaptation": "Transparent SVG with a light mountain mark in dark mode; original category colors and lettering retained."
+  },
+  "utmb-100m.svg": {
+    "url": "https://img.utmb.world/image/upload/v1/Common/categories/100M",
+    "contentType": "image/svg+xml",
+    "adaptation": "Transparent SVG with a light mountain mark in dark mode; original category colors and lettering retained."
+  },
+  "itra-0.svg": {
+    "url": "https://itra.run/images/zero.svg",
+    "contentType": "image/svg+xml"
+  },
+  "itra-1.svg": {
+    "url": "https://itra.run/images/one.svg",
+    "contentType": "image/svg+xml"
+  },
+  "itra-2.svg": {
+    "url": "https://itra.run/images/two.svg",
+    "contentType": "image/svg+xml"
+  },
+  "itra-3.svg": {
+    "url": "https://itra.run/images/three.svg",
+    "contentType": "image/svg+xml"
+  },
+  "itra-4.svg": {
+    "url": "https://itra.run/images/four.svg",
+    "contentType": "image/svg+xml"
+  },
+  "itra-5.svg": {
+    "url": "https://itra.run/images/five.svg",
+    "contentType": "image/svg+xml"
+  },
+  "itra-6.svg": {
+    "url": "https://itra.run/images/six.svg",
+    "contentType": "image/svg+xml"
+  }
+}

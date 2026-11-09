@@ -1,0 +1,18 @@
+dist
+.releases/
+.cache/
+__pycache__/
+test-results/
+.DS_Store
+node_modules/
+.env
+.env.*
+!.env.example
+# Provider snapshots and captures stay on the host; Git contains code and bounded test cases.
+data/*
+web/data/*.gz
+web/data/catalog-index.json
+web/data/catalog-*.gz
+web/data/manifest.json
+*.har
+*.log
