@@ -111,8 +111,8 @@ function hover(point,pos){
 }
 function selectPoint(point){clearHover();worker.postMessage({type:'group',locationIds:point.locationIds,requestId:`select:${++groupRequest}`});}
 function groupCard(r){
- const site=safeUrl(r.website);
- return `<article class="group-race">${card(r)}<div class="group-race-links" aria-label="Race pages for ${escape(r.name)}">${site?`<a href="${escape(site)}" target="_blank" rel="noopener noreferrer">Race website ↗</a>`:''}${sourceLinks(r)}</div></article>`;
+ const site=safeUrl(r.website),grade=raceGrade(r);
+ return `<article class="group-race" style="--race-grade-color:${grade.color}">${card(r)}<div class="group-race-links" aria-label="Race pages for ${escape(r.name)}">${site?`<a href="${escape(site)}" target="_blank" rel="noopener noreferrer">Race website ↗</a>`:''}${sourceLinks(r)}</div></article>`;
 }
 function showGroup(m,{restore=false}={}){
  if(m.items.length===1){activeGroup=null;detail(m.items[0]);return;}
