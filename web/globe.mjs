@@ -14,7 +14,7 @@ function markerRadius(feature){
 }
 export class Globe {
   constructor(container,{onHover,onSelect,onMove}) {
-    this.container=container;this.onHover=onHover;this.onSelect=onSelect;this.onMove=onMove;this.points=[];this.cache=new Map();this.ready=false;this.hoverToken=0;this.viewRevision=0;this.highlightedRace=null;this.theme=document.documentElement.dataset.theme||'light';
+    this.container=container;this.onHover=onHover;this.onSelect=onSelect;this.onMove=onMove;this.points=[];this.cache=new Map();this.ready=false;this.hoverToken=0;this.viewRevision=0;this.highlightedRace=null;this.highlightRevision=0;this.highlightDirty=false;this.highlightedMarker=null;this.theme=document.documentElement.dataset.theme||'light';
   }
   async load() {
     const response=await fetch('./data/map-style.json');if(!response.ok)throw new Error('Map style unavailable');
@@ -30,7 +30,9 @@ export class Globe {
       this.map.once('load',()=>{
         clearTimeout(timeout);this.ready=true;this.addRaceLayers();this.setTheme(this.theme);this.applyPoints();this.highlight(this.highlightedRace);
         this.map.on('move',()=>{this.hoverToken++;this.viewRevision++;this.onHover(null);this.onMove?.();});
+        this.map.on('movestart',()=>this.queueHighlight());
         this.map.on('moveend',()=>this.onMove?.(true));
+        this.map.on('sourcedata',e=>{if(e.sourceId==='races'&&e.isSourceLoaded)this.queueHighlight();});
         this.map.on('mousemove',e=>this.hover(e));
         this.map.on('mouseout',()=>{this.hoverToken++;this.onHover(null);});
         this.map.on('click',e=>this.click(e));
@@ -48,10 +50,12 @@ export class Globe {
     // placement/fades can otherwise leave a count visible behind the globe.
     this.countCanvas=document.createElement('canvas');this.countCanvas.className='race-count-overlay';
     this.countCanvas.setAttribute('aria-hidden','true');this.container.append(this.countCanvas);
-    this.countContext=this.countCanvas.getContext('2d');this.map.on('render',()=>this.drawCounts());
+    this.countContext=this.countCanvas.getContext('2d');this.map.on('render',()=>{
+      this.drawCounts();
+      if(this.highlightDirty&&!map.isMoving()&&map.isSourceLoaded('races')){this.highlightDirty=false;void this.resolveHighlight();}
+    });
     map.addSource('race-highlight',{type:'geojson',data:empty()});
-    map.addLayer({id:'race-highlight-halo',type:'circle',source:'race-highlight',paint:{'circle-radius':19,'circle-color':'#f38c38','circle-opacity':.2,'circle-stroke-color':'#db691f','circle-stroke-width':3}});
-    map.addLayer({id:'race-highlight-point',type:'circle',source:'race-highlight',paint:{'circle-radius':7,'circle-color':'#ffb15b','circle-stroke-color':'#193b37','circle-stroke-width':2}});
+    map.addLayer({id:'race-highlight-halo',type:'circle',source:'race-highlight',paint:{'circle-radius':['get','radius'],'circle-opacity':0,'circle-stroke-color':'#db691f','circle-stroke-width':3}});
   }
   setTheme(theme){
     this.theme=theme;if(!this.ready)return;
@@ -59,6 +63,7 @@ export class Globe {
   }
   setPoints(points) {this.points=points;this.pointByKey=new Map(points.map(p=>[p.key,p]));this.cache.clear();this.viewRevision++;this.hoverToken++;if(this.ready)this.applyPoints();}
   applyPoints(){
+    this.queueHighlight();
     this.countContext?.clearRect(0,0,this.countCanvas.width,this.countCanvas.height);
     this.map.getSource('races').setData({type:'FeatureCollection',features:this.points.map(p=>({type:'Feature',geometry:{type:'Point',coordinates:[p.longitude,p.latitude]},properties:{key:p.key,count:p.count,race_count:p.count,category:p.category||'other',...Object.fromEntries(GRADES.map(g=>[g.property,p.gradeCounts?.[g.key]||0]))}}))});
   }
@@ -94,7 +99,7 @@ export class Globe {
     if(this.cache.has(key))return this.cache.get(key);
     const revision=this.viewRevision;
     let point;
-    if(props.cluster){const leaves=await this.map.getSource('races').getClusterLeaves(props.cluster_id,props.point_count,0);const points=leaves.map(f=>this.pointByKey.get(f.properties.key)).filter(Boolean);point={count:points.reduce((n,p)=>n+p.count,0),locationIds:points.flatMap(p=>p.locationIds),cluster:true};}
+    if(props.cluster){const leaves=await this.map.getSource('races').getClusterLeaves(props.cluster_id,props.point_count,0);const points=leaves.map(f=>this.pointByKey.get(f.properties.key)).filter(Boolean);point={count:points.reduce((n,p)=>n+p.count,0),locationIds:points.flatMap(p=>p.locationIds),pointKeys:points.map(p=>p.key),cluster:true};}
     else point=this.pointByKey.get(props.key);
     if(point&&revision===this.viewRevision)this.cache.set(key,point);return point;
   }
@@ -117,8 +122,44 @@ export class Globe {
   highlight(race){
     this.highlightedRace=race;if(!this.ready)return;
     const coordinates=race?.longitude!=null&&race?.latitude!=null?[race.longitude,race.latitude]:null;
-    this.map.getSource('race-highlight').setData(coordinates?{type:'FeatureCollection',features:[{type:'Feature',geometry:{type:'Point',coordinates},properties:{raceId:race.id}}]}:empty());
+    this.queueHighlight();
     if(coordinates&&!this.visibleScreenPoint(coordinates))this.map.easeTo({center:coordinates,zoom:this.map.getZoom(),duration:this.duration(450)});
+  }
+  queueHighlight(){
+    this.highlightRevision++;this.highlightDirty=!!this.highlightedRace;
+    if(this.highlightedMarker){this.map.getSource('race-highlight').setData(empty());this.highlightedMarker=null;}
+    if(this.highlightDirty)this.map.triggerRepaint();
+  }
+  async resolveHighlight(){
+    const race=this.highlightedRace,revision=this.highlightRevision;
+    if(!race||race.longitude==null||race.latitude==null)return;
+    const key=`${race.longitude},${race.latitude}`;
+    if(!this.pointByKey.has(key))return;
+    const position=this.visibleScreenPoint([race.longitude,race.latitude]);if(!position)return;
+    // A whole-viewport rendered query can miss front-facing features on the globe.
+    // Start with loaded bubbles, then confirm the matching bubble with a local hit.
+    const seen=new Set(),features=this.map.querySourceFeatures('races').filter(f=>{
+      const markerKey=f.properties.cluster?'cluster:'+f.properties.cluster_id:f.properties.key;
+      if(seen.has(markerKey)||!this.visibleScreenPoint(f.geometry.coordinates))return false;
+      seen.add(markerKey);return true;
+    });
+    // Check actual cluster membership, rather than guessing from nearby coordinates.
+    // Cached leaves make subsequent sidebar hovers within the same group immediate.
+    const distance=f=>{const p=this.map.project(f.geometry.coordinates);return Math.hypot(p.x-position.x,p.y-position.y);};
+    features.sort((a,b)=>distance(a)-distance(b));
+    try{
+      for(const feature of features){
+        const props=feature.properties;
+        const contains=props.cluster?(await this.featurePoint(feature))?.pointKeys.includes(key):props.key===key;
+        if(revision!==this.highlightRevision)return;
+        if(!contains)continue;
+        const markerKey=props.cluster?'cluster:'+props.cluster_id:props.key;
+        const rendered=this.featuresAt(this.map.project(feature.geometry.coordinates)).find(f=>(f.properties.cluster?'cluster:'+f.properties.cluster_id:f.properties.key)===markerKey);
+        if(!rendered)continue;
+        const marker={type:'Feature',geometry:rendered.geometry,properties:{raceId:race.id,markerKey,radius:markerRadius(rendered)+5}};
+        this.highlightedMarker=marker;this.map.getSource('race-highlight').setData({type:'FeatureCollection',features:[marker]});return;
+      }
+    }catch{/* A source refresh can invalidate a pending cluster query. */}
   }
   duration(ms){return matchMedia('(prefers-reduced-motion: reduce)').matches?0:ms;}
   zoomBy(delta){if(this.ready)this.map.zoomTo(this.map.getZoom()+delta,{duration:this.duration(280)});}

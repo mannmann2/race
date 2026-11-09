@@ -19,7 +19,7 @@ with sync_playwright() as p:
     errors = []
     page.on('pageerror', lambda e: errors.append(str(e)))
     page.goto(BASE, wait_until='domcontentloaded')
-    page.wait_for_function("window.testMap && testMap.getLayer('race-highlight-point') && testMap.isSourceLoaded('races')", timeout=60000)
+    page.wait_for_function("window.testMap && testMap.getLayer('race-highlight-halo') && testMap.isSourceLoaded('races')", timeout=60000)
     page.wait_for_selector('#races .race-card', timeout=60000)
     page.wait_for_function("!testMap.isMoving() && document.querySelector('#races').getAttribute('aria-busy')==='false'")
     # Back-to-back filters must not drop the point data with a stale worker response.
@@ -101,7 +101,7 @@ with sync_playwright() as p:
     phone.add_init_script(HOOK)
     phone.on('pageerror', lambda e: errors.append(str(e)))
     phone.goto(BASE, wait_until='domcontentloaded')
-    phone.wait_for_function("window.testMap && testMap.getLayer('race-highlight-point')", timeout=60000)
+    phone.wait_for_function("window.testMap && testMap.getLayer('race-highlight-halo')", timeout=60000)
     phone.locator('#show-list').tap()
     phone.locator('#races .race-card').first.tap()
     expect(phone.locator('#detail-dialog')).to_be_visible(timeout=15000)

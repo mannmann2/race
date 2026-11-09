@@ -13,7 +13,6 @@ export function themedPaint(layer,theme){
   if(id==='race-cluster-labels'||id==='race-point-labels')return {'text-color':p.clusterText};
   if(id==='race-points')return {'circle-color':['case',['>',['get','count'],1],p.cluster,['match',['get','category'],...Object.entries(COLORS).flat(),COLORS.other]],'circle-stroke-color':['case',['>',['get','count'],1],p.stroke,p.pointStroke]};
   if(id==='race-highlight-halo')return {'circle-color':p.highlight,'circle-stroke-color':p.highlight};
-  if(id==='race-highlight-point')return {'circle-color':p.highlight,'circle-stroke-color':p.stroke};
   if(layer.type==='background')paint['background-color']=p.land;
   if(id==='water')paint['fill-color']=p.water;
   if(id==='waterway')paint['line-color']=p.waterway;
