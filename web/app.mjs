@@ -233,7 +233,14 @@ function checkCalendarClock(){
 setInterval(checkCalendarClock,60000);
 document.addEventListener('visibilitychange',checkCalendarClock);
 
-function notify(text){const box=$('#app-status');box.textContent=text;box.hidden=false;clearTimeout(toastTimer);toastTimer=setTimeout(()=>box.hidden=true,5000);}
+function hideNotification(){const box=$('#app-status');clearTimeout(toastTimer);box.hidePopover?.();box.hidden=true;}
+function notify(text){
+ const box=$('#app-status'),host=$$('dialog[open]').at(-1)||document.body;
+ // Keep announcements within the active modal, and above its backdrop and scroll area.
+ hideNotification();if(box.parentElement!==host)host.append(box);
+ box.textContent=text;box.hidden=false;box.showPopover?.();toastTimer=setTimeout(hideNotification,5000);
+}
+document.addEventListener('close',e=>{if(e.target.contains($('#app-status')))hideNotification();},true);
 function reportURL(r){const p=new URLSearchParams({title:'Race correction: '+r.name,body:`Race: ${r.name} (${r.date})\nRace ID: ${r.id}\nSources:\n${sourceRecords(r).map(s=>s.url).filter(Boolean).join('\n')}\n\nWhat should change?\n`});return 'https://github.com/mannmann2/race/issues/new?'+p;}
 async function shareCurrent(){writeURL();const url=location.href,title=selectedRaceId?($('#detail-content h2')?.textContent||'Race Atlas'):'Race Atlas — find your next starting line';
  try{if(navigator.share&&matchMedia('(pointer:coarse)').matches){await navigator.share({title,url});return;}if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(url);notify('Link copied.');return;}}catch(e){if(e.name==='AbortError')return;}
