@@ -9,6 +9,7 @@ const displayDate=(value,long=false)=>value?new Intl.DateTimeFormat('en-GB',{day
 const defaults=()=>({q:'',when:'upcoming',datePreset:'6m',...presetDates('6m'),categories:[],countries:[],source:'',worldsmarathonsSurface:'',endurancePoints:[],mountainMin:'',mountainMax:'',continent:'',distanceMin:'',distanceMax:'',elevationMin:'',elevationMax:'',worldSeries:false,inView:true,locationId:null});
 let filters=defaults(),seq=0,viewVersion=0,ready=false,page=0,total=0,pending=false,meta,hoverRequest=0,currentHover=null,hoverTimer,filterTimer,groupRequest=0,detailRequest=0,visibleRaces=new Map(),viewTimer,locationIds=null,lastViewKey='',globePointKey=null,collapsed=false,hoveredRaceId=null,focusedRaceId=null;
 let selectedRaceId=raceFromURL(location.hash),sharedCamera=cameraFromURL(location.hash),deepLinkPending=!!selectedRaceId,panelReturnTarget=null,toastTimer,dialogReturnTarget=null;
+let activeGroup=null;
 const failedImages=new Set();
 const worker=new Worker(new URL('./worker.mjs',import.meta.url),{type:'module'}),form=$('#filters-form');
 const pinIcon='<svg viewBox="0 0 16 18" aria-hidden="true"><path d="M14 7c0 4-6 9-6 9S2 11 2 7a6 6 0 1 1 12 0Z"/><circle cx="8" cy="7" r="2"/></svg>';
@@ -91,12 +92,16 @@ function handleResults(m){
  if(!total)$('#races').innerHTML=`<div class="empty-state"><strong>${filters.inView?'No starting lines in this view.':'No matching starting lines.'}</strong><p>${filters.inView?'Move the globe, zoom out, or browse worldwide.':'Try a wider date range or loosen a filter.'}</p>${filters.inView?'<button id="show-worldwide">Browse worldwide</button>':''}<button id="empty-reset">Reset filters</button></div>`;
 }
 function detail(r){
+ $('#detail-back').hidden=!activeGroup;
  clearHover();selectedRaceId=r.id;writeURL();globe.focus(r);globe.highlight(r);const site=safeUrl(r.website),grade=raceGrade(r);
  $('#detail-content').style.setProperty('--race-grade-color',grade.color);$('#detail-content').dataset.grade=grade.key;
  $('#detail-content').innerHTML=`${photo(r,'detail-image','eager')}<div class="detail-top"><div class="detail-grade">${categoryBadge(r)}<span>${escape(raceGrades(r).length>1?'UTMB + ITRA grades':grade.provider==='utmb'?'UTMB category':grade.provider==='itra'?'ITRA Endurance Points':'Race classification')}</span></div><span class="eyebrow">THE NEXT STARTING LINE</span><h2>${escape(r.name)}</h2><p>${escape(r.eventName)}</p></div><div class="detail-body"><dl class="detail-grid"><div><dt>Race date</dt><dd>${escape(raceDate(r,true))}</dd></div><div><dt>${raceGrades(r).length>1?'Grades':grade.provider==='utmb'?'UTMB category':grade.provider==='itra'?'ITRA Endurance Points':'Race type'}</dt><dd>${categoryBadge(r)}</dd></div><div><dt>Distance</dt><dd>${r.distanceKm==null?'Not supplied':number(r.distanceKm)+' km'}</dd></div><div><dt>Elevation gain</dt><dd>${r.elevationGainM==null?'Not supplied':number(r.elevationGainM)+' m D+'}</dd></div></dl>${ratingDetails(r)}${conflictNote(r)}${r.extensions?.worldsmarathons&&!r.extensions?.utmb&&!r.extensions?.itra?'<p class="small-note">Marathon distance and dates come from the event listing. Check the organiser for the exact course and start time.</p>':r.datePrecision==='event'?'<p class="small-note">Date is from the event calendar; the course start date is not confirmed.</p>':''}<div class="detail-place">${escape(r.place||r.country||'Location not supplied')}<small>${r.longitude==null?'No reliable location match. See the organiser’s website for the start.':`Approximate ${r.locationPrecision==='event'?'event':'town'} location · ${r.latitude.toFixed(4)}°, ${r.longitude.toFixed(4)}°<br>${r.locationPrecision==='event'?'Location supplied by the event catalogue':'Town name match from GeoNames'}; not a verified starting line.`}</small></div><div class="detail-actions"><button type="button" data-share-race>Share race ↗</button><a href="${escape(reportURL(r))}" target="_blank" rel="noopener noreferrer">Report a correction ↗</a></div><div class="detail-links">${site?`<a href="${escape(site)}" target="_blank" rel="noopener noreferrer">Visit race website ↗</a>`:''}${sourceLinks(r)}</div><p class="detail-source">${sourceProvenance(r)}${r.imageSource?`<br>Photo: <a href="${escape(r.imageSource)}" target="_blank" rel="noopener noreferrer">image source ↗</a>`:''}<br>Check race details with the organiser before making plans.</p></div>`;
  const dialog=$('#detail-dialog');const title=$('#detail-content h2');title.id='race-title';dialog.setAttribute('aria-labelledby','race-title');if(!dialog.open){dialogReturnTarget=document.activeElement;dialog.showModal();}dialog.scrollTop=0;
 }
-function openRace(id){const r=visibleRaces.get(id);if(r)detail(r);else worker.postMessage({type:'detail',id,requestId:++detailRequest});}
+function openRace(id,{fromGroup=false}={}){
+ if(fromGroup&&activeGroup){activeGroup.scrollTop=$('#detail-dialog').scrollTop;activeGroup.focusId=id;}
+ else activeGroup=null;
+ const r=visibleRaces.get(id);if(r)detail(r);else worker.postMessage({type:'detail',id,requestId:++detailRequest});}
 function clearHover(){clearTimeout(hoverTimer);hoverRequest++;currentHover=null;$('#tooltip').hidden=true;}
 function hover(point,pos){
  if(!point){clearHover();return;}if(matchMedia('(max-width:800px)').matches)return;
@@ -105,7 +110,30 @@ function hover(point,pos){
  hoverTimer=setTimeout(()=>worker.postMessage({type:'group',locationIds:point.locationIds,requestId:`hover:${requestId}`}),60);
 }
 function selectPoint(point){clearHover();worker.postMessage({type:'group',locationIds:point.locationIds,requestId:`select:${++groupRequest}`});}
-function showGroup(m){selectedRaceId=null;writeURL();$('#detail-content').style.removeProperty('--race-grade-color');delete $('#detail-content').dataset.grade;if(m.items.length===1){detail(m.items[0]);return;}for(const r of m.items)visibleRaces.set(r.id,r);const places=[...new Set(m.items.map(r=>r.place).filter(Boolean))];$('#detail-content').innerHTML=`<div class="group-dialog-title"><span class="eyebrow">RACES IN THIS AREA</span><h2>${escape(places.length===1?places[0]:'More than one starting line.')}</h2><p>${number(m.total)} matching races.</p></div><div class="details-group-list">${m.items.map(card).join('')}</div>${m.total>100?'<p class="small-note" style="padding:18px 28px">Showing the first 100. Narrow your dates to explore more.</p>':''}`;const d=$('#detail-dialog');$('#detail-content h2').id='race-title';d.setAttribute('aria-labelledby','race-title');if(!d.open){dialogReturnTarget=document.activeElement;d.showModal();}d.scrollTop=0;}
+function groupCard(r){
+ const site=safeUrl(r.website);
+ return `<article class="group-race">${card(r)}<div class="group-race-links" aria-label="Race pages for ${escape(r.name)}">${site?`<a href="${escape(site)}" target="_blank" rel="noopener noreferrer">Race website ↗</a>`:''}${sourceLinks(r)}</div></article>`;
+}
+function showGroup(m,{restore=false}={}){
+ if(m.items.length===1){activeGroup=null;detail(m.items[0]);return;}
+ if(!restore){const map=globe.ready?globe.map:null;activeGroup={response:m,scrollTop:0,focusId:null,camera:map?{center:map.getCenter().toArray(),zoom:map.getZoom(),bearing:map.getBearing(),pitch:map.getPitch()}:null};}
+ selectedRaceId=null;writeURL();$('#detail-back').hidden=true;
+ $('#detail-content').style.removeProperty('--race-grade-color');delete $('#detail-content').dataset.grade;
+ for(const r of m.items)visibleRaces.set(r.id,r);
+ const places=[...new Set(m.items.map(r=>r.place).filter(Boolean))];
+ $('#detail-content').innerHTML=`<div class="group-dialog-title"><span class="eyebrow">RACES IN THIS AREA</span><h2>${escape(places.length===1?places[0]:'More than one starting line.')}</h2><p>${number(m.total)} matching races.</p></div><div class="details-group-list">${m.items.map(groupCard).join('')}</div>${m.total>100?'<p class="small-note" style="padding:18px 28px">Showing the first 100. Narrow your dates to explore more.</p>':''}`;
+ const dialog=$('#detail-dialog');$('#detail-content h2').id='race-title';dialog.setAttribute('aria-labelledby','race-title');
+ if(!dialog.open){dialogReturnTarget=document.activeElement;dialog.showModal();}
+ dialog.scrollTop=restore?activeGroup.scrollTop:0;
+ if(restore){const target=[...dialog.querySelectorAll('[data-race]')].find(el=>el.dataset.race===activeGroup.focusId);target?.focus({preventScroll:true});}
+}
+function backToGroup(){
+ if(!activeGroup)return;
+ detailRequest++;clearHover();globe.highlight(null);
+ if(activeGroup.camera&&globe.ready){globe.map.stop();globe.map.jumpTo(activeGroup.camera);}
+ showGroup(activeGroup.response,{restore:true});
+}
+
 const globe=new Globe($('#globe'),{onHover:hover,onSelect:selectPoint,onMove:immediate=>{scheduleView(immediate);if(immediate&&ready)writeURL();}});
 document.addEventListener('themechange',e=>globe.setTheme(e.detail));
 globe.load().then(()=>{if(sharedCamera)globe.map.jumpTo(sharedCamera);}).catch(error=>{const notice=document.createElement('div');notice.className='error-banner';notice.textContent='The detailed map could not load. You can still browse races worldwide.';$('.globe-panel').append(notice);filters.inView=false;runFilters();console.warn(error.message);});
@@ -142,7 +170,7 @@ $('#countries-clear').addEventListener('click',()=>setFilter('countries',[]));$(
 $('#load-more').addEventListener('click',()=>{if(pending)return;pending=true;$('#load-more').disabled=true;worker.postMessage({type:'page',seq,viewVersion,page:page+1});});
 function collapseResults(value){collapsed=value;$('.workspace').classList.toggle('results-collapsed',value);updatePanelToggle();requestAnimationFrame(()=>globe.map?.resize());}
 $('#results-toggle').addEventListener('click',()=>{if(matchMedia('(max-width:800px)').matches){if($('#race-results').classList.contains('open'))closePanels();else $('#show-list').click();}else collapseResults(!collapsed);});
-document.addEventListener('click',e=>{if(e.target.closest('[data-share-race]'))shareCurrent();const c=e.target.closest('[data-race]');if(c)openRace(c.dataset.race);if(e.target.closest('#empty-reset'))reset();if(e.target.closest('#show-worldwide'))setFilter('inView',false);if(e.target.closest('#retry'))location.reload();if(!e.target.closest('.country-picker'))$('.country-picker').open=false;});
+document.addEventListener('click',e=>{if(e.target.closest('[data-share-race]'))shareCurrent();const c=e.target.closest('[data-race]');if(c)openRace(c.dataset.race,{fromGroup:!!c.closest('.details-group-list')});if(e.target.closest('#empty-reset'))reset();if(e.target.closest('#show-worldwide'))setFilter('inView',false);if(e.target.closest('#retry'))location.reload();if(!e.target.closest('.country-picker'))$('.country-picker').open=false;});
 function previewCalendarRace(){globe.highlight(visibleRaces.get(hoveredRaceId||focusedRaceId)||null);}
 $('#races').addEventListener('pointerover',e=>{const card=e.target.closest('[data-race]');if(card&&card!==e.relatedTarget?.closest?.('[data-race]')){hoveredRaceId=card.dataset.race;previewCalendarRace();}});
 $('#races').addEventListener('pointerout',e=>{const card=e.target.closest('[data-race]');if(card&&card!==e.relatedTarget?.closest?.('[data-race]')){hoveredRaceId=null;previewCalendarRace();}});
@@ -150,6 +178,7 @@ $('#races').addEventListener('focusin',e=>{focusedRaceId=e.target.closest('[data
 $('#races').addEventListener('focusout',()=>{focusedRaceId=null;previewCalendarRace();});
 document.addEventListener('error',e=>{if(e.target.tagName==='IMG'){if(/(?:race-photo|tooltip-image|detail-image)/.test(e.target.className)){if(failedImages.size>=1000)failedImages.delete(failedImages.values().next().value);failedImages.add(e.target.src);}e.target.hidden=true;if(e.target.classList.contains('race-photo'))e.target.closest('.race-card')?.classList.remove('has-photo');}},true);
 $('#zoom-in').addEventListener('click',()=>globe.zoomBy(1));$('#zoom-out').addEventListener('click',()=>globe.zoomBy(-1));$('#globe-reset').addEventListener('click',()=>globe.reset());
+$('#detail-back').addEventListener('click',backToGroup);
 $('#detail-close').addEventListener('click',()=>$('#detail-dialog').close());$('#about-close').addEventListener('click',()=>$('#about-dialog').close());
 for(const d of $$('dialog'))d.addEventListener('click',e=>{if(e.target===d){const r=d.getBoundingClientRect();if(e.clientX<r.left||e.clientX>r.right||e.clientY<r.top||e.clientY>r.bottom)d.close();}});
 $('#about-open').addEventListener('click',()=>$('#about-dialog').showModal());$('#category-help').addEventListener('click',()=>$('#about-dialog').showModal());
@@ -182,7 +211,7 @@ async function shareCurrent(){writeURL();const url=location.href,title=selectedR
  $('#share-link').value=url;$('#share-dialog').showModal();$('#share-link').focus();$('#share-link').select();
 }
 $('#share-view').addEventListener('click',shareCurrent);$('#share-close').addEventListener('click',()=>$('#share-dialog').close());
-$('#detail-dialog').addEventListener('close',()=>{selectedRaceId=null;writeURL();if(dialogReturnTarget?.isConnected&&!dialogReturnTarget.closest('[inert]'))dialogReturnTarget.focus();else if(!matchMedia('(max-width:800px)').matches)globe.map?.getCanvas().focus();});
+$('#detail-dialog').addEventListener('close',()=>{activeGroup=null;$('#detail-back').hidden=true;selectedRaceId=null;writeURL();if(dialogReturnTarget?.isConnected&&!dialogReturnTarget.closest('[inert]'))dialogReturnTarget.focus();else if(!matchMedia('(max-width:800px)').matches)globe.map?.getCanvas().focus();});
 function syncPanelAccessibility(){
  const mobile=matchMedia('(max-width:800px)').matches,active=mobile?$('.filters.open,.results-panel.open'):null;
  $('.header').inert=!!active;

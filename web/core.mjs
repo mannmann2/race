@@ -52,6 +52,12 @@ export function safeUrl(value) {
 }
 const sourceDate=value=>{if(!value||!/^\d{4}-\d{2}-\d{2}$/.test(value)||!Number.isFinite(Date.parse(value)))return null;return new Date(value).toISOString().slice(0,10)===value?value:null;};
 const measurement=value=>typeof value==='number'&&Number.isFinite(value)&&value>=0?value:null;
+const locationFields=['longitude','latitude','locationPrecision','locationId','geonamesId','countryCode','country','continent','place'];
+export function correctLocation(race, corrections) {
+  const correction=corrections?.[race.id];
+  if(correction)for(const key of locationFields)if(Object.hasOwn(correction,key))race[key]=correction[key];
+  return race;
+}
 export function expandDataset(data) {
   if(data.schemaVersion===3){if(!Array.isArray(data.races))throw new Error('Invalid race catalog');return data.races.map(r=>searchable(r));}
   if(![1,2].includes(data.schemaVersion)) throw new Error('Unsupported race data version');
@@ -65,11 +71,11 @@ export function expandDataset(data) {
     race.image=safeUrl(enrichment.image);race.imageSource=safeUrl(enrichment.imageSource);
     if(enrichment.longitude!=null){race.longitude=enrichment.longitude;race.latitude=enrichment.latitude;race.locationPrecision='event';race.locationId=`event:${enrichment.longitude},${enrichment.latitude}`;}
     race.sources=[{provider:'utmb',id:sourceId,url:race.sourceUrl,fetchedAt:data.fetchedAt,values:{name,eventName,date,distanceKm,elevationGainM,place,countryCode:code}}];
-    return searchable(race);
+    return searchable(correctLocation(race,data.locationCorrections));
   });
   const index=new Map(races.map((r,i)=>[r.id,i]));
   for(const entry of data.additionalRaces || []) {
-    const race=structuredClone(entry.race);
+    const race=correctLocation(structuredClone(entry.race),data.locationCorrections);
     for(const field of ['website','image','imageSource','sourceUrl'])race[field]=safeUrl(race[field]);
     race.sources=sourceRecords(race).map(s=>({...s,url:safeUrl(s.url)}));
     const position=index.get(entry.matchId);

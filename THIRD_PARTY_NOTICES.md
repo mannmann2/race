@@ -30,3 +30,5 @@ ITRA and World’s Marathons supply additional event facts and optional image li
 Official UTMB category badges and ITRA Endurance Points badges are provider SVGs used to identify source classifications. UTMB badges are adapted to use a light mountain mark in dark mode; category colors and lettering are unchanged. ITRA badges are unmodified. Copyright and trademarks remain with UTMB and ITRA. Original asset URLs are recorded in `web/assets/grades/sources.json`. This tool is independent of both organisations.
 
 DM Sans and Manrope are self-hosted Google Fonts under the SIL Open Font License 1.1. Complete licences accompany the font files in `web/assets/fonts/`.
+
+Location verification also uses Natural Earth 1:10m Admin 0 country outlines (public domain) and GeoNames administrative names and cities500 (CC BY 4.0). Server-side derivatives and source references are in `scripts/geo/`.

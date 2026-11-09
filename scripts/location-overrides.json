@@ -1,0 +1,234 @@
+[
+  {
+    "match": {
+      "source": "utmb",
+      "countryCode": "GB",
+      "eventNames": [
+        "Slate Trail Ultra",
+        "Wales Ultra Trail"
+      ],
+      "place": [
+        "Bangor",
+        "Bangor, United Kingdom"
+      ]
+    },
+    "location": {
+      "longitude": -4.12936,
+      "latitude": 53.22752,
+      "geonamesId": "2656397",
+      "locationPrecision": "town",
+      "locationId": "geonames:2656397"
+    },
+    "evidence": [
+      "https://apexrunning.co/events/slatetrailultra",
+      "https://www.geonames.org/2656397/bangor.html"
+    ],
+    "note": "Bangor, Gwynedd, Wales. Preserve independent Northern Ireland Bangor events."
+  },
+  {
+    "match": {
+      "countryCode": "SL",
+      "eventNames": [
+        "Val d’Aran by UTMB®"
+      ]
+    },
+    "location": {
+      "countryCode": "ES",
+      "place": "Vielha, Spain",
+      "longitude": 0.796251,
+      "latitude": 42.7004,
+      "geonamesId": null,
+      "locationPrecision": "event",
+      "locationId": "event:valdaran"
+    },
+    "evidence": [
+      "https://valdaran.utmb.world/"
+    ],
+    "note": "The source incorrectly labels Vielha as Sierra Leone; organiser event location is in Spain."
+  },
+  {
+    "match": {
+      "countryCode": "US",
+      "eventNames": [
+        "Leavenworth Ski Hill 50k",
+        "Leavenworth Skyline 25k",
+        "Leavenworth Ski Hill 55k",
+        "Leavenworth Skyline 27k"
+      ],
+      "place": [
+        "Leavenworth, United States of America",
+        "North Bend, United States of America"
+      ]
+    },
+    "location": {
+      "longitude": -120.66148,
+      "latitude": 47.59623,
+      "geonamesId": "5800683",
+      "locationPrecision": "town",
+      "locationId": "geonames:5800683",
+      "place": "Leavenworth, Washington, United States"
+    },
+    "evidence": [
+      "https://mountainrunningraces.com/leavenworth-trail-fest-skihill-50k/",
+      "https://mountainrunningraces.com/leavenworth-trail-fest-skyline-25k/"
+    ],
+    "note": "Organiser confirms both races start at Leavenworth Ski Hill, Washington."
+  },
+  {
+    "match": {
+      "countryCode": "US",
+      "eventNames": [
+        "North Bend Skyline 30k"
+      ],
+      "place": [
+        "North Bend, United States of America"
+      ]
+    },
+    "location": {
+      "longitude": -121.78678,
+      "latitude": 47.49566,
+      "geonamesId": "5804915",
+      "locationPrecision": "town",
+      "locationId": "geonames:5804915"
+    },
+    "evidence": [
+      "https://mountainrunningraces.com/north-bend-skyline-30k/"
+    ],
+    "note": "Torguson Park, North Bend, Washington, not North Bend, Oregon."
+  },
+  {
+    "match": {
+      "countryCode": "AU",
+      "eventNames": [
+        "The Kokoda Challenge - Brisbane"
+      ],
+      "place": [
+        "Brookfield, Australia"
+      ]
+    },
+    "location": {
+      "longitude": 152.9,
+      "latitude": -27.5,
+      "geonamesId": "2173887",
+      "locationPrecision": "town",
+      "locationId": "geonames:2173887"
+    },
+    "evidence": [
+      "https://www.kokodachallenge.com/brisbane"
+    ],
+    "note": "Brookfield, Queensland, near Brisbane, not Brookfield, Victoria."
+  },
+  {
+    "match": {
+      "countryCode": "DE",
+      "eventNames": [
+        "MOUNTAINMAN Stagerun & Trail Festival Berchtesgaden"
+      ],
+      "place": [
+        "Ramsau, Germany"
+      ]
+    },
+    "location": {
+      "longitude": 12.9,
+      "latitude": 47.61667,
+      "geonamesId": "2850608",
+      "locationPrecision": "town",
+      "locationId": "geonames:2850608"
+    },
+    "evidence": [
+      "https://mountainman.de/trailrunning-events/alps/berchtesgaden/streckendetails-berchtesgaden-watz/"
+    ],
+    "note": "The final stage starts in Ramsau bei Berchtesgaden, not the northern Bavarian namesake."
+  },
+  {
+    "match": {
+      "countryCode": "IE",
+      "eventNames": [
+        "Granite Peaks"
+      ],
+      "place": [
+        "Newcastle, Co. Down, Ireland"
+      ]
+    },
+    "location": {
+      "longitude": -5.88979,
+      "latitude": 54.21804,
+      "geonamesId": "6695976",
+      "locationPrecision": "town",
+      "locationId": "geonames:6695976",
+      "countryCode": "GB",
+      "place": "Newcastle, County Down, United Kingdom"
+    },
+    "evidence": [
+      "https://granitepeaksultras.com/travel/"
+    ],
+    "note": "Source country is incorrect: Newcastle, County Down, Northern Ireland."
+  },
+  {
+    "match": {
+      "countryCode": "AU",
+      "eventNames": [
+        "Run Tasmania Stage Race"
+      ],
+      "place": [
+        "Kingston"
+      ]
+    },
+    "location": {
+      "longitude": 147.30351,
+      "latitude": -42.97638,
+      "geonamesId": "2161311",
+      "locationPrecision": "town",
+      "locationId": "geonames:2161311"
+    },
+    "evidence": [
+      "https://runtasmania.rapidascent.com.au/"
+    ],
+    "note": "Day one is Kingston south of Hobart, Tasmania, not Kingston, Canada."
+  },
+  {
+    "match": {
+      "countryCode": "AU",
+      "eventNames": [
+        "Gone Nuts Adventure Run"
+      ],
+      "place": [
+        "Stanley"
+      ]
+    },
+    "location": {
+      "longitude": 145.29555,
+      "latitude": -40.76064,
+      "geonamesId": "2148528",
+      "locationPrecision": "town",
+      "locationId": "geonames:2148528"
+    },
+    "evidence": [
+      "https://www.gonenuts.com.au/"
+    ],
+    "note": "Event location is Stanley, Tasmania, not Stanley, Jamaica; course starts can vary by distance."
+  },
+  {
+    "match": {
+      "countryCode": "US",
+      "eventNames": [
+        "Tunnel Hill  100 & 50 mile runs"
+      ],
+      "place": [
+        "Vienna, United States of America",
+        "Vienna, IL, United States of America"
+      ]
+    },
+    "location": {
+      "longitude": -88.89784,
+      "latitude": 37.41533,
+      "geonamesId": "4252025",
+      "locationPrecision": "town",
+      "locationId": "geonames:4252025"
+    },
+    "evidence": [
+      "https://www.tunnelhill100.com/"
+    ],
+    "note": "Organiser confirms Vienna, Illinois, including historical entries that omit the state."
+  }
+]

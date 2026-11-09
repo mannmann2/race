@@ -1,0 +1,3 @@
+Country outlines: Natural Earth 1:10m Admin 0 countries, public domain, retrieved 2026-11-09 from https://github.com/nvkelso/natural-earth-vector/blob/master/geojson/ne_10m_admin_0_countries.geojson . Coordinates rounded to five decimals; coastlines simplified to 0.01 degrees while retaining islands. Gzipped for storage. Used only on the server, with a 20 km border/coast buffer; not a political boundary authority.
+
+Region names/codes: GeoNames admin1CodesASCII.txt, CC BY 4.0, retrieved 2026-11-09 from https://download.geonames.org/export/dump/admin1CodesASCII.txt . Attribution: https://www.geonames.org/ .

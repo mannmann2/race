@@ -2,11 +2,12 @@ import { readFile, writeFile, rename, mkdir } from 'node:fs/promises';
 import { gzipSync, gunzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
-import { writeCatalogAssets } from './catalog-assets.mjs';
+import { writeCatalogAssets, atomicWrite } from './catalog-assets.mjs';
 import { validateCatalog } from './catalog-quality.mjs';
-import { expandDataset } from '../web/core.mjs';
+import { expandDataset, correctLocation } from '../web/core.mjs';
 import { matchSources } from './match-sources.mjs';
 import { matchMarathons } from './match-marathons.mjs';
+import { resolveLocations } from './resolve-locations.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));
 async function optional(path,fallback){if(!path)return fallback;try{return JSON.parse(await readFile(path,'utf8'));}catch(e){if(e.code==='ENOENT')return fallback;throw e;}}
 export async function compose({basePath=resolve(root,'web/data/races.json.gz'),itraPath=resolve(root,'.cache/itra/races.json'),fallbackPath=resolve(root,'data/itra-snapshot.json'),statusPath=resolve(root,'.cache/itra/status.json'),output=resolve(root,'web/data/catalog.json.gz'),reportPath=resolve(root,'.cache/itra/match-report.json'),overridesPath=resolve(root,'scripts/source-overrides.json'),marathonsPath=resolve(root,'.cache/worldsmarathons/races.json'),marathonsFallbackPath=resolve(root,'data/worldsmarathons-snapshot.json'),marathonsStatusPath=resolve(root,'.cache/worldsmarathons/status.json'),marathonsReportPath=resolve(root,'.cache/worldsmarathons/match-report.json')}={}) {
@@ -17,13 +18,18 @@ export async function compose({basePath=resolve(root,'web/data/races.json.gz'),i
   if(snapshot && (snapshot.schemaVersion!==1||!Array.isArray(snapshot.races)||!snapshot.races.length))throw new Error('Invalid ITRA snapshot; catalog preserved');
   const exclusions=await optional(resolve(root,'scripts/source-exclusions.json'),{});
   const excluded=new Set(Object.keys(exclusions));
-  const {entries,report}=matchSources(expandDataset(base),(snapshot?.races||[]).filter(r=>!excluded.has(r.id)),overrides);
-  const data={...base,schemaVersion:2,additionalRaces:entries,sourceMeta:{utmb:{...await optional(resolve(root,'.cache/utmb-status.json'),{state:'available'}),fetchedAt:base.fetchedAt,races:base.records.length},itra:{...status,fetchedAt:snapshot?.fetchedAt||null,retrievedAt:snapshot?.retrievedAt||null,acquisition:snapshot?.acquisition||'direct',races:entries.length,coverage:snapshot?.coverage||null}},mergeSummary:{imported:report.imported,merged:report.merged,added:report.added,unresolved:report.unresolved}};
   const marathons=await optional(marathonsPath,null)||await optional(marathonsFallbackPath,null);
+  const itraRaces=(snapshot?.races||[]).filter(r=>!excluded.has(r.id));
+  const locations=resolveLocations([...expandDataset(base),...itraRaces,...(marathons?.races||[])]);
+  base.locationCorrections=locations.corrections;
+  await mkdir(resolve(root,'.cache'),{recursive:true});
+  await atomicWrite(resolve(root,'.cache/location-report.json'),JSON.stringify({generatedAt:new Date().toISOString(),accepted:locations.accepted,review:locations.review},null,2)+'\n');
+  const {entries,report}=matchSources(expandDataset(base),itraRaces.map(r=>correctLocation({...r},locations.corrections)),overrides);
+  const data={...base,schemaVersion:2,additionalRaces:entries,sourceMeta:{utmb:{...await optional(resolve(root,'.cache/utmb-status.json'),{state:'available'}),fetchedAt:base.fetchedAt,races:base.records.length},itra:{...status,fetchedAt:snapshot?.fetchedAt||null,retrievedAt:snapshot?.retrievedAt||null,acquisition:snapshot?.acquisition||'direct',races:entries.length,coverage:snapshot?.coverage||null}},mergeSummary:{imported:report.imported,merged:report.merged,added:report.added,unresolved:report.unresolved}};
   let marathonsReport=null;
   if(marathons) {
     if(marathons.schemaVersion!==1||!Array.isArray(marathons.races)||!marathons.races.length||marathons.races.some(r=>r.source!=='worldsmarathons'))throw new Error('Invalid World’s Marathons snapshot; catalog preserved');
-    const result=matchMarathons(expandDataset(data),marathons.races);marathonsReport=result.report;
+    const result=matchMarathons(expandDataset(data),marathons.races.map(r=>correctLocation({...r},locations.corrections)));marathonsReport=result.report;
     data.additionalRaces.push(...result.entries);
     data.sourceMeta.worldsmarathons={...await optional(marathonsStatusPath,{state:'available'}),fetchedAt:marathons.fetchedAt,acquisition:marathons.acquisition,races:marathons.races.length,coverage:marathons.coverage,mergeSummary:marathonsReport};
     // Detailed match evidence stays in the server-side report, not the transport.
