@@ -18,7 +18,7 @@ Hosting remains managed by **systemctl**, with the proxy pointing to **127.0.0.1
 ```sh
 # Use the supported app runtime in this shell:
 export PATH=/opt/race/node/bin:$PATH
-npm run test:ci
+npm run test:all
 npm run build -- --stage          # build/validate without changing the serving pointer
 # Start a preview with SERVE_DIR set to the staged release printed above:
 # SERVE_DIR=/root/race/.releases/<release> PORT=4174 npm run dev
@@ -44,7 +44,7 @@ The initial download contains upcoming races, with a two-day timezone buffer. Th
 
 Imports create checksummed local backups, retaining the latest 14 under `.cache/backups`. `npm run backup` can run independently; `RACE_BACKUP_DIR` can point to a separately mounted backup volume. These are **local backups until an off-host destination is configured**. Restore a backup into a separate folder, verify its `.sha256`, copy the source snapshots/overrides back, then compose, stage and validate a new release; do not overwrite a running catalog piecemeal.
 
-Filters, selected races and camera positions are shareable. The app includes a race correction link, privacy explanation, social preview image, crawler metadata and public third-party credits. No analytics service is installed. Bulk provider data is not committed to Git; GitHub CI uses synthetic data and bounded regression cases. Private snapshot tests run additionally on this host.
+Filters, selected races and camera positions are shareable. The app includes a race correction link, privacy explanation, social preview image, crawler metadata and public third-party credits. No analytics service is installed. Bulk provider data is not committed to Git. Local checks use synthetic data and bounded regression cases, with additional private snapshot checks on this host. No CI is configured.
 
 Source access and reuse permission are separate. Provider approval for public use of their data, photos and badges remains an owner task. CARTO remains keyless; its existing attribution is retained. Real iPhone/Android checks and off-host backup/notification setup remain additional launch checks.
 

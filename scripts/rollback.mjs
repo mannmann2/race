@@ -1,5 +1,7 @@
 import{readFile,symlink,rename,rm}from'node:fs/promises';
 import{fileURLToPath}from'node:url';
+import{locked}from'./lock.mjs';
+await locked();
 const root=fileURLToPath(new URL('../',import.meta.url));
 const state=JSON.parse(await readFile(root+'.releases/last-release.json','utf8'));
 if(!state.previous||!/^\.releases\/[\w-]+$/.test(state.previous))throw new Error('No previous release to restore');
