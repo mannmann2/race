@@ -31,7 +31,7 @@ with sync_playwright() as p:
     browser=p.chromium.launch(headless=True,args=['--no-sandbox','--enable-unsafe-swiftshader'])
     errors=[]
     if os.environ.get('TEST_SCOPE')!='mobile':
-        page=browser.new_page(viewport={'width':1280,'height':860});errors=[]
+        page=browser.new_page(bypass_csp=True,viewport={'width':1280,'height':860});errors=[]
         page.add_init_script(HOOK);page.on('pageerror',lambda error:errors.append(str(error)))
         start=time.monotonic();loaded(page);print(f'Globe + initial calendar ready in {time.monotonic()-start:.2f}s',flush=True)
         expect(page.locator('[data-date="6m"]')).to_have_attribute('aria-pressed','true')
@@ -102,7 +102,7 @@ with sync_playwright() as p:
         assert page.evaluate("!testMap.getSource('terrain-tiles') && !testMap.getLayer('terrain-map')")
         page.screenshot(path=str(OUT/'zoomed-map.png'))
         assert not errors,errors;print('Map: marker hover/click, group modal without zoom and deep zoom passed' if os.environ.get('TEST_SCOPE')=='map' else 'Desktop: presets, dual slider, viewport/far-side filtering, collapse, World Series, photos, URLs, pagination and marker interaction passed',flush=True)
-    mobile=browser.new_page(viewport={'width':390,'height':844},device_scale_factor=1,is_mobile=True,has_touch=True);mobile.add_init_script(HOOK);mobile.on('pageerror',lambda e:errors.append(str(e)));loaded(mobile)
+    mobile=browser.new_page(bypass_csp=True,viewport={'width':390,'height':844},device_scale_factor=1,is_mobile=True,has_touch=True);mobile.add_init_script(HOOK);mobile.on('pageerror',lambda e:errors.append(str(e)));loaded(mobile)
     assert not mobile.evaluate('document.documentElement.scrollWidth>innerWidth')
     mobile.screenshot(path=str(OUT/'mobile.png'))
     mobile.locator('#open-filters').tap();mobile.locator('[data-date="1m"]').tap();settle(mobile)

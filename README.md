@@ -1,15 +1,52 @@
 # Race Atlas
 
-A standalone, mobile-friendly race globe for **race.slopmaxx.ing**. Source lives in this directory. No Sites dependency, account, API key, or npm installation is required. The site is static; scheduled data acquisition runs separately on the host.
+A standalone, mobile-friendly race globe for **race.slopmaxx.ing**. Source lives in this directory. No Sites dependency, account, API key, or npm installation is required. The site is static; scheduled data acquisition runs separately on the host. Provider snapshots, browser captures and caches are intentionally excluded from the public Git repository. A fresh checkout can run `node scripts/seed-demo.mjs` to create two clearly labelled synthetic races for development; production retains its private snapshots.
 
 ```sh
 npm run dev       # development: 0.0.0.0:4173
 npm test          # snapshot integrity and filter/date tests
 npm run build     # static application in dist/
-npm start         # production: serves dist/ on 0.0.0.0:4173
+npm start         # production: serves current/ on 127.0.0.1:4173
 ```
 
-Point your reverse proxy at **http://127.0.0.1:4173** when it runs on the same machine. Set `PORT` to change it. The installed `race-atlas.service` keeps the production server running on port 4173 and starts it after reboot. Its reproducible definition is in `deploy/`. Node 18+ is required for these commands, Python 3.10+ for acquisition/enrichment. Browsers need WebGL, ES modules, Web Workers, dialog and DecompressionStream (current Chrome, Firefox and Safari).
+Point your reverse proxy at **http://127.0.0.1:4173** when it runs on the same machine. Set `PORT` to change it. The installed `race-atlas.service` keeps the production server running on port 4173 and starts it after reboot. Its reproducible definition is in `deploy/`. Node 22+ (the installed service uses an app-scoped Node 24 runtime) is required for these commands, Python 3.10+ for acquisition/enrichment. Browsers need WebGL, ES modules, Web Workers, dialog and DecompressionStream (current Chrome, Firefox and Safari).
+
+## Production operations
+
+Hosting remains managed by **systemctl**, with the proxy pointing to **127.0.0.1:4173**. `race-atlas.service` runs as the restricted `race-atlas` user. Import jobs run separately as `race-refresh`, with access to data/cache directories. Both see this checkout through a service-local `/srv/race` bind mount; the service configuration hides the rest of `/root`. The app-scoped Node runtime and browser environment live under `/opt/race`, so other services keep their existing runtimes.
+
+```sh
+# Use the supported app runtime in this shell:
+export PATH=/opt/race/node/bin:$PATH
+npm run test:ci
+npm run build -- --stage          # build/validate without changing the serving pointer
+# Start a preview with SERVE_DIR set to the staged release printed above:
+# SERVE_DIR=/root/race/.releases/<release> PORT=4174 npm run dev
+TEST_URL=http://127.0.0.1:4174 npm run test:launch
+npm run deploy                   # activate the verified staged release atomically
+systemctl restart race-atlas.service  # only necessary when server code or units changed
+npm run prune                    # retain five recent releases and 30 days of data
+npm run rollback                 # restore the previous release, without rebuilding
+
+systemctl status race-atlas.service
+systemctl list-timers 'race-*'
+systemctl start race-refresh.service
+journalctl -u race-refresh.service -n 60
+systemctl start race-health.service
+journalctl -u race-health.service -n 30
+```
+
+`deploy/install.sh` installs the app-scoped runtime, users, dependencies and reproducible units, but deliberately does not activate a release or restart the site. After staging and verifying a release, activate it and enable `race-atlas.service`, `race-refresh.timer`, and `race-health.timer`. The health timer checks the website and per-source freshness every 15 minutes. Logs and machine-readable health results remain on the host. Optional alerts require an approved HTTPS webhook in `/etc/race-atlas/alerts.env` (`RACE_ALERT_WEBHOOK`); no destination is configured by default.
+
+Refreshes run under a shared lock and per-source time limits. Other providers continue when one fails. Publication validates identity, dates, ratings, coordinates and source-count retention (a drop exceeding 30% requires review). Last-good snapshots survive failures. UTMB's historical `-1` elevation sentinel is displayed as missing, and an empty source course name falls back to its event name. Two specifically reviewed ITRA test listings are excluded via `scripts/source-exclusions.json`; a valid race containing the word “test” is not automatically excluded.
+
+The initial download contains upcoming races, with a two-day timezone buffer. The full archive loads only for historical/all-date browsing or an older shared race. Payloads have content-derived filenames; a small index is published last. Hourly checks use conditional requests and avoid re-expanding an unchanged catalog. Application assets use immutable version directories and precompressed Brotli/gzip responses. Fonts are self-hosted. CSP, framing restrictions, permissions policy, referrer policy and HTTPS HSTS are served by the app.
+
+Imports create checksummed local backups, retaining the latest 14 under `.cache/backups`. `npm run backup` can run independently; `RACE_BACKUP_DIR` can point to a separately mounted backup volume. These are **local backups until an off-host destination is configured**. Restore a backup into a separate folder, verify its `.sha256`, copy the source snapshots/overrides back, then compose, stage and validate a new release; do not overwrite a running catalog piecemeal.
+
+Filters, selected races and camera positions are shareable. The app includes a race correction link, privacy explanation, social preview image, crawler metadata and public third-party credits. No analytics service is installed. Bulk provider data is not committed to Git; GitHub CI uses synthetic data and bounded regression cases. Private snapshot tests run additionally on this host.
+
+Source access and reuse permission are separate. Provider approval for public use of their data, photos and badges remains an owner task. CARTO remains keyless; its existing attribution is retained. Real iPhone/Android checks and off-host backup/notification setup remain additional launch checks.
 
 ## Discovery
 
@@ -26,7 +63,7 @@ Point your reverse proxy at **http://127.0.0.1:4173** when it runs on the same m
 - Hover or keyboard-focus a calendar race to highlight its location. Worldwide races outside the current view are brought into view without changing the zoom.
 - MapLibre GL JS globe transitions into a detailed CARTO/OpenStreetMap vector map as you zoom. Country/place labels and roads appear at appropriate scales. Click a cluster or a shared location to open its race-list modal; hover or tap an individual race for details.
 - Real event images appear in cards, hover previews and details when available. Images load lazily, and unavailable images disappear. No generic stock images are substituted.
-- Filters and sorting are shareable in the URL. Relative date presets are recalculated on load; custom dates stay fixed. There is no application tracking or account requirement.
+- Filters, sorting, selected race and camera position are shareable in the URL. Relative date presets are recalculated on load; custom dates stay fixed. There is no application tracking or account requirement.
 
 ## Race data and images
 
@@ -66,7 +103,7 @@ npm run enrich
 python3 scripts/enrich.py --limit 1000
 ```
 
-`.cache/` stores GeoNames, country metadata and `event-images.json`. Remove that last file to recheck previously failed or changed image metadata. Race refresh preserves enrichment for surviving source IDs. A failed/incomplete feed fetch leaves the previous snapshot intact. A failed catalogue fetch leaves the previous enriched snapshot intact. The installed `race-refresh.timer` runs daily at 03:30 UTC (with up to 10 minutes of jitter), including a catch-up after missed runs while the host was offline. It refreshes UTMB and course details daily, downloads the ITRA bulk calendar only when the verified copy is seven calendar days old, and atomically publishes the catalog without restarting the site. Open tabs recheck the data hourly and advance relative dates across midnight. On another host, install the units in `deploy/` and update their paths first.
+`.cache/` stores GeoNames, country metadata and `event-images.json`. Remove that last file to recheck previously failed or changed image metadata. Race refresh preserves enrichment for surviving source IDs. A failed/incomplete feed fetch leaves the previous snapshot intact. A failed catalogue fetch leaves the previous enriched snapshot intact. The installed `race-refresh.timer` runs daily at 03:30 UTC (with up to 10 minutes of jitter), including a catch-up after missed runs while the host was offline. It refreshes UTMB and course details daily, downloads the ITRA bulk calendar only when the verified copy is seven calendar days old, and atomically publishes validated catalog payloads and their index without restarting the site. Open tabs recheck the data hourly and advance relative dates across midnight. On another host, install the units in `deploy/` and update their paths first.
 
 ### ITRA rolling browser acquisition
 
@@ -99,7 +136,7 @@ journalctl -u race-refresh.service -n 60
 systemctl start race-refresh.service
 ```
 
-The installed unit uses `/root/.venv/bin/python3`; set `RACE_PYTHON` for another interpreter. `deploy/race-refresh.service` and `.timer` are the reproducible unit definitions. A file lock prevents overlapping scheduled refreshes, and a second lock protects ITRA acquisition. Per-source failures produce a nonzero job exit while preserving and publishing the other source's latest good data. The ITRA source status in the app reports a failed refresh rather than presenting stale data as fresh.
+The installed unit uses `/opt/race/venv/bin/python3`; set `RACE_PYTHON` for another interpreter. `deploy/race-refresh.service` and `.timer` are the reproducible unit definitions. A file lock prevents overlapping scheduled refreshes, and a second lock protects ITRA acquisition. Per-source failures produce a nonzero job exit while preserving and publishing the other source's latest good data. The ITRA source status in the app reports a failed refresh rather than presenting stale data as fresh.
 
 Legacy HTML/HAR/public-index import remains available through `scripts/itra.py` for diagnostics and fixtures. It is not the scheduled acquisition path.
 

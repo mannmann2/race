@@ -16,3 +16,6 @@ web/data/catalog-*.gz
 web/data/manifest.json
 *.har
 *.log
+
+current
+.current.next

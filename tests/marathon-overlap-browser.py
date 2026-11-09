@@ -9,7 +9,7 @@ HOOK="""let lib;Object.defineProperty(window,'maplibregl',{get(){return lib},set
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True,args=['--no-sandbox','--enable-unsafe-swiftshader'])
     for mobile in (False,True):
-        context=browser.new_context(viewport={'width':390,'height':844} if mobile else {'width':1440,'height':1000},is_mobile=mobile,has_touch=mobile,color_scheme='light',reduced_motion='reduce')
+        context=browser.new_context(bypass_csp=True,viewport={'width':390,'height':844} if mobile else {'width':1440,'height':1000},is_mobile=mobile,has_touch=mobile,color_scheme='light',reduced_motion='reduce')
         page=context.new_page();page.add_init_script(HOOK);errors=[]
         page.on('pageerror',lambda e:errors.append(str(e)))
         page.goto(BASE+'#inView=0',wait_until='domcontentloaded')

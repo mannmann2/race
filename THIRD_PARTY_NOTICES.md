@@ -28,3 +28,5 @@ Event photos remain on their original providers' hosts. Sources are UTMB's offic
 ITRA and World’s Marathons supply additional event facts and optional image links. Source and photo attribution links remain on each listing, including merged records. World’s Marathons is operated by World’s Sports Group; this personal tool is not affiliated with UTMB, ITRA or World’s Sports Group. Images stay on their original hosts and remain the property of their respective owners.
 
 Official UTMB category badges and ITRA Endurance Points badges are provider SVGs used to identify source classifications. UTMB badges are adapted to use a light mountain mark in dark mode; category colors and lettering are unchanged. ITRA badges are unmodified. Copyright and trademarks remain with UTMB and ITRA. Original asset URLs are recorded in `web/assets/grades/sources.json`. This tool is independent of both organisations.
+
+DM Sans and Manrope are self-hosted Google Fonts under the SIL Open Font License 1.1. Complete licences accompany the font files in `web/assets/fonts/`.

@@ -14,7 +14,7 @@ const M=v.Map;v.Map=class extends M{constructor(...args){super(...args);window.t
 
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True, args=['--no-sandbox', '--enable-unsafe-swiftshader'])
-    page = browser.new_page(viewport={'width': 1280, 'height': 860})
+    page = browser.new_page(bypass_csp=True,viewport={'width': 1280, 'height': 860})
     page.add_init_script(HOOK)
     errors = []
     page.on('pageerror', lambda e: errors.append(str(e)))
@@ -97,7 +97,7 @@ with sync_playwright() as p:
     assert not errors, errors
     print('Calendar hover/focus, clearing, far-side reveal and detailed zoom passed', flush=True)
 
-    phone = browser.new_page(viewport={'width':390,'height':844}, is_mobile=True, has_touch=True)
+    phone = browser.new_page(bypass_csp=True,viewport={'width':390,'height':844}, is_mobile=True, has_touch=True)
     phone.add_init_script(HOOK)
     phone.on('pageerror', lambda e: errors.append(str(e)))
     phone.goto(BASE, wait_until='domcontentloaded')

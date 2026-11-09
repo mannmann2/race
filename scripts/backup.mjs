@@ -1,0 +1,7 @@
+import{mkdir,readdir,stat,rm,readFile}from'node:fs/promises';import{spawnSync}from'node:child_process';import{fileURLToPath}from'node:url';import{join}from'node:path';import{createHash}from'node:crypto';import{atomicWrite}from'./catalog-assets.mjs';
+const root=fileURLToPath(new URL('../',import.meta.url)),folder=process.env.RACE_BACKUP_DIR||root+'.cache/backups';await mkdir(folder,{recursive:true});
+const paths=['data','web/data/races.json.gz','web/data/catalog.json.gz','web/data/manifest.json','.cache/itra/races.json','.cache/itra/bulk-listings.json','.cache/itra/course-details.json','.cache/worldsmarathons/races.json','scripts/source-overrides.json','scripts/source-exclusions.json'];
+const available=[];for(const p of paths)try{await stat(root+p);available.push(p);}catch{}
+const name='race-data-'+new Date().toISOString().replace(/[:.]/g,'-')+'.tar.gz',target=join(folder,name),r=spawnSync('tar',['-czf',target+'.next','-C',root,...available],{stdio:'inherit'});if(r.status!==0)throw new Error('Backup failed');
+const {rename}=await import('node:fs/promises');await rename(target+'.next',target);await atomicWrite(target+'.sha256',createHash('sha256').update(await readFile(target)).digest('hex')+'  '+name+'\n');
+const archives=(await readdir(folder)).filter(n=>/^race-data-.*\.tar\.gz$/.test(n)).sort();for(const old of archives.slice(0,-14)){await rm(join(folder,old));await rm(join(folder,old+'.sha256'),{force:true});}console.log('Saved backup '+target);

@@ -6,10 +6,11 @@ def data(lon):
  return gzip.compress(json.dumps({'schemaVersion':1,'fetchedAt':'2027-12-31T12:00:00Z','countries':{'FR':{'name':'France','continent':'Europe'}},'events':[['1','Clock fixture']], 'locations':[['Town','FR',lon,46,'event',None]],'records':[['1',0,'Clock fixture','2028-01-06',50,2000,'50k',0,None,'clock','qualifier',0]],'coverage':{'from':'2028-01-06','to':'2028-01-06','races':1,'unmapped':0}}).encode())
 with sync_playwright() as p:
  b=p.chromium.launch(headless=True,args=['--no-sandbox','--enable-unsafe-swiftshader'])
- c=b.new_context(timezone_id='UTC',viewport={'width':1380,'height':1000},reduced_motion='reduce')
+ c=b.new_context(bypass_csp=True,timezone_id='UTC',viewport={'width':1380,'height':1000},reduced_motion='reduce')
  state={'lon':6,'requests':0}
  def response(route):
   state['requests']+=1;route.fulfill(status=200,content_type='application/gzip',body=data(state['lon']))
+ c.route('**/data/catalog-index.json',lambda route:route.fulfill(status=404,body='Fixture uses the legacy transport'))
  c.route('**/data/catalog.json.gz',response)
  page=c.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
  page.add_init_script("""const W=window.Worker;window.Worker=class extends W{constructor(...a){super(...a);this.addEventListener('message',({data})=>{if(data.type==='results')window.testResults=data;});}};""")

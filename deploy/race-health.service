@@ -1,0 +1,17 @@
+[Unit]
+Description=Check Race Atlas availability and source freshness
+After=race-atlas.service
+
+[Service]
+Type=oneshot
+User=race-refresh
+Group=race-refresh
+WorkingDirectory=/srv/race
+EnvironmentFile=-/etc/race-atlas/alerts.env
+ExecStart=/opt/race/node/bin/node /srv/race/scripts/healthcheck.mjs
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=tmpfs
+BindReadOnlyPaths=/root/race:/srv/race
+ReadWritePaths=/srv/race/.cache
+PrivateTmp=true

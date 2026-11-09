@@ -30,9 +30,11 @@ test('real relay legs do not merge with another leg or the full 125K course',()=
  // A malformed ITRA relay distance must not be silently treated as the solo W70.
  assert.equal(ids.get('itra:2026:115756'),null);
 });
-test('same-distance courses use distinct ascent evidence; unspecified stage formats stay unresolved',()=>{
+test('same-distance courses use distinct ascent evidence; explicit URL stage formats resolve safely',()=>{
  assert.notEqual(ids.get('itra:2027:123749'),ids.get('itra:2027:124680'));
- for(const id of ['itra:2027:124181','itra:2027:124177'])assert.equal(ids.get(id),null,id);
+ assert.equal(ids.get('itra:2027:124181'),null);
+ // The ITRA URL explicitly names 110km.Multi.Stage; this is no longer an unknown bulk variant.
+ assert.equal(ids.get('itra:2027:124177'),'utmb:157570');
  // 10.32 km versus 12 km is too large a discrepancy to assume identity.
  assert.equal(ids.get('itra:2026:121319'),null);
 });

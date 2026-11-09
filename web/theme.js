@@ -14,7 +14,7 @@
   apply(saved||(system.matches?'dark':'light'));
   document.addEventListener('DOMContentLoaded',()=>{
     apply(document.documentElement.dataset.theme);
-    document.querySelector('#theme-toggle').addEventListener('click',()=>{
+    document.querySelector('#theme-toggle')?.addEventListener('click',()=>{
       saved=document.documentElement.dataset.theme==='dark'?'light':'dark';
       try {localStorage.setItem(key,saved);} catch {}
       apply(saved);

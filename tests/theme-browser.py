@@ -16,7 +16,7 @@ def load(page):
 
 with sync_playwright() as p:
     browser=p.chromium.launch(headless=True,args=['--no-sandbox','--enable-unsafe-swiftshader'])
-    context=browser.new_context(viewport={'width':1280,'height':860},color_scheme='light',reduced_motion='reduce')
+    context=browser.new_context(bypass_csp=True,viewport={'width':1280,'height':860},color_scheme='light',reduced_motion='reduce')
     page=context.new_page();page.add_init_script(HOOK)
     errors=[];page.on('pageerror',lambda error:errors.append(str(error)))
     load(page)
@@ -61,7 +61,7 @@ with sync_playwright() as p:
     print('Desktop: both palettes, keyboard toggle, saved choice, unchanged map/filter state and marker interactions passed',flush=True)
     context.close()
 
-    mobile_context=browser.new_context(viewport={'width':390,'height':844},is_mobile=True,has_touch=True,color_scheme='dark',reduced_motion='reduce')
+    mobile_context=browser.new_context(bypass_csp=True,viewport={'width':390,'height':844},is_mobile=True,has_touch=True,color_scheme='dark',reduced_motion='reduce')
     mobile=mobile_context.new_page();mobile.add_init_script(HOOK);mobile.on('pageerror',lambda error:errors.append(str(error)))
     load(mobile)
     expect(mobile.locator('html')).to_have_attribute('data-theme','dark')
@@ -77,7 +77,7 @@ with sync_playwright() as p:
     mobile.screenshot(path=str(OUT/'theme-mobile-light.png'))
     mobile_context.close()
     # Restricted storage must not prevent the theme control from working.
-    restricted=browser.new_context(color_scheme='dark')
+    restricted=browser.new_context(bypass_csp=True,color_scheme='dark')
     page=restricted.new_page();page.on('pageerror',lambda error:errors.append(str(error)))
     page.add_init_script("Object.defineProperty(window,'localStorage',{get(){throw new DOMException('Denied','SecurityError')}})")
     page.goto(BASE,wait_until='domcontentloaded')

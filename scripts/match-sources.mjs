@@ -26,17 +26,26 @@ function geography(a,b) {
   return {place,nearby:Math.hypot(dx,dy)<30};
 }
 const summary=r=>r.datePrecision!=='race'&&/ · .*\bkm\b/.test(r.name||'');
+// Calendar display names can be event-only. A validated ITRA course URL can
+// still explicitly distinguish a night course, relay or walk; never infer that
+// distinction from distance or an event title.
+export function providerCourseName(r){
+ if(!summary(r))return '';
+ try{const u=new URL(r.sourceUrl);if(u.hostname!=='itra.run')return '';const m=u.pathname.match(/^\/Races\/RaceDetails\/([^/]+)\/(\d{4})\/(\d+)\/?$/i);if(!m||m[2]!==r.date?.slice(0,4)||!String(r.sourceId||r.id).endsWith(':'+m[3])&&String(r.sourceId)!==m[3])return '';
+ const label=norm(decodeURIComponent(m[1])),event=norm(r.eventName);return event&&label.startsWith(event+' ')?label.slice(event.length).trim():'';
+ }catch{return '';}
+}
 function variant(r) {
   // Calendar labels contain the event name, not the actual course variant.
-  const name=summary(r)?'':norm(r.name).replace(eventKey(r.eventName),' '),relay=/\b(relay|relai|relais|relevos|estafeta|stafette)\b/.test(name);
+  const name=summary(r)?providerCourseName(r):norm(r.name).replace(eventKey(r.eventName),' '),relay=/\b(relay|relai|relais|relevos|estafeta|stafette)\b/.test(name);
   const night=/\b(night|nocturne|nocturna|nocturno|nuit)\b/.test(name),day=/\b(day|diurne|diurna|diurno)\b/.test(name);
   const leg=name.match(/\b(?:relay|relai|relais|leg|stage|etapa|etappe|day) (\d+)(?: (?:of|de) (\d+))?\b/);
-  return {stage:/\bmulti stage\b/.test(name)?'multi':/\bsingle stage\b/.test(name)?'single':'',relay,time:night?'night':day&&!leg?'day':'',leg:leg?leg.slice(1).filter(Boolean).join('/'):'',team:/\b(team|duo|duet)\b/.test(name),solo:/\bsolo\b/.test(name)};
+  return {hike:/\b(caminhada|hike|hiking|walk|walking|randonnee)\b/.test(name),stage:/\bmulti stage\b/.test(name)?'multi':/\bsingle stage\b/.test(name)?'single':'',relay,time:night?'night':day&&!leg?'day':'',leg:leg?leg.slice(1).filter(Boolean).join('/'):'',team:/\b(team|duo|duet)\b/.test(name),solo:/\bsolo\b/.test(name)};
 }
 function variants(a,b) {
-  const x=variant(a),y=variant(b),unknown=summary(a)||summary(b);
+  const x=variant(a),y=variant(b),unknown=(summary(a)&&!providerCourseName(a))||(summary(b)&&!providerCourseName(b));
   const explicitConflict=(x.stage&&y.stage&&x.stage!==y.stage)||(x.leg&&y.leg&&x.leg!==y.leg)||(x.time&&y.time&&x.time!==y.time)||(x.team&&y.solo)||(y.team&&x.solo);
-  const different=x.stage!==y.stage||x.relay!==y.relay||x.time!==y.time||x.leg!==y.leg||x.team!==y.team;
+  const different=x.hike!==y.hike||x.stage!==y.stage||x.relay!==y.relay||x.time!==y.time||x.leg!==y.leg||x.team!==y.team;
   return {variantConflict:!!explicitConflict||(!unknown&&different),variantUnknown:unknown&&different};
 }
 function course(r) {
@@ -142,5 +151,5 @@ export function matchSources(utmb,itra,overrides={match:{},separate:[]}) {
       assigned.set(r.id,c.utmbId);claimed.add(c.utmbId);accepted.push({...c,reason:'edition-and-course'});
     } else if(found.length)review.push({itraId:r.id,name:r.name,date:r.date,candidates:found});
   }
-  return {entries:itra.map(race=>({race,matchId:assigned.get(race.id)||null})),report:{algorithm:'edition-course-v2',imported:itra.length,merged:assigned.size,added:itra.length-assigned.size,unresolved:review.length,accepted,eventLinks:eventLinks.map(({pairs,...link})=>link),review,staleOverrides}};
+  return {entries:itra.map(race=>({race,matchId:assigned.get(race.id)||null})),report:{algorithm:'edition-course-v3',imported:itra.length,merged:assigned.size,added:itra.length-assigned.size,unresolved:review.length,accepted,eventLinks:eventLinks.map(({pairs,...link})=>link),review,staleOverrides}};
 }

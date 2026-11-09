@@ -1,8 +1,9 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { expandDataset, matches, groupLocations } from '../web/core.mjs';
 import { gunzipSync } from 'node:zlib';
+if(!(existsSync(new URL('../data/itra-snapshot.json',import.meta.url)) && existsSync(new URL('../web/data/catalog.json.gz',import.meta.url))))test('private provider snapshots are optional in a public checkout',{skip:true},()=>{});else{
 const snapshot=JSON.parse(readFileSync(new URL('../data/itra-snapshot.json',import.meta.url)));
 const catalog=JSON.parse(gunzipSync(readFileSync(new URL('../web/data/catalog.json.gz',import.meta.url))));
 test('live bulk snapshot matches reported coverage and has valid per-course dates, coordinates and ratings',()=>{
@@ -30,3 +31,5 @@ test('published catalog includes every live source record once, with both links 
  assert.ok(itra.some(r=>!r.sources.some(s=>s.provider==='utmb')&&r.longitude!=null));
  for(const r of itra.filter(r=>r.sources.length===2))assert.ok(r.sources.every(s=>/^https:\/\//.test(s.url)));
 });
+
+}

@@ -1,9 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { synthetic } from './fixtures/synthetic.mjs';
+import { readFileSync, existsSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { expandDataset, matches, sortRaces, groupLocations, safeUrl, localToday, presetDates, isWorldSeries, racesInView } from '../web/core.mjs';
-const data=JSON.parse(gunzipSync(readFileSync(new URL('../web/data/races.json.gz',import.meta.url))));
+const snapshotPath=new URL('../web/data/races.json.gz',import.meta.url);
+const data=existsSync(snapshotPath)?JSON.parse(gunzipSync(readFileSync(snapshotPath))):synthetic;
 const races=expandDataset(data);
 const base={q:'',categories:[],countries:[],when:'all',continent:'',from:'',to:'',distanceMin:'',distanceMax:'',elevationMin:'',elevationMax:''};
 const fixture={...races.find(r=>r.longitude!=null),id:'fixture',name:'Épreuve des Alpes',date:'2026-11-08',distanceKm:50,elevationGainM:0,countryCode:'FR',continent:'Europe',searchText:'epreuve des alpes chamonix france europe',extensions:{utmb:{category:'100k'}}};

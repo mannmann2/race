@@ -6,6 +6,7 @@ from pathlib import Path
 import sys
 import tempfile
 import unittest
+import zipfile
 from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / 'scripts'))
@@ -51,6 +52,7 @@ class ItraTest(unittest.TestCase):
         races, _ = itra.parse_calendar(calendar().replace(URL, 'https://itra.run/Races/RaceDetails/999001'))
         self.assertEqual(races[0]['sourceId'], '2027:999001')
 
+    @unittest.skipUnless((itra.ROOT / 'data/itra-indexed.json').exists(), 'Private snapshot not present')
     def test_real_indexed_import_preserves_ratings_evidence_and_freshness(self):
         document = json.loads((itra.ROOT / 'data/itra-indexed.json').read_text())
         snapshot = itra.indexed_snapshot(document)
@@ -70,6 +72,7 @@ class ItraTest(unittest.TestCase):
         self.assertEqual(snapshot['coverage']['rated'], 7)
         self.assertEqual(snapshot['coverage']['mountainRated'], 31)
 
+    @unittest.skipUnless((itra.ROOT / 'data/itra-indexed.json').exists(), 'Private snapshot not present')
     def test_indexed_import_rejects_unverified_ratings_and_edition_mismatches(self):
         document = json.loads((itra.ROOT / 'data/itra-indexed.json').read_text())
         document['records'] = [copy.deepcopy(document['records'][0])]
@@ -146,9 +149,13 @@ class ItraTest(unittest.TestCase):
         with tempfile.TemporaryDirectory() as temp:
             root = Path(temp)
             har = root / 'capture.har'
+            (root / '.cache').mkdir()
+            (root / '.cache/countries.json').write_text(json.dumps([{'cca2':'FR','name':{'common':'France'},'region':'Europe'}]))
+            with zipfile.ZipFile(root / '.cache/cities1000.zip', 'w') as cities:
+                cities.writestr('cities1000.txt', '\t'.join(['1','Chamonix','Chamonix','','45.923','6.87','P','PPL','FR','','','','','','8000'])+'\n')
             entries = [{'request': {'url': url}, 'response': {'status': 200, 'content': {'text': content}}} for url, content in [(itra.CALENDAR, calendar()), (URL, detail())]]
             har.write_text(json.dumps({'log': {'entries': entries}}))
-            with patch.object(sys, 'argv', ['itra.py', '--cache', str(root / 'cache'), '--har', str(har), '--offline']), patch.object(itra.Client, 'request', side_effect=AssertionError('network call')):
+            with patch.object(itra, 'ROOT', root), patch.object(sys, 'argv', ['itra.py', '--cache', str(root / 'cache'), '--har', str(har), '--offline']), patch.object(itra.Client, 'request', side_effect=AssertionError('network call')):
                 self.assertEqual(itra.main(), 0)
             data = json.loads((root / 'cache/races.json').read_text())
             self.assertEqual(data['coverage']['races'], 1)

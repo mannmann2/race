@@ -1,11 +1,34 @@
 [Unit]
-Description=Refresh and publish Race Atlas rolling race calendar
+Description=Refresh and validate Race Atlas rolling calendar
 Wants=network-online.target
 After=network-online.target
 
 [Service]
 Type=oneshot
-WorkingDirectory=/root/race
-Environment=RACE_PYTHON=/root/.venv/bin/python3
-ExecStart=/usr/bin/flock -n /root/race/.cache/catalog-refresh.lock /usr/bin/node /root/race/scripts/refresh-all.mjs --publish --itra-bulk-max-age-days=7
-TimeoutStartSec=2h
+User=race-refresh
+Group=race-refresh
+WorkingDirectory=/srv/race
+Environment=RACE_PYTHON=/opt/race/venv/bin/python3
+Environment=PLAYWRIGHT_BROWSERS_PATH=/opt/race/browsers
+Environment=HOME=/var/lib/race-refresh
+Environment=XDG_CACHE_HOME=/var/cache/race-refresh
+StateDirectory=race-refresh
+CacheDirectory=race-refresh
+ExecStart=/opt/race/node/bin/node /srv/race/scripts/refresh-all.mjs --publish --itra-bulk-max-age-days=7
+ExecStartPost=/opt/race/node/bin/node /srv/race/scripts/backup.mjs
+TimeoutStartSec=90m
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=tmpfs
+BindReadOnlyPaths=/root/race:/srv/race
+ReadWritePaths=/srv/race/.cache /srv/race/web/data /srv/race/data /srv/race/.releases
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+UMask=0022
+MemoryMax=2G
+CPUQuota=150%
+TasksMax=256

@@ -22,12 +22,41 @@
     "itra:2026:113513": "utmb:141000",
     "itra:2027:125519": "utmb:159954",
     "itra:2027:125776": "utmb:160670",
-    "itra:2027:125946": "utmb:158028"
+    "itra:2027:125946": "utmb:158028",
+    "itra:2026:125151": "utmb:159280",
+    "itra:2026:122029": "utmb:154714",
+    "itra:2026:124893": "utmb:137512",
+    "itra:2026:125266": "utmb:159476",
+    "itra:2027:122085": "utmb:154138",
+    "itra:2027:117730": "utmb:147278",
+    "itra:2027:121061": "utmb:152590",
+    "itra:2027:125597": "utmb:160076",
+    "itra:2027:120960": "utmb:150880",
+    "itra:2027:122196": "utmb:154290",
+    "itra:2027:120974": "utmb:150902",
+    "itra:2027:120387": "utmb:151386",
+    "itra:2027:121063": "utmb:152588",
+    "itra:2027:121572": "utmb:153332",
+    "itra:2027:125372": "utmb:158806",
+    "itra:2026:113515": "utmb:141006",
+    "itra:2027:123589": "utmb:156670",
+    "itra:2027:123590": "utmb:156676",
+    "itra:2027:123501": "utmb:156558",
+    "itra:2027:122436": "utmb:155310",
+    "itra:2027:125556": "utmb:160636"
   },
   "separate": [
     [
       "itra:2026:113882",
       "utmb:152350"
+    ],
+    [
+      "itra:2027:122437",
+      "utmb:155310"
+    ],
+    [
+      "itra:2027:125687",
+      "utmb:160636"
     ]
   ],
   "reviewedAt": "2026-11-09",
@@ -42,6 +71,29 @@
     "itra:2026:113513": "Marcona Wind Trail 42K: same edition, date, town and named 42K course in ITRA URL; keep differing distance and elevation.",
     "itra:2027:125519": "7 Cidades Ultimate Trail: same 7CUT40 course in ITRA URL, event and edition date; retain differing elevation.",
     "itra:2027:125776": "Hobbit 42km Mountain Marathon: same named course in ITRA URL, Hogsback, edition and overlapping dates; retain distance/gain conflicts.",
-    "itra:2027:125946": "Guatemala Impact Marathon: same Beast of Pacaya Volcano course in ITRA URL, edition date and 1491/1492 m gain; retain locality and distance differences."
+    "itra:2027:125946": "Guatemala Impact Marathon: same Beast of Pacaya Volcano course in ITRA URL, edition date and 1491/1492 m gain; retain locality and distance differences.",
+    "itra:2026:125151": "Reviewed 2026-11-09: same event, country and edition date 2026-11-21; ITRA course URL identifies Hitachi.Alps.Long.Trail.100.HALT100, UTMB course is HALT100. Distance 160.0/160.0 km and gain 5692.0/6300 m corroborate identity; retain differing measurements.",
+    "itra:2026:122029": "Reviewed 2026-11-09: same event, country and edition date 2026-11-21; ITRA course URL identifies Lembu.Suro.Trail.Run.38K.TITAN, UTMB course is 38K - TITAN. Distance 37.0/37.25 km and gain 1621.0/1779 m corroborate identity; retain differing measurements.",
+    "itra:2026:124893": "Reviewed 2026-11-09: same event, country and edition date 2026-11-21; ITRA course URL identifies North.Chilterns.50K.North.Chilterns.50K, UTMB course is North Chilterns 50K. Distance 50.0/50.0 km and gain 800.0/797 m corroborate identity; retain differing measurements.",
+    "itra:2026:125266": "Reviewed 2026-11-09: same event, country and edition date 2026-12-20; ITRA course URL identifies GAWALISE.NAMBASO.TRAIL.RUN.Gawalise.Summit.Trail, UTMB course is Gawalise Summit Trail. Distance 18.0/17.69 km and gain 1863.0/1860 m corroborate identity; retain differing measurements.",
+    "itra:2027:122085": "Reviewed 2026-11-09: same event, country and edition date 2027-01-14; ITRA course URL identifies Terra.de.Gigantes.Terra.de.Gigantes, UTMB course is Terra de Gigantes. Distance 301.0/303.8 km and gain 10800.0/10815 m corroborate identity; retain differing measurements.",
+    "itra:2027:117730": "Reviewed 2026-11-09: same event, country and edition date 2027-03-22; ITRA course URL identifies Ultra.X.Sahara.Ultra.X.Sahara.220, UTMB course is Ultra X Sahara . Distance 220.0/220.0 km and gain 2932.0/2932 m corroborate identity; retain differing measurements.",
+    "itra:2027:121061": "Reviewed 2026-11-09: same event, country and edition date 2027-04-04; ITRA course URL identifies Atacama.Crossing.by.RacingThePlanet.Atacama.Crossing.Chile.2027, UTMB course is Atacama Crossing (Chile) 2027. Distance 250.0/250.0 km and gain 2830.0/2813 m corroborate identity; retain differing measurements.",
+    "itra:2027:125597": "Reviewed 2026-11-09: same event, country and edition date 2027-04-25; ITRA course URL identifies Rémy.Trail.Little.Peak, UTMB course is Little Peak. Distance 10.0/10.0 km and gain 50.0/50 m corroborate identity; retain differing measurements.",
+    "itra:2027:120960": "Reviewed 2026-11-09: same event, country and edition date 2027-05-01; ITRA course URL identifies Cap.Vert.Trail.Challenge.Cap.Vert.Trail.Challenge.Trail, UTMB course is CAP Vert trail challenge . Distance 116.0/116.0 km and gain 3150.0/3150 m corroborate identity; retain differing measurements.",
+    "itra:2027:122196": "Reviewed 2026-11-09: same event, country and edition date 2027-05-06; ITRA course URL identifies Trail.de.Haute.Provence.THP.olympe, UTMB course is THP olympe. Distance 25.0/25.0 km and gain 1302.0/1300 m corroborate identity; retain differing measurements.",
+    "itra:2027:120974": "Reviewed 2026-11-09: same event, country and edition date 2027-05-29; ITRA course URL identifies Islande.Volcanic.Trail.Challenge.islande.Volcanic.Trail.To.Be.Alive, UTMB course is ISLANDE VOLCANIC TRAIL CHALLENGE. Distance 118.0/118.0 km and gain 2160.0/2160 m corroborate identity; retain differing measurements.",
+    "itra:2027:120387": "Reviewed 2026-11-09: same event, country and edition date 2027-06-05; ITRA course URL identifies Čertovskej.Trail.66.6.km, UTMB course is 66,6 km. Distance 67.0/67.9 km and gain 1710.0/1710 m corroborate identity; retain differing measurements.",
+    "itra:2027:121063": "Reviewed 2026-11-09: same event, country and edition date 2027-06-20; ITRA course URL identifies Gobi.March.by.RacingThePlanet.Gobi.March.Mongolia, UTMB course is Gobi March (Mongolia) 2027. Distance 250.0/248.3 km and gain 4640.0/4552 m corroborate identity; retain differing measurements.",
+    "itra:2027:121572": "Reviewed 2026-11-09: same event, country and edition date 2027-06-27; ITRA course URL identifies TRAIL.DU.SALEVE.LA.CROISETTE, UTMB course is LA CROISETTE. Distance 38.0/37.8 km and gain 1514.0/1500 m corroborate identity; retain differing measurements.",
+    "itra:2027:125372": "Reviewed 2026-11-09: same event, country and edition date 2027-07-24; ITRA course URL identifies Davos.X.Trails.Diamond.Run.68km, UTMB course is Diamond Run 68 km. Distance 68.0/68.37 km and gain 3058.0/3309 m corroborate identity; retain differing measurements.",
+    "itra:2026:113515": "Reviewed 2026-11-09: same event, country and edition date 2026-12-06; ITRA course URL identifies Marcona.Wind.Trail.35K.Night, UTMB course is 35k Night. Distance 33.0/33.49 km and gain 601.0/579 m corroborate identity; retain differing measurements.",
+    "itra:2027:123589": "Reviewed 2026-11-09: same event, country and edition date 2027-09-04; ITRA course URL identifies adidas.INFINITE.TRAILS.Team.Loop.S, UTMB course is Team Loop S. Distance 21.0/21.4 km and gain 1906.0/1855 m corroborate identity; retain differing measurements.",
+    "itra:2027:123590": "Reviewed 2026-11-09: same event, country and edition date 2027-09-04; ITRA course URL identifies adidas.INFINITE.TRAILS.Team.Loop.M, UTMB course is Team Loop M. Distance 35.0/34.9 km and gain 2781.0/2726 m corroborate identity; retain differing measurements.",
+    "itra:2027:123501": "Reviewed 2026-11-09: same event, country and edition date 2027-09-11; ITRA course URL identifies The.Most.Beautiful.Thing.37.Km.Night.Challenge, UTMB course is 37 Km Night Challenge. Distance 37.0/37.7 km and gain 1770.0/1865 m corroborate identity; retain differing measurements.",
+    "itra:2027:122436": "Reviewed 2026-11-09: same event, country and edition date 2027-03-14; ITRA course URL identifies Trilhos.dos.Calceteiros.2027.Trail.Experience, UTMB course is TRILHOS DOS CALCETEIROS 2027_TRAIL EXPERIENCE. Distance 10.0/10.0 km and gain 400.0/400 m corroborate identity; retain differing measurements.",
+    "itra:2027:125556": "Reviewed 2026-11-09: same event, country and edition date 2027-05-16; ITRA course URL identifies Trail.de.La.Grande.Montagne..Le.Marathon.du.Sanglier., UTMB course is Trail de La Grande Montagne - Le Sanglier. Distance 42.0/42.0 km and gain 2066.0/2300 m corroborate identity; retain differing measurements.",
+    "itra:2027:122437": "Caminhada is the walking category, not the named Trail Experience course, despite identical distance and gain.",
+    "itra:2027:125687": "ITRA URL explicitly names RELAIS; keep separate from the solo Le Sanglier marathon."
   }
 }

@@ -1,0 +1,1619 @@
+[
+  {
+    "itra": {
+      "id": "itra:2026:125151",
+      "sourceId": "2026:125151",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Hitachi.Alps.Long.Trail.100.HALT100/2026/125151",
+      "eventId": "itra:event:2026:125151",
+      "editionId": "itra:event:2026:125151",
+      "name": "Hitachi Alps Long Trail 100 · 160 km",
+      "eventName": "Hitachi Alps Long Trail 100",
+      "date": "2026-11-21",
+      "datePrecision": "event-day",
+      "distanceKm": 160.0,
+      "elevationGainM": 5692.0,
+      "place": "Hitachi",
+      "countryCode": "JP",
+      "website": null,
+      "image": null,
+      "imageSource": null,
+      "longitude": 140.6019744873047,
+      "latitude": 36.52512741088867,
+      "locationPrecision": "event",
+      "geonamesId": "2112708",
+      "extensions": {
+        "itra": {
+          "endurancePoints": 6,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2026-11-21",
+      "locationId": "itra:event:140.6019744873047,36.52512741088867",
+      "country": "Japan",
+      "continent": "Asia",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2026:125151",
+          "url": "https://itra.run/Races/RaceDetails/Hitachi.Alps.Long.Trail.100.HALT100/2026/125151",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Hitachi Alps Long Trail 100 · 160 km",
+            "eventName": "Hitachi Alps Long Trail 100",
+            "date": "2026-11-21",
+            "dateEnd": "2026-11-21",
+            "datePrecision": "event-day",
+            "distanceKm": 160.0,
+            "elevationGainM": 5692.0,
+            "place": "Hitachi",
+            "countryCode": "JP"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:159280",
+      "source": "utmb",
+      "sourceId": "159280",
+      "name": "HALT100",
+      "eventName": "Hitachi Alps Long Trail 100",
+      "date": "2026-11-21",
+      "distanceKm": 160.0,
+      "elevationGainM": 6300,
+      "countryCode": "JP",
+      "place": "Ibaraki/Hitachi, Japan",
+      "longitude": 135.56828,
+      "latitude": 34.81641,
+      "extensions": {
+        "utmb": {
+          "category": "100m"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/66640.hitachialpslongtrail100halt100.2026"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2026:122029",
+      "sourceId": "2026:122029",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Lembu.Suro.Trail.Run.38K.TITAN/2026/122029",
+      "eventId": "itra:event:2026:122029",
+      "editionId": "itra:event:2026:122029",
+      "name": "Lembu Suro Trail Run · 37 km",
+      "eventName": "Lembu Suro Trail Run",
+      "date": "2026-11-21",
+      "datePrecision": "event-day",
+      "distanceKm": 37.0,
+      "elevationGainM": 1621.0,
+      "place": "Krisik",
+      "countryCode": "ID",
+      "website": null,
+      "image": "https://itra.run/Files/Events/f5ee987149044e15962fed1bb7e7f1a3.png",
+      "imageSource": "https://itra.run/Races/RaceDetails/Lembu.Suro.Trail.Run.38K.TITAN/2026/122029",
+      "longitude": 112.40828704833984,
+      "latitude": -7.941044807434082,
+      "locationPrecision": "event",
+      "geonamesId": null,
+      "extensions": {
+        "itra": {
+          "endurancePoints": 2,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2026-11-21",
+      "locationId": "itra:event:112.40828704833984,-7.941044807434082",
+      "country": "Indonesia",
+      "continent": "Asia",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2026:122029",
+          "url": "https://itra.run/Races/RaceDetails/Lembu.Suro.Trail.Run.38K.TITAN/2026/122029",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Lembu Suro Trail Run · 37 km",
+            "eventName": "Lembu Suro Trail Run",
+            "date": "2026-11-21",
+            "dateEnd": "2026-11-21",
+            "datePrecision": "event-day",
+            "distanceKm": 37.0,
+            "elevationGainM": 1621.0,
+            "place": "Krisik",
+            "countryCode": "ID"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:154714",
+      "source": "utmb",
+      "sourceId": "154714",
+      "name": "38K - TITAN",
+      "eventName": "Lembu Suro Trail Run",
+      "date": "2026-11-21",
+      "distanceKm": 37.25,
+      "elevationGainM": 1779,
+      "countryCode": "ID",
+      "place": "Kabupaten Blitar, Indonesia",
+      "longitude": null,
+      "latitude": null,
+      "extensions": {
+        "utmb": {
+          "category": "50k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/64528.lembusurotrailrun38k-titan.2026"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2026:124893",
+      "sourceId": "2026:124893",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/North.Chilterns.50K.North.Chilterns.50K/2026/124893",
+      "eventId": "itra:event:2026:124893",
+      "editionId": "itra:event:2026:124893",
+      "name": "North Chilterns 50K · 50 km",
+      "eventName": "North Chilterns 50K",
+      "date": "2026-11-21",
+      "datePrecision": "event-day",
+      "distanceKm": 50.0,
+      "elevationGainM": 800.0,
+      "place": "Putteridge Bury",
+      "countryCode": "GB",
+      "website": null,
+      "image": null,
+      "imageSource": null,
+      "longitude": -0.3763622045516968,
+      "latitude": 51.91029739379883,
+      "locationPrecision": "event",
+      "geonamesId": null,
+      "extensions": {
+        "itra": {
+          "endurancePoints": null,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2026-11-21",
+      "locationId": "itra:event:-0.3763622045516968,51.91029739379883",
+      "country": "United Kingdom",
+      "continent": "Europe",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2026:124893",
+          "url": "https://itra.run/Races/RaceDetails/North.Chilterns.50K.North.Chilterns.50K/2026/124893",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "North Chilterns 50K · 50 km",
+            "eventName": "North Chilterns 50K",
+            "date": "2026-11-21",
+            "dateEnd": "2026-11-21",
+            "datePrecision": "event-day",
+            "distanceKm": 50.0,
+            "elevationGainM": 800.0,
+            "place": "Putteridge Bury",
+            "countryCode": "GB"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:137512",
+      "source": "utmb",
+      "sourceId": "137512",
+      "name": "North Chilterns 50K",
+      "eventName": "North Chilterns 50K",
+      "date": "2026-11-21",
+      "distanceKm": 50.0,
+      "elevationGainM": 797,
+      "countryCode": "GB",
+      "place": "Putteridge Bury, Hertfordshire, United Kingdom",
+      "longitude": null,
+      "latitude": null,
+      "extensions": {
+        "utmb": {
+          "category": "50k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/34808.northchilterns50knorthchilterns50k.2026"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2026:125266",
+      "sourceId": "2026:125266",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/GAWALISE.NAMBASO.TRAIL.RUN.Gawalise.Summit.Trail/2026/125266",
+      "eventId": "itra:event:2026:125266",
+      "editionId": "itra:event:2026:125266",
+      "name": "GAWALISE NAMBASO TRAIL RUN · 18 km",
+      "eventName": "GAWALISE NAMBASO TRAIL RUN",
+      "date": "2026-12-20",
+      "datePrecision": "event-day",
+      "distanceKm": 18.0,
+      "elevationGainM": 1863.0,
+      "place": "Sigi",
+      "countryCode": "ID",
+      "website": null,
+      "image": "https://itra.run/Files/Events/ded9d234ad1048eca038446e084f5fd0.jpg",
+      "imageSource": "https://itra.run/Races/RaceDetails/GAWALISE.NAMBASO.TRAIL.RUN.Gawalise.Summit.Trail/2026/125266",
+      "longitude": 119.88152313232422,
+      "latitude": -1.3859903812408447,
+      "locationPrecision": "event",
+      "geonamesId": null,
+      "extensions": {
+        "itra": {
+          "endurancePoints": 1,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2026-12-20",
+      "locationId": "itra:event:119.88152313232422,-1.3859903812408447",
+      "country": "Indonesia",
+      "continent": "Asia",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2026:125266",
+          "url": "https://itra.run/Races/RaceDetails/GAWALISE.NAMBASO.TRAIL.RUN.Gawalise.Summit.Trail/2026/125266",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "GAWALISE NAMBASO TRAIL RUN · 18 km",
+            "eventName": "GAWALISE NAMBASO TRAIL RUN",
+            "date": "2026-12-20",
+            "dateEnd": "2026-12-20",
+            "datePrecision": "event-day",
+            "distanceKm": 18.0,
+            "elevationGainM": 1863.0,
+            "place": "Sigi",
+            "countryCode": "ID"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:159476",
+      "source": "utmb",
+      "sourceId": "159476",
+      "name": "Gawalise Summit Trail",
+      "eventName": "GAWALISE NAMBASO TRAIL RUN",
+      "date": "2026-12-20",
+      "distanceKm": 17.69,
+      "elevationGainM": 1860,
+      "countryCode": "ID",
+      "place": "Palu, Indonesia",
+      "longitude": 119.87083,
+      "latitude": -0.90833,
+      "extensions": {
+        "utmb": {
+          "category": "20k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/66742.gawalisenambasotrailrungawalisesummittrail.2026"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:122085",
+      "sourceId": "2027:122085",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Terra.de.Gigantes.Terra.de.Gigantes/2027/122085",
+      "eventId": "itra:event:2027:122085",
+      "editionId": "itra:event:2027:122085",
+      "name": "Terra de Gigantes · 301 km",
+      "eventName": "Terra de Gigantes",
+      "date": "2027-01-14",
+      "datePrecision": "event-day",
+      "distanceKm": 301.0,
+      "elevationGainM": 10800.0,
+      "place": "Torre",
+      "countryCode": "PT",
+      "website": null,
+      "image": "https://itra.run/Files/Events/5a9d762e7f744d9ea40bb05b7571ebad.png",
+      "imageSource": "https://itra.run/Races/RaceDetails/Terra.de.Gigantes.Terra.de.Gigantes/2027/122085",
+      "longitude": -7.6128997802734375,
+      "latitude": 40.32191467285156,
+      "locationPrecision": "event",
+      "geonamesId": null,
+      "extensions": {
+        "itra": {
+          "endurancePoints": null,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-01-14",
+      "locationId": "itra:event:-7.6128997802734375,40.32191467285156",
+      "country": "Portugal",
+      "continent": "Europe",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:122085",
+          "url": "https://itra.run/Races/RaceDetails/Terra.de.Gigantes.Terra.de.Gigantes/2027/122085",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Terra de Gigantes · 301 km",
+            "eventName": "Terra de Gigantes",
+            "date": "2027-01-14",
+            "dateEnd": "2027-01-14",
+            "datePrecision": "event-day",
+            "distanceKm": 301.0,
+            "elevationGainM": 10800.0,
+            "place": "Torre",
+            "countryCode": "PT"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:154138",
+      "source": "utmb",
+      "sourceId": "154138",
+      "name": "Terra de Gigantes",
+      "eventName": "Terra de Gigantes",
+      "date": "2027-01-14",
+      "distanceKm": 303.8,
+      "elevationGainM": 10815,
+      "countryCode": "PT",
+      "place": "40.32214, -7.6127, Portugal",
+      "longitude": null,
+      "latitude": null,
+      "extensions": {
+        "utmb": {
+          "category": "100m"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/37722.terradegigantesterradegigantes.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:117730",
+      "sourceId": "2027:117730",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Ultra.X.Sahara.Ultra.X.Sahara.220/2027/117730",
+      "eventId": "itra:event:2027:117730",
+      "editionId": "itra:event:2027:117730",
+      "name": "Ultra X Sahara · 220 km",
+      "eventName": "Ultra X Sahara",
+      "date": "2027-03-22",
+      "datePrecision": "event-day",
+      "distanceKm": 220.0,
+      "elevationGainM": 2932.0,
+      "place": "Zagora",
+      "countryCode": "MA",
+      "website": null,
+      "image": null,
+      "imageSource": null,
+      "longitude": -5.837771415710449,
+      "latitude": 30.34287452697754,
+      "locationPrecision": "event",
+      "geonamesId": "2526452",
+      "extensions": {
+        "itra": {
+          "endurancePoints": null,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-03-22",
+      "locationId": "itra:event:-5.837771415710449,30.34287452697754",
+      "country": "Morocco",
+      "continent": "Africa",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:117730",
+          "url": "https://itra.run/Races/RaceDetails/Ultra.X.Sahara.Ultra.X.Sahara.220/2027/117730",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Ultra X Sahara · 220 km",
+            "eventName": "Ultra X Sahara",
+            "date": "2027-03-22",
+            "dateEnd": "2027-03-22",
+            "datePrecision": "event-day",
+            "distanceKm": 220.0,
+            "elevationGainM": 2932.0,
+            "place": "Zagora",
+            "countryCode": "MA"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:147278",
+      "source": "utmb",
+      "sourceId": "147278",
+      "name": "Ultra X Sahara ",
+      "eventName": "Ultra X Sahara ",
+      "date": "2027-03-22",
+      "distanceKm": 220.0,
+      "elevationGainM": 2932,
+      "countryCode": "MA",
+      "place": "Marrakesh , Morocco",
+      "longitude": -7.99994,
+      "latitude": 31.63416,
+      "extensions": {
+        "utmb": {
+          "category": "100k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/54688.ultraxsaharaultraxsahara.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:121061",
+      "sourceId": "2027:121061",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Atacama.Crossing.by.RacingThePlanet.Atacama.Crossing.Chile.2027/2027/121061",
+      "eventId": "itra:event:2027:121061",
+      "editionId": "itra:event:2027:121061",
+      "name": "Atacama Crossing by RacingThePlanet · 250 km",
+      "eventName": "Atacama Crossing by RacingThePlanet",
+      "date": "2027-04-04",
+      "datePrecision": "event-day",
+      "distanceKm": 250.0,
+      "elevationGainM": 2830.0,
+      "place": "Navigation by Rock",
+      "countryCode": "CL",
+      "website": null,
+      "image": null,
+      "imageSource": null,
+      "longitude": -111.86396789550781,
+      "latitude": 34.095760345458984,
+      "locationPrecision": "event",
+      "geonamesId": null,
+      "extensions": {
+        "itra": {
+          "endurancePoints": null,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-04-04",
+      "locationId": "itra:event:-111.86396789550781,34.095760345458984",
+      "country": "Chile",
+      "continent": "South America",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:121061",
+          "url": "https://itra.run/Races/RaceDetails/Atacama.Crossing.by.RacingThePlanet.Atacama.Crossing.Chile.2027/2027/121061",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Atacama Crossing by RacingThePlanet · 250 km",
+            "eventName": "Atacama Crossing by RacingThePlanet",
+            "date": "2027-04-04",
+            "dateEnd": "2027-04-04",
+            "datePrecision": "event-day",
+            "distanceKm": 250.0,
+            "elevationGainM": 2830.0,
+            "place": "Navigation by Rock",
+            "countryCode": "CL"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:152590",
+      "source": "utmb",
+      "sourceId": "152590",
+      "name": "Atacama Crossing (Chile) 2027",
+      "eventName": "Atacama Crossing by RacingThePlanet",
+      "date": "2027-04-04",
+      "distanceKm": 250.0,
+      "elevationGainM": 2813,
+      "countryCode": "CL",
+      "place": "San Pedro de Atacama, Chile",
+      "longitude": -68.20113,
+      "latitude": -22.9111,
+      "extensions": {
+        "utmb": {
+          "category": "100k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/32.atacamacrossingbyracingtheplanetatacamacrossing-chile-2027.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:125597",
+      "sourceId": "2027:125597",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Rémy.Trail.Little.Peak/2027/125597",
+      "eventId": "itra:event:2027:125595",
+      "editionId": "itra:event:2027:125595",
+      "name": "Rémy Trail · 10 km",
+      "eventName": "Rémy Trail",
+      "date": "2027-04-25",
+      "datePrecision": "event-day",
+      "distanceKm": 10.0,
+      "elevationGainM": 50.0,
+      "place": null,
+      "countryCode": "FR",
+      "website": null,
+      "image": null,
+      "imageSource": null,
+      "longitude": null,
+      "latitude": null,
+      "locationPrecision": "unknown",
+      "geonamesId": null,
+      "extensions": {
+        "itra": {
+          "endurancePoints": null,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-04-25",
+      "country": "France",
+      "continent": "Europe",
+      "locationId": "itra:place:FR:",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:125597",
+          "url": "https://itra.run/Races/RaceDetails/Rémy.Trail.Little.Peak/2027/125597",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Rémy Trail · 10 km",
+            "eventName": "Rémy Trail",
+            "date": "2027-04-25",
+            "dateEnd": "2027-04-25",
+            "datePrecision": "event-day",
+            "distanceKm": 10.0,
+            "elevationGainM": 50.0,
+            "place": null,
+            "countryCode": "FR"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:160076",
+      "source": "utmb",
+      "sourceId": "160076",
+      "name": "Little Peak",
+      "eventName": "REMY TRAIL",
+      "date": "2027-04-25",
+      "distanceKm": 10.0,
+      "elevationGainM": 50,
+      "countryCode": "FR",
+      "place": "Saint remy de maurienne , France",
+      "longitude": 6.26667,
+      "latitude": 45.4,
+      "extensions": {
+        "utmb": {
+          "category": null
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/66994.remytraillittlepeak.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:120960",
+      "sourceId": "2027:120960",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Cap.Vert.Trail.Challenge.Cap.Vert.Trail.Challenge.Trail/2027/120960",
+      "eventId": "itra:event:2027:120960",
+      "editionId": "itra:event:2027:120960",
+      "name": "Cap Vert Trail Challenge · 116 km",
+      "eventName": "Cap Vert Trail Challenge",
+      "date": "2027-05-01",
+      "datePrecision": "event-day",
+      "distanceKm": 116.0,
+      "elevationGainM": 3150.0,
+      "place": "Mindelo",
+      "countryCode": "CV",
+      "website": null,
+      "image": null,
+      "imageSource": null,
+      "longitude": -46.391563415527344,
+      "latitude": -23.967180252075195,
+      "locationPrecision": "event",
+      "geonamesId": "3374462",
+      "extensions": {
+        "itra": {
+          "endurancePoints": null,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-05-01",
+      "locationId": "itra:event:-46.391563415527344,-23.967180252075195",
+      "country": "Cape Verde",
+      "continent": "Africa",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:120960",
+          "url": "https://itra.run/Races/RaceDetails/Cap.Vert.Trail.Challenge.Cap.Vert.Trail.Challenge.Trail/2027/120960",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Cap Vert Trail Challenge · 116 km",
+            "eventName": "Cap Vert Trail Challenge",
+            "date": "2027-05-01",
+            "dateEnd": "2027-05-01",
+            "datePrecision": "event-day",
+            "distanceKm": 116.0,
+            "elevationGainM": 3150.0,
+            "place": "Mindelo",
+            "countryCode": "CV"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:150880",
+      "source": "utmb",
+      "sourceId": "150880",
+      "name": "CAP Vert trail challenge ",
+      "eventName": "CAP VERT TRAIL CHALLENGE",
+      "date": "2027-05-01",
+      "distanceKm": 116.0,
+      "elevationGainM": 3150,
+      "countryCode": "CV",
+      "place": "São Vicente, Cape Verde",
+      "longitude": null,
+      "latitude": null,
+      "extensions": {
+        "utmb": {
+          "category": "50k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/63042.capverttrailchallengecapverttrailchallenge.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:122196",
+      "sourceId": "2027:122196",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Trail.de.Haute.Provence.THP.olympe/2027/122196",
+      "eventId": "itra:event:2027:122200",
+      "editionId": "itra:event:2027:122200",
+      "name": "Trail de Haute Provence · 25 km",
+      "eventName": "Trail de Haute Provence",
+      "date": "2027-05-06",
+      "datePrecision": "event",
+      "distanceKm": 25.0,
+      "elevationGainM": 1302.0,
+      "place": "Forcalquier",
+      "countryCode": "FR",
+      "website": null,
+      "image": null,
+      "imageSource": null,
+      "longitude": 5.781579971313477,
+      "latitude": 44.1136474609375,
+      "locationPrecision": "event",
+      "geonamesId": "3017798",
+      "extensions": {
+        "itra": {
+          "endurancePoints": 1,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-05-09",
+      "locationId": "itra:event:5.781579971313477,44.1136474609375",
+      "country": "France",
+      "continent": "Europe",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:122196",
+          "url": "https://itra.run/Races/RaceDetails/Trail.de.Haute.Provence.THP.olympe/2027/122196",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Trail de Haute Provence · 25 km",
+            "eventName": "Trail de Haute Provence",
+            "date": "2027-05-06",
+            "dateEnd": "2027-05-09",
+            "datePrecision": "event",
+            "distanceKm": 25.0,
+            "elevationGainM": 1302.0,
+            "place": "Forcalquier",
+            "countryCode": "FR"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:154290",
+      "source": "utmb",
+      "sourceId": "154290",
+      "name": "THP olympe",
+      "eventName": "Trail de Haute Provence",
+      "date": "2027-05-06",
+      "distanceKm": 25.0,
+      "elevationGainM": 1300,
+      "countryCode": "FR",
+      "place": "Saint-Etienne-les-Orgues, France",
+      "longitude": null,
+      "latitude": null,
+      "extensions": {
+        "utmb": {
+          "category": "20k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/64382.traildehauteprovencethpolympe.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:120974",
+      "sourceId": "2027:120974",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Islande.Volcanic.Trail.Challenge.islande.Volcanic.Trail.To.Be.Alive/2027/120974",
+      "eventId": "itra:event:2027:120974",
+      "editionId": "itra:event:2027:120974",
+      "name": "Islande Volcanic Trail Challenge · 118 km",
+      "eventName": "Islande Volcanic Trail Challenge",
+      "date": "2027-05-29",
+      "datePrecision": "event-day",
+      "distanceKm": 118.0,
+      "elevationGainM": 2160.0,
+      "place": "Reykjanesbaer",
+      "countryCode": "IS",
+      "website": null,
+      "image": null,
+      "imageSource": null,
+      "longitude": -22.596467971801758,
+      "latitude": 63.91514587402344,
+      "locationPrecision": "event",
+      "geonamesId": "8644037",
+      "extensions": {
+        "itra": {
+          "endurancePoints": null,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-05-29",
+      "locationId": "itra:event:-22.596467971801758,63.91514587402344",
+      "country": "Iceland",
+      "continent": "Europe",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:120974",
+          "url": "https://itra.run/Races/RaceDetails/Islande.Volcanic.Trail.Challenge.islande.Volcanic.Trail.To.Be.Alive/2027/120974",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Islande Volcanic Trail Challenge · 118 km",
+            "eventName": "Islande Volcanic Trail Challenge",
+            "date": "2027-05-29",
+            "dateEnd": "2027-05-29",
+            "datePrecision": "event-day",
+            "distanceKm": 118.0,
+            "elevationGainM": 2160.0,
+            "place": "Reykjanesbaer",
+            "countryCode": "IS"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:150902",
+      "source": "utmb",
+      "sourceId": "150902",
+      "name": "ISLANDE VOLCANIC TRAIL CHALLENGE",
+      "eventName": "ISLANDE VOLCANIC TRAIL CHALLENGE",
+      "date": "2027-05-29",
+      "distanceKm": 118.0,
+      "elevationGainM": 2160,
+      "countryCode": "IS",
+      "place": "Reykjavík, Iceland",
+      "longitude": -21.89541,
+      "latitude": 64.13548,
+      "extensions": {
+        "utmb": {
+          "category": "50k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/63056.islandevolcanictrailchallengeislandevolcanictrailchallenge.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:120387",
+      "sourceId": "2027:120387",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Čertovskej.Trail.66.6.km/2027/120387",
+      "eventId": "itra:event:2027:120387",
+      "editionId": "itra:event:2027:120387",
+      "name": "Čertovskej Trail · 67 km",
+      "eventName": "Čertovskej Trail",
+      "date": "2027-06-05",
+      "datePrecision": "event-day",
+      "distanceKm": 67.0,
+      "elevationGainM": 1710.0,
+      "place": "Houska",
+      "countryCode": "CZ",
+      "website": null,
+      "image": "https://itra.run/Files/Events/00700d4486a94d078b7dd77ecd2d362d.png",
+      "imageSource": "https://itra.run/Races/RaceDetails/Čertovskej.Trail.66.6.km/2027/120387",
+      "longitude": 14.632180213928223,
+      "latitude": 50.49032974243164,
+      "locationPrecision": "event",
+      "geonamesId": null,
+      "extensions": {
+        "itra": {
+          "endurancePoints": 3,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-06-05",
+      "locationId": "itra:event:14.632180213928223,50.49032974243164",
+      "country": "Czechia",
+      "continent": "Europe",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:120387",
+          "url": "https://itra.run/Races/RaceDetails/Čertovskej.Trail.66.6.km/2027/120387",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Čertovskej Trail · 67 km",
+            "eventName": "Čertovskej Trail",
+            "date": "2027-06-05",
+            "dateEnd": "2027-06-05",
+            "datePrecision": "event-day",
+            "distanceKm": 67.0,
+            "elevationGainM": 1710.0,
+            "place": "Houska",
+            "countryCode": "CZ"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:151386",
+      "source": "utmb",
+      "sourceId": "151386",
+      "name": "66,6 km",
+      "eventName": "Čertovskej Trail",
+      "date": "2027-06-05",
+      "distanceKm": 67.9,
+      "elevationGainM": 1710,
+      "countryCode": "CZ",
+      "place": "Houska, Czech Republic",
+      "longitude": null,
+      "latitude": null,
+      "extensions": {
+        "utmb": {
+          "category": "50k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/12617.certovskejtrail66-6km.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:121063",
+      "sourceId": "2027:121063",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Gobi.March.by.RacingThePlanet.Gobi.March.Mongolia/2027/121063",
+      "eventId": "itra:event:2027:121063",
+      "editionId": "itra:event:2027:121063",
+      "name": "Gobi March by RacingThePlanet · 250 km",
+      "eventName": "Gobi March by RacingThePlanet",
+      "date": "2027-06-20",
+      "datePrecision": "event-day",
+      "distanceKm": 250.0,
+      "elevationGainM": 4640.0,
+      "place": "Ulaanbaatar",
+      "countryCode": "MN",
+      "website": null,
+      "image": null,
+      "imageSource": null,
+      "longitude": 106.9177017211914,
+      "latitude": 47.9184684753418,
+      "locationPrecision": "event",
+      "geonamesId": "2028462",
+      "extensions": {
+        "itra": {
+          "endurancePoints": null,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-06-20",
+      "locationId": "itra:event:106.9177017211914,47.9184684753418",
+      "country": "Mongolia",
+      "continent": "Asia",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:121063",
+          "url": "https://itra.run/Races/RaceDetails/Gobi.March.by.RacingThePlanet.Gobi.March.Mongolia/2027/121063",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Gobi March by RacingThePlanet · 250 km",
+            "eventName": "Gobi March by RacingThePlanet",
+            "date": "2027-06-20",
+            "dateEnd": "2027-06-20",
+            "datePrecision": "event-day",
+            "distanceKm": 250.0,
+            "elevationGainM": 4640.0,
+            "place": "Ulaanbaatar",
+            "countryCode": "MN"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:152588",
+      "source": "utmb",
+      "sourceId": "152588",
+      "name": "Gobi March (Mongolia) 2027",
+      "eventName": "Gobi March by RacingThePlanet",
+      "date": "2027-06-20",
+      "distanceKm": 248.3,
+      "elevationGainM": 4552,
+      "countryCode": "MN",
+      "place": "Dachinchilen, Mongolia",
+      "longitude": null,
+      "latitude": null,
+      "extensions": {
+        "utmb": {
+          "category": "100k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/538.gobimarchbyracingtheplanetgobimarch-mongolia-2027.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:121572",
+      "sourceId": "2027:121572",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/TRAIL.DU.SALEVE.LA.CROISETTE/2027/121572",
+      "eventId": "itra:event:2027:121572",
+      "editionId": "itra:event:2027:121572",
+      "name": "TRAIL DU SALEVE · 38 km",
+      "eventName": "TRAIL DU SALEVE",
+      "date": "2027-06-27",
+      "datePrecision": "event-day",
+      "distanceKm": 38.0,
+      "elevationGainM": 1514.0,
+      "place": "COL DU MONT SION MAISON DU PERE NOEL",
+      "countryCode": "FR",
+      "website": null,
+      "image": "https://itra.run/Files/Events/5832d10944a941059d536af83981bf64.jpg",
+      "imageSource": "https://itra.run/Races/RaceDetails/TRAIL.DU.SALEVE.LA.CROISETTE/2027/121572",
+      "longitude": 6.085723876953125,
+      "latitude": 46.07412338256836,
+      "locationPrecision": "event",
+      "geonamesId": null,
+      "extensions": {
+        "itra": {
+          "endurancePoints": 1,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-06-27",
+      "locationId": "itra:event:6.085723876953125,46.07412338256836",
+      "country": "France",
+      "continent": "Europe",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:121572",
+          "url": "https://itra.run/Races/RaceDetails/TRAIL.DU.SALEVE.LA.CROISETTE/2027/121572",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "TRAIL DU SALEVE · 38 km",
+            "eventName": "TRAIL DU SALEVE",
+            "date": "2027-06-27",
+            "dateEnd": "2027-06-27",
+            "datePrecision": "event-day",
+            "distanceKm": 38.0,
+            "elevationGainM": 1514.0,
+            "place": "COL DU MONT SION MAISON DU PERE NOEL",
+            "countryCode": "FR"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:153332",
+      "source": "utmb",
+      "sourceId": "153332",
+      "name": "LA CROISETTE",
+      "eventName": "TRAIL DU SALEVE",
+      "date": "2027-06-27",
+      "distanceKm": 37.8,
+      "elevationGainM": 1500,
+      "countryCode": "FR",
+      "place": "saint-blaise, France",
+      "longitude": null,
+      "latitude": null,
+      "extensions": {
+        "utmb": {
+          "category": "50k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/48522.traildusalevelacroisette.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:125372",
+      "sourceId": "2027:125372",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Davos.X.Trails.Diamond.Run.68km/2027/125372",
+      "eventId": "itra:event:2027:125372",
+      "editionId": "itra:event:2027:125372",
+      "name": "Davos X-Trails · 68 km",
+      "eventName": "Davos X-Trails",
+      "date": "2027-07-24",
+      "datePrecision": "event-day",
+      "distanceKm": 68.0,
+      "elevationGainM": 3058.0,
+      "place": "Davos Platz Tourismus- und Sportzentrum",
+      "countryCode": "CH",
+      "website": null,
+      "image": "https://itra.run/Files/Events/d32bfdd15ac742538d9e79b3663f69e2.jpg",
+      "imageSource": "https://itra.run/Races/RaceDetails/Davos.X.Trails.Diamond.Run.68km/2027/125372",
+      "longitude": 9.820969581604004,
+      "latitude": 46.79181671142578,
+      "locationPrecision": "event",
+      "geonamesId": null,
+      "extensions": {
+        "itra": {
+          "endurancePoints": 3,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-07-24",
+      "locationId": "itra:event:9.820969581604004,46.79181671142578",
+      "country": "Switzerland",
+      "continent": "Europe",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:125372",
+          "url": "https://itra.run/Races/RaceDetails/Davos.X.Trails.Diamond.Run.68km/2027/125372",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Davos X-Trails · 68 km",
+            "eventName": "Davos X-Trails",
+            "date": "2027-07-24",
+            "dateEnd": "2027-07-24",
+            "datePrecision": "event-day",
+            "distanceKm": 68.0,
+            "elevationGainM": 3058.0,
+            "place": "Davos Platz Tourismus- und Sportzentrum",
+            "countryCode": "CH"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:158806",
+      "source": "utmb",
+      "sourceId": "158806",
+      "name": "Diamond Run 68 km",
+      "eventName": "Davos X-Trails",
+      "date": "2027-07-24",
+      "distanceKm": 68.37,
+      "elevationGainM": 3309,
+      "countryCode": "CH",
+      "place": "Davos Platz, Switzerland",
+      "longitude": null,
+      "latitude": null,
+      "extensions": {
+        "utmb": {
+          "category": "100k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/31926.davosx-trailsdiamondrun68km.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2026:113515",
+      "sourceId": "2026:113515",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Marcona.Wind.Trail.35K.Night/2026/113515",
+      "eventId": "itra:event:2026:113514",
+      "editionId": "itra:event:2026:113514",
+      "name": "Marcona Wind Trail · 33 km",
+      "eventName": "Marcona Wind Trail",
+      "date": "2026-12-06",
+      "datePrecision": "event-day",
+      "distanceKm": 33.0,
+      "elevationGainM": 601.0,
+      "place": "San Juan de Marcona",
+      "countryCode": "PE",
+      "website": null,
+      "image": "https://itra.run/Files/Events/logo_2879.jpg",
+      "imageSource": "https://itra.run/Races/RaceDetails/Marcona.Wind.Trail.35K.Night/2026/113515",
+      "longitude": -75.1659164428711,
+      "latitude": -15.361991882324219,
+      "locationPrecision": "event",
+      "geonamesId": "3929520",
+      "extensions": {
+        "itra": {
+          "endurancePoints": 1,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2026-12-06",
+      "locationId": "itra:event:-75.1659164428711,-15.361991882324219",
+      "country": "Peru",
+      "continent": "South America",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2026:113515",
+          "url": "https://itra.run/Races/RaceDetails/Marcona.Wind.Trail.35K.Night/2026/113515",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Marcona Wind Trail · 33 km",
+            "eventName": "Marcona Wind Trail",
+            "date": "2026-12-06",
+            "dateEnd": "2026-12-06",
+            "datePrecision": "event-day",
+            "distanceKm": 33.0,
+            "elevationGainM": 601.0,
+            "place": "San Juan de Marcona",
+            "countryCode": "PE"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:141006",
+      "source": "utmb",
+      "sourceId": "141006",
+      "name": "35k Night",
+      "eventName": "Marcona Wind Trail",
+      "date": "2026-12-06",
+      "distanceKm": 33.49,
+      "elevationGainM": 579,
+      "countryCode": "PE",
+      "place": "San Juan de Marcona, Peru",
+      "longitude": -75.16222,
+      "latitude": -15.36528,
+      "extensions": {
+        "utmb": {
+          "category": "20k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/58828.marconawindtrail35knight.2026"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:123589",
+      "sourceId": "2027:123589",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/adidas.INFINITE.TRAILS.Team.Loop.S/2027/123589",
+      "eventId": "itra:event:2027:123585",
+      "editionId": "itra:event:2027:123585",
+      "name": "adidas INFINITE TRAILS · 21 km",
+      "eventName": "adidas INFINITE TRAILS",
+      "date": "2027-09-04",
+      "datePrecision": "event-day",
+      "distanceKm": 21.0,
+      "elevationGainM": 1906.0,
+      "place": "Bad Hofgastein",
+      "countryCode": "AT",
+      "website": null,
+      "image": "https://itra.run/Files/Events/36d3daa4060547e79daf025e41066904.png",
+      "imageSource": "https://itra.run/Races/RaceDetails/adidas.INFINITE.TRAILS.Team.Loop.S/2027/123589",
+      "longitude": 13.09874439239502,
+      "latitude": 47.17255401611328,
+      "locationPrecision": "event",
+      "geonamesId": "2782053",
+      "extensions": {
+        "itra": {
+          "endurancePoints": 1,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-09-04",
+      "locationId": "itra:event:13.09874439239502,47.17255401611328",
+      "country": "Austria",
+      "continent": "Europe",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:123589",
+          "url": "https://itra.run/Races/RaceDetails/adidas.INFINITE.TRAILS.Team.Loop.S/2027/123589",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "adidas INFINITE TRAILS · 21 km",
+            "eventName": "adidas INFINITE TRAILS",
+            "date": "2027-09-04",
+            "dateEnd": "2027-09-04",
+            "datePrecision": "event-day",
+            "distanceKm": 21.0,
+            "elevationGainM": 1906.0,
+            "place": "Bad Hofgastein",
+            "countryCode": "AT"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:156670",
+      "source": "utmb",
+      "sourceId": "156670",
+      "name": "Team Loop S",
+      "eventName": "adidas INFINITE TRAILS",
+      "date": "2027-09-04",
+      "distanceKm": 21.4,
+      "elevationGainM": 1855,
+      "countryCode": "AT",
+      "place": "Bad Hofgastein, Austria",
+      "longitude": 13.09871,
+      "latitude": 47.17274,
+      "extensions": {
+        "utmb": {
+          "category": "20k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/41564.adidasinfinitetrailsteamloops.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:123590",
+      "sourceId": "2027:123590",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/adidas.INFINITE.TRAILS.Team.Loop.M/2027/123590",
+      "eventId": "itra:event:2027:123585",
+      "editionId": "itra:event:2027:123585",
+      "name": "adidas INFINITE TRAILS · 35 km",
+      "eventName": "adidas INFINITE TRAILS",
+      "date": "2027-09-04",
+      "datePrecision": "event-day",
+      "distanceKm": 35.0,
+      "elevationGainM": 2781.0,
+      "place": "Bad Hofgastein",
+      "countryCode": "AT",
+      "website": null,
+      "image": "https://itra.run/Files/Events/36d3daa4060547e79daf025e41066904.png",
+      "imageSource": "https://itra.run/Races/RaceDetails/adidas.INFINITE.TRAILS.Team.Loop.M/2027/123590",
+      "longitude": 13.09874439239502,
+      "latitude": 47.17255401611328,
+      "locationPrecision": "event",
+      "geonamesId": "2782053",
+      "extensions": {
+        "itra": {
+          "endurancePoints": 2,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-09-04",
+      "locationId": "itra:event:13.09874439239502,47.17255401611328",
+      "country": "Austria",
+      "continent": "Europe",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:123590",
+          "url": "https://itra.run/Races/RaceDetails/adidas.INFINITE.TRAILS.Team.Loop.M/2027/123590",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "adidas INFINITE TRAILS · 35 km",
+            "eventName": "adidas INFINITE TRAILS",
+            "date": "2027-09-04",
+            "dateEnd": "2027-09-04",
+            "datePrecision": "event-day",
+            "distanceKm": 35.0,
+            "elevationGainM": 2781.0,
+            "place": "Bad Hofgastein",
+            "countryCode": "AT"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:156676",
+      "source": "utmb",
+      "sourceId": "156676",
+      "name": "Team Loop M",
+      "eventName": "adidas INFINITE TRAILS",
+      "date": "2027-09-04",
+      "distanceKm": 34.9,
+      "elevationGainM": 2726,
+      "countryCode": "AT",
+      "place": "Bad Hofgastein, Austria",
+      "longitude": 13.09871,
+      "latitude": 47.17274,
+      "extensions": {
+        "utmb": {
+          "category": "50k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/41566.adidasinfinitetrailsteamloopm.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:123501",
+      "sourceId": "2027:123501",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/The.Most.Beautiful.Thing.37.Km.Night.Challenge/2027/123501",
+      "eventId": "itra:event:2027:123498",
+      "editionId": "itra:event:2027:123498",
+      "name": "The Most Beautiful Thing · 37 km",
+      "eventName": "The Most Beautiful Thing",
+      "date": "2027-09-11",
+      "datePrecision": "event-day",
+      "distanceKm": 37.0,
+      "elevationGainM": 1770.0,
+      "place": "Lingkubang",
+      "countryCode": "MY",
+      "website": null,
+      "image": "https://itra.run/Files/Events/logo_2693.png",
+      "imageSource": "https://itra.run/Races/RaceDetails/The.Most.Beautiful.Thing.37.Km.Night.Challenge/2027/123501",
+      "longitude": 116.57499694824219,
+      "latitude": 5.984340190887451,
+      "locationPrecision": "event",
+      "geonamesId": null,
+      "extensions": {
+        "itra": {
+          "endurancePoints": 2,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-09-11",
+      "locationId": "itra:event:116.57499694824219,5.984340190887451",
+      "country": "Malaysia",
+      "continent": "Asia",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:123501",
+          "url": "https://itra.run/Races/RaceDetails/The.Most.Beautiful.Thing.37.Km.Night.Challenge/2027/123501",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "The Most Beautiful Thing · 37 km",
+            "eventName": "The Most Beautiful Thing",
+            "date": "2027-09-11",
+            "dateEnd": "2027-09-11",
+            "datePrecision": "event-day",
+            "distanceKm": 37.0,
+            "elevationGainM": 1770.0,
+            "place": "Lingkubang",
+            "countryCode": "MY"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:156558",
+      "source": "utmb",
+      "sourceId": "156558",
+      "name": "37 Km Night Challenge",
+      "eventName": "The Most Beautiful Thing",
+      "date": "2027-09-11",
+      "distanceKm": 37.7,
+      "elevationGainM": 1865,
+      "countryCode": "MY",
+      "place": "Kundasang, Malaysia",
+      "longitude": 116.5712,
+      "latitude": 5.9824,
+      "extensions": {
+        "utmb": {
+          "category": "50k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/20677.themostbeautifulthing37kmnightchallenge.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:122436",
+      "sourceId": "2027:122436",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Trilhos.dos.Calceteiros.2027.Trail.Experience/2027/122436",
+      "eventId": "itra:event:2027:122432",
+      "editionId": "itra:event:2027:122432",
+      "name": "Trilhos dos Calceteiros 2027 · 10 km",
+      "eventName": "Trilhos dos Calceteiros 2027",
+      "date": "2027-03-14",
+      "datePrecision": "event-day",
+      "distanceKm": 10.0,
+      "elevationGainM": 400.0,
+      "place": "Fanhoes",
+      "countryCode": "PT",
+      "website": null,
+      "image": "https://itra.run/Files/Events/976cbd106d15474482f1e0678dc923d4.png",
+      "imageSource": "https://itra.run/Races/RaceDetails/Trilhos.dos.Calceteiros.2027.Trail.Experience/2027/122436",
+      "longitude": -9.153083801269531,
+      "latitude": 38.88064956665039,
+      "locationPrecision": "event",
+      "geonamesId": "2268352",
+      "extensions": {
+        "itra": {
+          "endurancePoints": null,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-03-14",
+      "locationId": "itra:event:-9.153083801269531,38.88064956665039",
+      "country": "Portugal",
+      "continent": "Europe",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:122436",
+          "url": "https://itra.run/Races/RaceDetails/Trilhos.dos.Calceteiros.2027.Trail.Experience/2027/122436",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Trilhos dos Calceteiros 2027 · 10 km",
+            "eventName": "Trilhos dos Calceteiros 2027",
+            "date": "2027-03-14",
+            "dateEnd": "2027-03-14",
+            "datePrecision": "event-day",
+            "distanceKm": 10.0,
+            "elevationGainM": 400.0,
+            "place": "Fanhoes",
+            "countryCode": "PT"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:155310",
+      "source": "utmb",
+      "sourceId": "155310",
+      "name": "TRILHOS DOS CALCETEIROS 2027_TRAIL EXPERIENCE",
+      "eventName": "Trilhos dos Calceteiros",
+      "date": "2027-03-14",
+      "distanceKm": 10.0,
+      "elevationGainM": 400,
+      "countryCode": "PT",
+      "place": "Fanhões, Portugal",
+      "longitude": -9.15283,
+      "latitude": 38.88151,
+      "extensions": {
+        "utmb": {
+          "category": null
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/64794.trilhosdoscalceteirostrilhosdoscalceteiros2027-trailexperience.2027"
+    }
+  },
+  {
+    "itra": {
+      "id": "itra:2027:125556",
+      "sourceId": "2027:125556",
+      "source": "itra",
+      "sourceUrl": "https://itra.run/Races/RaceDetails/Trail.de.La.Grande.Montagne..Le.Marathon.du.Sanglier./2027/125556",
+      "eventId": "itra:event:2027:125687",
+      "editionId": "itra:event:2027:125687",
+      "name": "Trail de La Grande Montagne · 42 km",
+      "eventName": "Trail de La Grande Montagne",
+      "date": "2027-05-16",
+      "datePrecision": "event-day",
+      "distanceKm": 42.0,
+      "elevationGainM": 2066.0,
+      "place": "Le Poizat-Lalleyriat",
+      "countryCode": "FR",
+      "website": null,
+      "image": "https://itra.run/Files/Events/a45f160c431a4603a35a7a11f529f85f.jpg",
+      "imageSource": "https://itra.run/Races/RaceDetails/Trail.de.La.Grande.Montagne..Le.Marathon.du.Sanglier./2027/125556",
+      "longitude": 5.713242053985596,
+      "latitude": 46.15140151977539,
+      "locationPrecision": "event",
+      "geonamesId": null,
+      "extensions": {
+        "itra": {
+          "endurancePoints": 2,
+          "mountainLevel": null,
+          "finisherLevel": null
+        }
+      },
+      "dateEnd": "2027-05-16",
+      "locationId": "itra:event:5.713242053985596,46.15140151977539",
+      "country": "France",
+      "continent": "Europe",
+      "sources": [
+        {
+          "provider": "itra",
+          "id": "2027:125556",
+          "url": "https://itra.run/Races/RaceDetails/Trail.de.La.Grande.Montagne..Le.Marathon.du.Sanglier./2027/125556",
+          "fetchedAt": "2026-11-09T13:32:40.162855+00:00",
+          "detailsFetchedAt": null,
+          "acquisition": "browser-calendar",
+          "values": {
+            "name": "Trail de La Grande Montagne · 42 km",
+            "eventName": "Trail de La Grande Montagne",
+            "date": "2027-05-16",
+            "dateEnd": "2027-05-16",
+            "datePrecision": "event-day",
+            "distanceKm": 42.0,
+            "elevationGainM": 2066.0,
+            "place": "Le Poizat-Lalleyriat",
+            "countryCode": "FR"
+          }
+        }
+      ]
+    },
+    "utmb": {
+      "id": "utmb:160636",
+      "source": "utmb",
+      "sourceId": "160636",
+      "name": "Trail de La Grande Montagne - Le Sanglier",
+      "eventName": "Trail de La Grande Montagne ",
+      "date": "2027-05-16",
+      "distanceKm": 42.0,
+      "elevationGainM": 2300,
+      "countryCode": "FR",
+      "place": "Le Poizat-Lalleyriat, France",
+      "longitude": null,
+      "latitude": null,
+      "extensions": {
+        "utmb": {
+          "category": "50k"
+        }
+      },
+      "sourceUrl": "https://utmb.world/utmb-index/races/43818.traildelagrandemontagnetraildelagrandemontagne-lesanglier.2027"
+    }
+  }
+]

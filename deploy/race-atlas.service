@@ -4,10 +4,29 @@ After=network.target
 
 [Service]
 Type=simple
-WorkingDirectory=/root/race
-ExecStart=/usr/bin/node /root/race/scripts/serve.mjs --production
+User=race-atlas
+Group=race-atlas
+WorkingDirectory=/srv/race
+ExecStart=/opt/race/node/bin/node /srv/race/scripts/serve.mjs --production
+Environment=HOST=127.0.0.1
+Environment=PORT=4173
 Restart=on-failure
-RestartSec=5
+RestartSec=3
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=tmpfs
+BindReadOnlyPaths=/root/race:/srv/race
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+UMask=0027
+MemoryMax=384M
+TasksMax=64
 
 [Install]
 WantedBy=multi-user.target

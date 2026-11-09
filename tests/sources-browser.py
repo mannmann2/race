@@ -51,6 +51,7 @@ def count(page, number):
 
 
 def load(context):
+    context.route('**/data/catalog-index.json',lambda route:route.fulfill(status=404,body='Fixture uses the legacy transport'))
     context.route('**/data/catalog.json.gz', lambda route: route.fulfill(status=200, content_type='application/gzip', body=PAYLOAD))
     page = context.new_page()
     page.add_init_script(HOOK)
@@ -63,7 +64,7 @@ def load(context):
 with sync_playwright() as p:
     browser = p.chromium.launch(headless=True, args=['--no-sandbox', '--enable-unsafe-swiftshader'])
     errors = []
-    context = browser.new_context(viewport={'width': 1380, 'height': 1000}, color_scheme='light', reduced_motion='reduce')
+    context = browser.new_context(bypass_csp=True,viewport={'width': 1380, 'height': 1000}, color_scheme='light', reduced_motion='reduce')
     context.on('page', lambda page: page.on('pageerror', lambda error: errors.append(str(error))))
     page = load(context)
     expect(page.locator('#itra-status')).to_contain_text('3 ITRA courses')
@@ -121,7 +122,7 @@ with sync_playwright() as p:
     print('Desktop: dedup counts, both links, conflicts, zero/unknown ratings, combined filters, URL persistence, reset, map groups and viewport passed', flush=True)
     context.close()
 
-    context = browser.new_context(viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True, color_scheme='dark', reduced_motion='reduce')
+    context = browser.new_context(bypass_csp=True,viewport={'width': 390, 'height': 844}, is_mobile=True, has_touch=True, color_scheme='dark', reduced_motion='reduce')
     context.on('page', lambda page: page.on('pageerror', lambda error: errors.append(str(error))))
     page = load(context)
     page.locator('#open-filters').tap()

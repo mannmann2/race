@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { combineRace, expandDataset, matches, groupLocations } from '../web/core.mjs';
 import { matchMarathons } from '../scripts/match-marathons.mjs';
@@ -28,7 +28,7 @@ test('third source preserves previous conflicts, all links and source-specific s
  assert.ok(matches({...wm,extensions:{worldsmarathons:{surface:null}}},{worldsmarathonsSurface:'unknown'},'2027-01-01'));
 });
 
-test('live marathon snapshot has validated coverage, correct provenance and one published listing per source id',()=>{
+test('live marathon snapshot has validated coverage, correct provenance and one published listing per source id',{skip:!existsSync(new URL('../data/worldsmarathons-snapshot.json',import.meta.url))||!existsSync(new URL('../web/data/catalog.json.gz',import.meta.url))},()=>{
  const snapshot=JSON.parse(readFileSync(new URL('../data/worldsmarathons-snapshot.json',import.meta.url)));
  const data=JSON.parse(gunzipSync(readFileSync(new URL('../web/data/catalog.json.gz',import.meta.url))));
  const races=expandDataset(data),marathons=races.filter(r=>matches(r,{source:'worldsmarathons'},'2000-01-01'));
@@ -70,7 +70,7 @@ test('matching requires independent corroboration and keeps uncertain course var
  assert.equal(matchMarathons([base,{...unmapped,id:'utmb:other'}],[wm]).report.merged,0);
 });
 
-test('published three-provider overlaps retain every link and ITRA ratings once each',()=>{
+test('published three-provider overlaps retain every link and ITRA ratings once each',{skip:!existsSync(new URL('../data/worldsmarathons-snapshot.json',import.meta.url))||!existsSync(new URL('../web/data/catalog.json.gz',import.meta.url))},()=>{
  const data=JSON.parse(gunzipSync(readFileSync(new URL('../web/data/catalog.json.gz',import.meta.url))));
  const races=expandDataset(data);
  for(const id of ['utmb:141000','utmb:159954','utmb:160670','utmb:158028']){

@@ -14,6 +14,16 @@
     "refresh:marathons": "node scripts/refresh-all.mjs --worldsmarathons-only",
     "compose": "node scripts/compose-catalog.mjs",
     "enrich": "python3 scripts/enrich.py",
-    "refresh:map": "node scripts/refresh-map.mjs"
+    "refresh:map": "node scripts/refresh-map.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "rollback": "node scripts/rollback.mjs",
+    "health": "node scripts/healthcheck.mjs",
+    "backup": "node scripts/backup.mjs",
+    "test:ci": "node scripts/test-ci.mjs",
+    "test:launch": "python3 tests/launch-browser.py",
+    "prune": "node scripts/prune.mjs"
+  },
+  "engines": {
+    "node": ">=22"
   }
 }

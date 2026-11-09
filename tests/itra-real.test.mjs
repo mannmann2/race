@@ -1,10 +1,11 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { readFileSync } from 'node:fs';
+import { readFileSync, existsSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { expandDataset, matches, groupLocations } from '../web/core.mjs';
 import { matchSources } from '../scripts/match-sources.mjs';
 
+if(!(existsSync(new URL('../data/itra-indexed-snapshot.json',import.meta.url)) && existsSync(new URL('../web/data/races.json.gz',import.meta.url))))test('private provider snapshots are optional in a public checkout',{skip:true},()=>{});else{
 const base=JSON.parse(gunzipSync(readFileSync(new URL('../web/data/races.json.gz',import.meta.url))));
 const indexed=JSON.parse(readFileSync(new URL('../data/itra-indexed-snapshot.json',import.meta.url)));
 const overrides=JSON.parse(readFileSync(new URL('../scripts/source-overrides.json',import.meta.url)));
@@ -41,3 +42,5 @@ test('indexed freshness and conflicting real dates remain explicit on shared rec
  assert.equal(source.acquisition,'public-index');assert.equal(source.fetchedAt,null);
  assert.ok(source.retrievedAt);assert.ok(source.indexAge);
 });
+
+}

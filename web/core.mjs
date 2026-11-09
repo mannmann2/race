@@ -50,14 +50,17 @@ export function racesInView(races, locationIds, enabled=true) {
 export function safeUrl(value) {
   try { const u=new URL(value); return ['https:','http:'].includes(u.protocol) ? u.href : null; } catch { return null; }
 }
+const sourceDate=value=>{if(!value||!/^\d{4}-\d{2}-\d{2}$/.test(value)||!Number.isFinite(Date.parse(value)))return null;return new Date(value).toISOString().slice(0,10)===value?value:null;};
+const measurement=value=>typeof value==='number'&&Number.isFinite(value)&&value>=0?value:null;
 export function expandDataset(data) {
+  if(data.schemaVersion===3){if(!Array.isArray(data.races))throw new Error('Invalid race catalog');return data.races.map(r=>searchable(r));}
   if(![1,2].includes(data.schemaVersion)) throw new Error('Unsupported race data version');
   const races=data.records.map(row => {
     const [sourceId,ei,name,date,distanceKm,elevationGainM,category,li,website,results,level,stones]=row;
     const [eventId,eventName]=data.events[ei];
     const [place,code,lon,lat,precision,geonamesId]=data.locations[li];
     const country=data.countries[code];
-    const race={id:`utmb:${sourceId}`,sourceId,source:'utmb',eventId,editionId:`${eventId}:${date?.slice(0,4) || 'unknown'}`,name,eventName,date,distanceKm,elevationGainM,locationId:li,place,countryCode:code,country:country?.name || code || null,continent:country?.continent || null,longitude:lon,latitude:lat,locationPrecision:precision,geonamesId,website:safeUrl(website),image:null,sourceUrl:results ? `https://utmb.world/utmb-index/races/${encodeURIComponent(results)}` : 'https://utmb.world/utmb-index/index-races',extensions:{utmb:{category,level,stones}}};
+    const race={id:`utmb:${sourceId}`,sourceId,source:'utmb',eventId,editionId:`${eventId}:${date?.slice(0,4) || 'unknown'}`,name:name||eventName||'Unnamed race',eventName,date:sourceDate(date),distanceKm:measurement(distanceKm),elevationGainM:measurement(elevationGainM),locationId:li,place,countryCode:code,country:country?.name || code || null,continent:country?.continent || null,longitude:lon,latitude:lat,locationPrecision:precision,geonamesId,website:safeUrl(website),image:null,sourceUrl:results ? `https://utmb.world/utmb-index/races/${encodeURIComponent(results)}` : 'https://utmb.world/utmb-index/index-races',extensions:{utmb:{category,level,stones}}};
     const enrichment=data.enrichment?.[sourceId] || {};
     race.image=safeUrl(enrichment.image);race.imageSource=safeUrl(enrichment.imageSource);
     if(enrichment.longitude!=null){race.longitude=enrichment.longitude;race.latitude=enrichment.latitude;race.locationPrecision='event';race.locationId=`event:${enrichment.longitude},${enrichment.latitude}`;}

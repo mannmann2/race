@@ -15,7 +15,8 @@ def count(page,n):
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,args=['--no-sandbox','--enable-unsafe-swiftshader'])
  for mobile in {'desktop':(False,), 'mobile':(True,)}.get(os.environ.get('TEST_DEVICE'),(False,True)):
-  c=browser.new_context(viewport={'width':390,'height':844} if mobile else {'width':1440,'height':1000},is_mobile=mobile,has_touch=mobile,reduced_motion='reduce')
+  c=browser.new_context(bypass_csp=True,viewport={'width':390,'height':844} if mobile else {'width':1440,'height':1000},is_mobile=mobile,has_touch=mobile,reduced_motion='reduce')
+  c.route('**/data/catalog-index.json',lambda route:route.fulfill(status=404,body='Fixture uses the legacy transport'))
   c.route('**/data/catalog.json.gz',lambda route:route.fulfill(status=200,content_type='application/gzip',body=payload))
   page=c.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.goto(BASE+'#when=all&datePreset=any&inView=0',wait_until='domcontentloaded');count(page,7)

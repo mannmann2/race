@@ -25,7 +25,8 @@ def fit(page):
 with sync_playwright() as p:
  browser=p.chromium.launch(headless=True,args=['--no-sandbox','--enable-unsafe-swiftshader'])
  mobile=os.environ.get('TEST_DEVICE')=='mobile'
- c=browser.new_context(viewport={'width':390,'height':600} if mobile else {'width':1440,'height':900},is_mobile=mobile,has_touch=mobile,color_scheme='light',reduced_motion='reduce')
+ c=browser.new_context(bypass_csp=True,viewport={'width':390,'height':600} if mobile else {'width':1440,'height':900},is_mobile=mobile,has_touch=mobile,color_scheme='light',reduced_motion='reduce')
+ c.route('**/data/catalog-index.json',lambda route:route.fulfill(status=404,body='Fixture uses the legacy transport'))
  c.route('**/data/catalog.json.gz',lambda route:route.fulfill(status=200,content_type='application/gzip',body=payload))
  page=c.new_page();page.set_default_timeout(15000);page.add_init_script(HOOK);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
  page.goto(BASE+'#when=all&datePreset=any&inView=0',wait_until='domcontentloaded')

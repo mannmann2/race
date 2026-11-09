@@ -23,7 +23,7 @@ def load(page,**extra):
 with sync_playwright() as p:
  b=p.chromium.launch(headless=True,args=['--no-sandbox','--enable-unsafe-swiftshader'])
  errors=[]
- c=b.new_context(viewport={'width':1380,'height':1000},reduced_motion='reduce')
+ c=b.new_context(bypass_csp=True,viewport={'width':1380,'height':1000},reduced_motion='reduce')
  page=c.new_page();page.add_init_script(HOOK);page.on('pageerror',lambda e:errors.append(str(e)))
  load(page);count(page,COUNT)
  expect(page.locator('#itra-status')).to_contain_text('Rolling 12-month calendar')
@@ -40,7 +40,7 @@ with sync_playwright() as p:
  expect(page.locator('.detail-source')).to_contain_text('Course details')
  page.screenshot(path=str(OUT/'itra-live-shared.png'));c.close()
  print(f'Desktop: {COUNT} ITRA records, {DATA["mergeSummary"]["merged"]} matches, {RATED} Mountain ratings, pins and both links passed.',flush=True)
- c=b.new_context(viewport={'width':390,'height':844},is_mobile=True,has_touch=True,color_scheme='dark',reduced_motion='reduce')
+ c=b.new_context(bypass_csp=True,viewport={'width':390,'height':844},is_mobile=True,has_touch=True,color_scheme='dark',reduced_motion='reduce')
  page=c.new_page();page.add_init_script(HOOK);page.on('pageerror',lambda e:errors.append(str(e)))
  load(page,q=NEW['race']['eventName']);page.locator('#open-filters').tap()
  pts=str(int(NEW['race']['extensions']['itra']['endurancePoints']));page.locator(f'[data-endurance="{pts}"]').tap()

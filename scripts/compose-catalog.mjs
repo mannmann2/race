@@ -2,6 +2,8 @@ import { readFile, writeFile, rename, mkdir } from 'node:fs/promises';
 import { gzipSync, gunzipSync } from 'node:zlib';
 import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
+import { writeCatalogAssets } from './catalog-assets.mjs';
+import { validateCatalog } from './catalog-quality.mjs';
 import { expandDataset } from '../web/core.mjs';
 import { matchSources } from './match-sources.mjs';
 import { matchMarathons } from './match-marathons.mjs';
@@ -13,8 +15,10 @@ export async function compose({basePath=resolve(root,'web/data/races.json.gz'),i
   if(snapshot?.acquisition==='browser-calendar'&&status.state==='not-imported')status.state='available';
   if(snapshot?.acquisition==='public-index'&&status.state==='not-imported')status.state='indexed-only';
   if(snapshot && (snapshot.schemaVersion!==1||!Array.isArray(snapshot.races)||!snapshot.races.length))throw new Error('Invalid ITRA snapshot; catalog preserved');
-  const {entries,report}=matchSources(expandDataset(base),snapshot?.races||[],overrides);
-  const data={...base,schemaVersion:2,additionalRaces:entries,sourceMeta:{utmb:{fetchedAt:base.fetchedAt,races:base.records.length},itra:{...status,fetchedAt:snapshot?.fetchedAt||null,retrievedAt:snapshot?.retrievedAt||null,acquisition:snapshot?.acquisition||'direct',races:entries.length,coverage:snapshot?.coverage||null}},mergeSummary:{imported:report.imported,merged:report.merged,added:report.added,unresolved:report.unresolved}};
+  const exclusions=await optional(resolve(root,'scripts/source-exclusions.json'),{});
+  const excluded=new Set(Object.keys(exclusions));
+  const {entries,report}=matchSources(expandDataset(base),(snapshot?.races||[]).filter(r=>!excluded.has(r.id)),overrides);
+  const data={...base,schemaVersion:2,additionalRaces:entries,sourceMeta:{utmb:{...await optional(resolve(root,'.cache/utmb-status.json'),{state:'available'}),fetchedAt:base.fetchedAt,races:base.records.length},itra:{...status,fetchedAt:snapshot?.fetchedAt||null,retrievedAt:snapshot?.retrievedAt||null,acquisition:snapshot?.acquisition||'direct',races:entries.length,coverage:snapshot?.coverage||null}},mergeSummary:{imported:report.imported,merged:report.merged,added:report.added,unresolved:report.unresolved}};
   const marathons=await optional(marathonsPath,null)||await optional(marathonsFallbackPath,null);
   let marathonsReport=null;
   if(marathons) {
@@ -31,7 +35,10 @@ export async function compose({basePath=resolve(root,'web/data/races.json.gz'),i
   data.coverage={...base.coverage,from:dates[0],to:dates.at(-1),races:expanded.length,unmapped:expanded.filter(r=>r.longitude==null).length};
   await mkdir(resolve(reportPath,'..'),{recursive:true});
   await writeFile(reportPath,JSON.stringify(report,null,2)+'\n');
+  let previous=null;try{previous=JSON.parse(gunzipSync(await readFile(output)));}catch(e){if(e.code!=='ENOENT')throw e;}
+  validateCatalog(data,{previous});
   await writeFile(output+'.tmp',gzipSync(JSON.stringify(data),{level:9}));await rename(output+'.tmp',output);
+  await writeCatalogAssets(resolve(output,'..'),data);
   console.log(`Catalog: ${data.coverage.races} races; ITRA ${report.imported} imported, ${report.merged} merged, ${report.unresolved} need review (${status.state}).`);
   if(marathonsReport)console.log(`World’s Marathons: ${marathonsReport.imported} imported, ${marathonsReport.merged} merged, ${marathonsReport.added} added.`);
   return {data,report,marathonsReport};

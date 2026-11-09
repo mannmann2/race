@@ -22,7 +22,7 @@ with sync_playwright() as p:
     browser=p.chromium.launch(headless=True,args=['--no-sandbox','--enable-unsafe-swiftshader'])
     devices={'desktop':(False,), 'mobile':(True,)}.get(os.environ.get('TEST_DEVICE'),(False,True))
     for mobile in devices:
-        context=browser.new_context(viewport={'width':390,'height':844} if mobile else {'width':1440,'height':1000},is_mobile=mobile,has_touch=mobile,reduced_motion='reduce')
+        context=browser.new_context(bypass_csp=True,viewport={'width':390,'height':844} if mobile else {'width':1440,'height':1000},is_mobile=mobile,has_touch=mobile,reduced_motion='reduce')
         page=context.new_page();page.add_init_script(HOOK);errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
         page.goto(BASE+'#source=worldsmarathons&inView=0&datePreset=any&when=all',wait_until='domcontentloaded')
         count(page,len(SNAP['races']))
