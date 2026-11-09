@@ -111,7 +111,5 @@ dialog::backdrop{background:var(--backdrop)}
 .source-badges{display:flex;flex-wrap:wrap;gap:5px;margin:8px 0;font-size:10px;font-weight:600;line-height:1.5;color:var(--muted)}
 .source-badges>span{border:1px solid var(--line);border-radius:4px;padding:2px 5px;background:var(--soft)}
 .source-badges .rating-badge{color:var(--selected-ink);background:var(--selected)}
-.source-conflicts{padding:12px;margin-bottom:18px;background:var(--soft);border-left:3px solid var(--selected-border);font-size:12px;line-height:1.6}
-.source-conflicts p{margin:4px 0}.source-conflicts small{color:var(--muted)}
 .itra-details{border-top:1px solid var(--line);padding-top:18px}
 .detail-links{flex-wrap:wrap}
