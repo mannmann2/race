@@ -58,6 +58,17 @@ test('reviewed real overlaps include trail measurements, sponsor titles, festiva
   assert.equal(result.entries[0].matchId,expected,incoming.eventName);
  }
 });
+test('country suffix matching requires a corroborated, unambiguous marathon course',()=>{
+ const fixture=JSON.parse(readFileSync(new URL('./fixtures/marathon-overlaps.json',import.meta.url))).find(f=>f.incoming.id==='worldsmarathons:2027:artic-marathon-finland:marathon');
+ const original=fixture.existing[0],incoming=fixture.incoming;
+ const result=matchMarathons([original],[incoming]);
+ assert.equal(result.entries[0].matchId,original.id);
+ assert.equal(result.report.accepted[0].countryNameDecoration,true);
+ for(const change of [{longitude:null},{longitude:26},{date:'2027-04-05',dateEnd:'2027-04-05'},{distanceKm:40},{countryCode:'SE'},{name:'Arctic Marathon Relay'}])assert.equal(matchMarathons([{...original,...change}],[incoming]).report.merged,0,JSON.stringify(change));
+ assert.equal(matchMarathons([original],[{...incoming,name:'Arctic Marathon Finlandia',eventName:'Arctic Marathon Finlandia'}]).report.merged,0);
+ assert.equal(matchMarathons([original,{...original,id:'itra:another-course'}],[incoming]).report.merged,0);
+ assert.equal(matchMarathons([original],[incoming,{...incoming,id:'worldsmarathons:another-listing'}]).report.merged,0);
+});
 
 test('matching requires independent corroboration and keeps uncertain course variants separate',()=>{
  const trail={...base,name:'Marathon',distanceKm:44.3};

@@ -1660,5 +1660,127 @@
         "searchText": "3 dias trail ibiza-ultra ibiza · 40 km 3 dias trail ibiza-ultra ibiza sant josep de sa talaia spain europe 3 dias trail ibiza-ultra ibiza · 40 km 3 dias trail ibiza-ultra ibiza"
       }
     ]
+  },
+  {
+    "expected": "itra:2027:121406",
+    "incoming": {
+      "id": "worldsmarathons:2027:artic-marathon-finland:marathon",
+      "source": "worldsmarathons",
+      "sourceId": "2027:artic-marathon-finland:marathon",
+      "eventId": "worldsmarathons:event:artic-marathon-finland",
+      "editionId": "worldsmarathons:2027:artic-marathon-finland",
+      "name": "Arctic Marathon Finland",
+      "eventName": "Arctic Marathon Finland",
+      "date": "2027-04-04",
+      "dateEnd": "2027-04-04",
+      "datePrecision": "event-day",
+      "distanceKm": 42.195,
+      "elevationGainM": null,
+      "place": "Rovaniemi",
+      "countryCode": "FI",
+      "country": "Finland",
+      "continent": "Europe",
+      "longitude": 25.8471974,
+      "latitude": 66.5436144,
+      "locationPrecision": "event",
+      "locationId": "worldsmarathons:event:artic-marathon-finland",
+      "geonamesId": "638936",
+      "website": "https://wildmarathon.com/articmarathon-eng/",
+      "sourceUrl": "https://worldsmarathons.com/marathon/artic-marathon-finland",
+      "image": "https://wmimg.azureedge.net/public/img/marathons/artic-marathon-finland/bRX6Up_artic-marathon-finland_500.jpg",
+      "imageSource": "https://worldsmarathons.com/marathon/artic-marathon-finland",
+      "extensions": {
+        "worldsmarathons": {
+          "surface": "mixed",
+          "sourceSurface": "Mixed",
+          "courseDifficulty": "flat",
+          "listingType": "marathon-event",
+          "tags": [
+            "scenic",
+            "snow",
+            "wild-life",
+            "itra-point-1",
+            "out-and-back",
+            "0-99-participants"
+          ]
+        }
+      },
+      "sources": [
+        {
+          "provider": "worldsmarathons",
+          "id": "2027:artic-marathon-finland:marathon",
+          "url": "https://worldsmarathons.com/marathon/artic-marathon-finland",
+          "fetchedAt": "2026-11-09T15:53:36.830036+00:00",
+          "acquisition": "search-api",
+          "values": {
+            "name": "Arctic Marathon Finland",
+            "eventName": "Arctic Marathon Finland",
+            "date": "2027-04-04",
+            "dateEnd": "2027-04-04",
+            "datePrecision": "event-day",
+            "distanceKm": 42.195,
+            "place": "Rovaniemi",
+            "countryCode": "FI"
+          }
+        }
+      ]
+    },
+    "existing": [
+      {
+        "id": "itra:2027:121406",
+        "sourceId": "2027:121406",
+        "source": "itra",
+        "sourceUrl": "https://itra.run/Races/RaceDetails/Arctic.Marathon.Arctic.Marathon.Finland/2027/121406",
+        "eventId": "itra:event:2027:121406",
+        "editionId": "itra:event:2027:121406",
+        "name": "Arctic Marathon · 42 km",
+        "eventName": "Arctic Marathon",
+        "date": "2027-04-04",
+        "datePrecision": "event-day",
+        "distanceKm": 42,
+        "elevationGainM": 155,
+        "place": "Rovaniemi",
+        "countryCode": "FI",
+        "website": null,
+        "image": "https://itra.run/Files/Events/f87cf476d1084aa486f67a4df94342d6.jpg",
+        "imageSource": "https://itra.run/Races/RaceDetails/Arctic.Marathon.Arctic.Marathon.Finland/2027/121406",
+        "longitude": 25.845861434936523,
+        "latitude": 66.54328918457031,
+        "locationPrecision": "event",
+        "geonamesId": null,
+        "extensions": {
+          "itra": {
+            "endurancePoints": null,
+            "mountainLevel": null,
+            "finisherLevel": null
+          }
+        },
+        "dateEnd": "2027-04-04",
+        "locationId": "itra:event:25.845861434936523,66.54328918457031",
+        "country": "Finland",
+        "continent": "Europe",
+        "sources": [
+          {
+            "provider": "itra",
+            "id": "2027:121406",
+            "url": "https://itra.run/Races/RaceDetails/Arctic.Marathon.Arctic.Marathon.Finland/2027/121406",
+            "fetchedAt": "2026-11-09T13:14:40.654750+00:00",
+            "detailsFetchedAt": null,
+            "acquisition": "browser-calendar",
+            "values": {
+              "name": "Arctic Marathon · 42 km",
+              "eventName": "Arctic Marathon",
+              "date": "2027-04-04",
+              "dateEnd": "2027-04-04",
+              "datePrecision": "event-day",
+              "distanceKm": 42,
+              "elevationGainM": 155,
+              "place": "Rovaniemi",
+              "countryCode": "FI"
+            }
+          }
+        ]
+      }
+    ]
   }
 ]

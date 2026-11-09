@@ -25,10 +25,11 @@ function courseLabels(r){
   }
   return labels;
 }
-function nameEvidence(a,b){
-  const target=distinctive(b.eventName),names=[a.eventName,a.name,...sourceRecords(a).flatMap(s=>[s.values?.eventName,s.values?.name])].filter(Boolean);
+function nameEvidence(a,b,country=null){
+  const clean=value=>country?(' '+nameKey(value)+' ').replaceAll(' '+nameKey(country)+' ',' '):value;
+  const target=distinctive(clean(b.eventName)),names=[a.eventName,a.name,...sourceRecords(a).flatMap(s=>[s.values?.eventName,s.values?.name])].filter(Boolean);
   let best=0;
-  for(const name of names){const tokens=distinctive(name),shared=tokens.filter(w=>target.includes(w)).length;
+  for(const name of names){const tokens=distinctive(clean(name)),shared=tokens.filter(w=>target.includes(w)).length;
     if(!shared)continue;
     const smaller=Math.min(tokens.length,target.length),larger=Math.max(tokens.length,target.length);
     // A distinctive place/name may carry sponsor or translated-title decoration.
@@ -54,12 +55,20 @@ export function matchMarathons(existing,incoming) {
       if(labels.some(n=>/\b(?:half|demi|1 2|relay|relai|relais|relevos|estafeta|stafette|night|nocturne|nocturna|nocturno|nuit|team|duo|duet|stage|etapa|etappe|leg)\b/.test(n)))continue;
       const nominalMarathon=labels.some(n=>/\b(?:marathon|maraton|maratona|42(?:\s*(?:2|195))?\s*(?:k|km)|26\s*2)\b/.test(n));
       if(difference>.8&&!nominalMarathon)continue;
-      const similarity=nameEvidence(base,race);if(similarity<.5)continue;
-      const ev=evidence(base,{...race,name:race.eventName+' · '+race.distanceKm+' km'}),site=websites(base,race);
+      let similarity=nameEvidence(base,race),countryNameDecoration=false;
+      // A country suffix is presentation, provided the same marathon is independently
+      // corroborated by an overlapping date, near-identical length and a nearby start.
       const mapped=[base.longitude,base.latitude,race.longitude,race.latitude].every(Number.isFinite);
+      const startGapKm=mapped?111.2*Math.hypot(base.latitude-race.latitude,(base.longitude-race.longitude)*Math.cos((base.latitude+race.latitude)*Math.PI/360)):Infinity;
+      if(gap===0&&difference<=.3&&nominalMarathon&&startGapKm<=1){
+        const normalized=nameEvidence(base,race,race.country||base.country);
+        if(normalized>similarity){similarity=normalized;countryNameDecoration=true;}
+      }
+      if(similarity<.5)continue;
+      const ev=evidence(base,{...race,name:race.eventName+' · '+race.distanceKm+' km'}),site=websites(base,race);
       const geography=ev.place||ev.nearby||site.exact||(!mapped&&site.host&&similarity>=2/3);
       const eligible=geography&&(gap===0||nominalMarathon)&&(similarity>=2/3||site.host);
-      found.push({id:base.id,name:base.name,eligible,evidence:{date:gap?'festival-course-offset':'overlapping-edition',dateGapDays:gap,distanceDifferenceKm:difference,nominalMarathon,nameSimilarity:similarity,place:ev.place,nearby:ev.nearby,officialHost:site.host,officialPage:site.exact}});
+      found.push({id:base.id,name:base.name,eligible,evidence:{date:gap?'festival-course-offset':'overlapping-edition',dateGapDays:gap,distanceDifferenceKm:difference,nominalMarathon,nameSimilarity:similarity,countryNameDecoration,place:ev.place,nearby:ev.nearby,officialHost:site.host,officialPage:site.exact}});
       if(!contenders.has(base.id))contenders.set(base.id,[]);contenders.get(base.id).push(race.id);
     }
     candidates.set(race.id,found);
@@ -71,5 +80,5 @@ export function matchMarathons(existing,incoming) {
     else if(found.length)review.push({sourceId:race.id,name:race.name,reason:found.length>1?'ambiguous-course':'insufficient-corroboration',candidates:found});
     return {race,matchId:match?.id||null};
   });
-  return {entries,report:{algorithm:'marathon-event-v2',imported:incoming.length,merged:accepted.length,added:incoming.length-accepted.length,unresolved:review.length,accepted,review}};
+  return {entries,report:{algorithm:'marathon-event-v3',imported:incoming.length,merged:accepted.length,added:incoming.length-accepted.length,unresolved:review.length,accepted,review}};
 }
