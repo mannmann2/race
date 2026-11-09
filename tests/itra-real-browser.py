@@ -1,4 +1,5 @@
 """Verify published real bulk data, map points, both source links, ratings and mobile."""
+from ui_filters import select_sources
 import gzip,json,os
 from pathlib import Path
 from urllib.parse import urlencode
@@ -28,8 +29,8 @@ with sync_playwright() as p:
  load(page);count(page,COUNT)
  expect(page.locator('#itra-status')).to_contain_text('Rolling 12-month calendar')
  assert sum(x['count'] for x in page.evaluate('testResults.points'))>3000
- page.locator('select[name=source]').select_option('both');count(page,DATA['mergeSummary']['merged'])
- page.locator('select[name=source]').select_option('itra')
+ select_sources(page,'both');count(page,DATA['mergeSummary']['merged'])
+ select_sources(page,'itra')
  page.locator('select[name=mountainMin]').select_option('0');count(page,RATED)
  load(page,q=SHARED['race']['eventName'])
  card=page.locator(f'#races [data-race="{SHARED["matchId"]}"]')

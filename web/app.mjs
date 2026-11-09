@@ -1,4 +1,4 @@
-import { localToday, safeUrl, presetDates, isWorldSeries, sourceRecords, providerName, raceGrade, fold } from './core.mjs';
+import { localToday, safeUrl, presetDates, nextMonths, isWorldSeries, sourceRecords, providerName, raceGrade, fold } from './core.mjs';
 import { raceGrades } from './grades.mjs';
 import { cameraFromURL, raceFromURL, sourceHealth } from './sharing.mjs';
 import { Globe } from './globe.mjs';
@@ -6,10 +6,10 @@ const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const number=n=>new Intl.NumberFormat('en-GB',{maximumFractionDigits:1}).format(n);
 const escape=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 const displayDate=(value,long=false)=>value?new Intl.DateTimeFormat('en-GB',{day:'numeric',month:long?'long':'short',year:'numeric',timeZone:'UTC'}).format(new Date(value+'T12:00:00Z')):'Date unavailable';
-const defaults=()=>({q:'',when:'upcoming',datePreset:'6m',...presetDates('6m'),categories:[],countries:[],source:'',worldsmarathonsSurface:'',endurancePoints:[],mountainMin:'',mountainMax:'',continent:'',distanceMin:'',distanceMax:'',elevationMin:'',elevationMax:'',worldSeries:false,inView:true,locationId:null});
+const defaults=()=>({q:'',when:'upcoming',datePreset:'6m',...presetDates('6m'),months:[],categories:[],countries:[],sources:[],sourceMatch:'any',worldsmarathonsSurface:'',endurancePoints:[],mountainMin:'',mountainMax:'',continents:[],distanceMin:'',distanceMax:'',elevationMin:'',elevationMax:'',worldSeries:false,inView:true,locationId:null});
 let filters=defaults(),seq=0,viewVersion=0,ready=false,page=0,total=0,pending=false,meta,hoverRequest=0,currentHover=null,hoverTimer,filterTimer,groupRequest=0,detailRequest=0,visibleRaces=new Map(),viewTimer,locationIds=null,lastViewKey='',globePointKey=null,collapsed=false,hoveredRaceId=null,focusedRaceId=null;
 let selectedRaceId=raceFromURL(location.hash),sharedCamera=cameraFromURL(location.hash),deepLinkPending=!!selectedRaceId,panelReturnTarget=null,toastTimer,dialogReturnTarget=null;
-let activeGroup=null;
+let activeGroup=null,dialogSidebarScroll=null;
 const failedImages=new Set();
 const worker=new Worker(new URL('./worker.mjs',import.meta.url),{type:'module'}),form=$('#filters-form');
 const pinIcon='<svg viewBox="0 0 16 18" aria-hidden="true"><path d="M14 7c0 4-6 9-6 9S2 11 2 7a6 6 0 1 1 12 0Z"/><circle cx="8" cy="7" r="2"/></svg>';
@@ -42,18 +42,29 @@ function renderCards(items,append=false){if(!append){hoveredRaceId=null;focusedR
 function updatePanelToggle(){const open=matchMedia('(max-width:800px)').matches?$('#race-results').classList.contains('open'):!collapsed;const button=$('#results-toggle');button.setAttribute('aria-expanded',String(open));button.setAttribute('aria-label',open?'Hide race calendar':'Show race calendar');button.title=open?'Hide race calendar':'Show race calendar';}
 function closePanels(){$('#filters-panel').classList.remove('open');$('#race-results').classList.remove('open');$('#open-filters').setAttribute('aria-expanded','false');$('#show-list').setAttribute('aria-expanded','false');updatePanelToggle();syncPanelAccessibility();}
 function showError(message){ready=false;$('#races').innerHTML=`<div class="error-state"><strong>The world is taking a moment.</strong><p>${escape(message)}</p><button id="retry">Try again</button></div>`;$('#result-caption').textContent='Race data unavailable';$('#load-more').hidden=true;}
-function activeCount(){return Object.entries(filters).filter(([k,v])=>!['locationId','inView','datePreset','from','to'].includes(k)&&(Array.isArray(v)?v.length:typeof v==='boolean'?v:k==='when'?v!=='all':v!=='')).length+(filters.from||filters.to?1:0);}
+function activeCount(){return Object.entries(filters).filter(([k,v])=>!['locationId','inView','datePreset','from','to','sourceMatch'].includes(k)&&(Array.isArray(v)?v.length:typeof v==='boolean'?v:k==='when'?v!=='all':v!=='')).length+(filters.from||filters.to?1:0);}
 function valid(){const dates=!!(filters.from&&filters.to&&filters.from>filters.to);let range=false;for(const prefix of ['distance','elevation','mountain']){const a=filters[prefix+'Min'],b=filters[prefix+'Max'];if((a!==''&&(!Number.isFinite(Number(a))||Number(a)<0))||(b!==''&&(!Number.isFinite(Number(b))||Number(b)<0))||(a!==''&&b!==''&&Number(a)>Number(b)))range=true;}if(['mountainMin','mountainMax'].some(k=>filters[k]!==''&&(!Number.isInteger(Number(filters[k]))||Number(filters[k])>12)))range=true;$('#date-error').hidden=!dates;$('#range-error').hidden=!range;return !dates&&!range;}
 function writeURL(){const p=new URLSearchParams();for(const [k,v]of Object.entries(filters)){if(k==='locationId')continue;if(Array.isArray(v)){if(v.length)p.set(k,v.join(','));}else if(typeof v==='boolean')p.set(k,v?'1':'0');else if(v)p.set(k,v);}if($('#sort').value!=='soonest')p.set('sort',$('#sort').value);const map=globe?.ready?globe.map:null;if(map){const c=map.getCenter();p.set('view',[c.lng.toFixed(4),c.lat.toFixed(4),map.getZoom().toFixed(2)].join(','));}else if(sharedCamera)p.set('view',[...sharedCamera.center,sharedCamera.zoom].join(','));if(selectedRaceId)p.set('race',selectedRaceId);history.replaceState(null,'',location.pathname+location.search+'#'+p.toString());}
 function updateSlider(){const low=Math.min(500,Number(filters.distanceMin)||0),high=filters.distanceMax===''?500:Math.min(500,Number(filters.distanceMax));$('#distance-low').value=low;$('#distance-high').value=high;$('#slider-fill').style.left=`${low/5}%`;$('#slider-fill').style.right=`${100-high/5}%`;$('#distance-readout').textContent=`${filters.distanceMin||0} – ${filters.distanceMax||'Any'} km`;$('#distance-low').setAttribute('aria-valuetext',`${filters.distanceMin||0} kilometres`);$('#distance-high').setAttribute('aria-valuetext',filters.distanceMax?`${filters.distanceMax} kilometres`:'No maximum distance');}
 function updateFilterUI(){
- for(const el of form.elements)if(el.name&&el.name!=='country'&&filters[el.name]!=null)el.value=filters[el.name];
+ for(const el of form.elements)if(el.name&&el.type!=='checkbox'&&filters[el.name]!=null)el.value=filters[el.name];
  $$('[data-when]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.when===filters.when)));
  $$('[data-date]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.date===filters.datePreset)));
+ const months=[...new Set([...nextMonths(),...filters.months])].sort(),options=$('#month-options');
+ if(options.dataset.months!==months.join(',')){
+  options.dataset.months=months.join(',');options.innerHTML=months.map(month=>{const date=new Date(month+'-01T12:00:00Z'),label=new Intl.DateTimeFormat('en-GB',{month:'short',year:'numeric',timeZone:'UTC'}).format(date),full=new Intl.DateTimeFormat('en-GB',{month:'long',year:'numeric',timeZone:'UTC'}).format(date);return `<button type="button" data-month="${month}" aria-label="${full}" aria-pressed="false">${label}</button>`;}).join('');
+ }
+ $$('[data-month]').forEach(b=>b.setAttribute('aria-pressed',String(filters.months.includes(b.dataset.month))));
+ $('#month-summary').textContent=filters.months.length?`${filters.months.length} month${filters.months.length===1?'':'s'} selected`:'Choose specific months';
+ $('#months-clear').hidden=!filters.months.length;
  $$('[data-endurance]').forEach(b=>b.setAttribute('aria-pressed',String(filters.endurancePoints.includes(b.dataset.endurance))));
  $$('[data-category]').forEach(b=>b.setAttribute('aria-pressed',String(filters.categories.includes(b.dataset.category))));
  $$('#country-options input').forEach(el=>el.checked=filters.countries.includes(el.value));
  $('#country-summary').textContent=filters.countries.length?`${filters.countries.length} countr${filters.countries.length===1?'y':'ies'} selected`:'All countries';
+ for(const key of ['continents','sources'])$$(`input[name="${key}"]`).forEach(el=>el.checked=filters[key].includes(el.value));
+ $('#continent-summary').textContent=filters.continents.length?filters.continents.join(', '):'Every continent';
+ $('#source-summary').textContent=filters.sources.length?filters.sources.map(providerName).join(' + '):'All sources';
+ $('#source-match-all').checked=filters.sourceMatch==='all';$('#source-match-all').disabled=filters.sources.length<2;
  $('#world-series').setAttribute('aria-pressed',String(filters.worldSeries));$('#in-view').checked=filters.inView;
  const count=activeCount();$('#active-count').textContent=count?`${count} active`:'No filters';$('#mobile-active').textContent=count?`(${count})`:'';$('#clear-location').hidden=filters.locationId==null;updateSlider();
 }
@@ -74,14 +85,22 @@ function runFilters(){
 function setFilter(key,value,immediate=true){filters[key]=value;clearTimeout(filterTimer);if(immediate)runFilters();else filterTimer=setTimeout(runFilters,100);}
 function restoreURL(){
  const p=new URLSearchParams(location.hash.slice(1));filters=defaults();selectedRaceId=raceFromURL(location.hash);sharedCamera=cameraFromURL(location.hash);
- for(const key of Object.keys(filters)){if(key==='locationId'||!p.has(key))continue;const v=p.get(key).slice(0,400);if(['categories','countries','endurancePoints'].includes(key))filters[key]=v.split(',').filter(Boolean);else if(['worldSeries','inView'].includes(key))filters[key]=v==='1';else filters[key]=v;}
+ for(const key of Object.keys(filters)){if(key==='locationId'||!p.has(key))continue;const v=p.get(key).slice(0,400);if(['categories','countries','endurancePoints','months','sources','continents'].includes(key))filters[key]=v.split(',').filter(Boolean);else if(['worldSeries','inView'].includes(key))filters[key]=v==='1';else filters[key]=v;}
  if(!['all','upcoming','past'].includes(filters.when))filters.when='upcoming';
- filters.endurancePoints=filters.endurancePoints.filter(v=>/^[0-6]$/.test(v));if(!['','utmb','itra','both','worldsmarathons'].includes(filters.source))filters.source='';
+ filters.endurancePoints=filters.endurancePoints.filter(v=>/^[0-6]$/.test(v));
+ if(!p.has('sources')&&p.has('source')){const source=p.get('source');filters.sources=source==='both'?['utmb','itra']:[source];if(source==='both')filters.sourceMatch='all';}
+ filters.sources=[...new Set(filters.sources.filter(s=>['utmb','itra','worldsmarathons'].includes(s)))];
+ if(filters.sourceMatch!=='all'||filters.sources.length<2)filters.sourceMatch='any';
+ if(!p.has('continents')&&p.has('continent'))filters.continents=[p.get('continent')];
+ filters.continents=[...new Set(filters.continents.filter(c=>['Africa','Asia','Europe','North America','South America','Oceania'].includes(c)))];
  if(!['','road','trail','mixed','other','unknown'].includes(filters.worldsmarathonsSurface))filters.worldsmarathonsSurface='';
  filters.categories=filters.categories.filter(c=>['20k','42','50k','100k','100m','other'].includes(c));
  if(p.has('datePreset')&&filters.datePreset!=='any')Object.assign(filters,presetDates(filters.datePreset));
  else if(p.has('from')||p.has('to')||filters.when!=='upcoming'){if(!p.has('datePreset'))filters.datePreset='';if(!p.has('from'))filters.from='';if(!p.has('to'))filters.to='';}
  if(filters.datePreset==='any')Object.assign(filters,{from:'',to:''});
+ filters.months=[...new Set(filters.months.filter(m=>/^\d{4}-(0[1-9]|1[0-2])$/.test(m)))].sort();
+ if(filters.months.length)Object.assign(filters,{datePreset:'',from:'',to:''});
+ $('#month-picker').open=!!filters.months.length;
  const sort=p.get('sort');$('#sort').value=['soonest','newest','distance','elevation'].includes(sort)?sort:'soonest';updateFilterUI();
 }
 function reset(){filters=defaults();$('#sort').value='soonest';$('#country-search').value='';$$('#country-options label').forEach(e=>e.hidden=false);runFilters();}
@@ -99,11 +118,12 @@ function handleResults(m){
 }
 function detail(r){
  $('#detail-back').hidden=!activeGroup;
- clearHover();selectedRaceId=r.id;writeURL();globe.focus(r);globe.highlight(r);const site=safeUrl(r.website),grade=raceGrade(r);
+ clearHover();selectedRaceId=r.id;writeURL();globe.highlight(r,{reveal:!activeGroup});const site=safeUrl(r.website),grade=raceGrade(r);
  $('#detail-content').style.setProperty('--race-grade-color',grade.color);$('#detail-content').dataset.grade=grade.key;
  $('#detail-content').innerHTML=`${photo(r,'detail-image','eager')}<div class="detail-top"><div class="detail-grade">${categoryBadge(r)}<span>${escape(raceGrades(r).length>1?'UTMB + ITRA grades':grade.provider==='utmb'?'UTMB category':grade.provider==='itra'?'ITRA Endurance Points':'Race classification')}</span></div><span class="eyebrow">THE NEXT STARTING LINE</span><h2>${escape(r.name)}</h2><p>${escape(r.eventName)}</p></div><div class="detail-body"><dl class="detail-grid"><div><dt>Race date</dt><dd>${escape(raceDate(r,true))}</dd></div><div><dt>${raceGrades(r).length>1?'Grades':grade.provider==='utmb'?'UTMB category':grade.provider==='itra'?'ITRA Endurance Points':'Race type'}</dt><dd>${categoryBadge(r)}</dd></div><div><dt>Distance</dt><dd>${r.distanceKm==null?'Not supplied':number(r.distanceKm)+' km'}</dd></div><div><dt>Elevation gain</dt><dd>${r.elevationGainM==null?'Not supplied':number(r.elevationGainM)+' m D+'}</dd></div></dl>${ratingDetails(r)}${r.extensions?.worldsmarathons&&!r.extensions?.utmb&&!r.extensions?.itra?'<p class="small-note">Marathon distance and dates come from the event listing. Check the organiser for the exact course and start time.</p>':r.datePrecision==='event'?'<p class="small-note">Date is from the event calendar; the course start date is not confirmed.</p>':''}<div class="detail-place">${escape(racePlace(r))}<small>${r.longitude==null?'No reliable location match. See the organiser’s website for the start.':`Approximate ${r.locationPrecision==='event'?'event':'town'} location · ${r.latitude.toFixed(4)}°, ${r.longitude.toFixed(4)}°<br>${r.locationPrecision==='event'?'Location supplied by the event catalogue':'Town name match from GeoNames'}; not a verified starting line.`}</small></div><div class="detail-actions"><button type="button" data-share-race>Share race ↗</button><a href="${escape(reportURL(r))}" target="_blank" rel="noopener noreferrer">Report a correction ↗</a></div><div class="detail-links">${site?`<a href="${escape(site)}" target="_blank" rel="noopener noreferrer">Visit race website ↗</a>`:''}${sourceLinks(r)}</div><p class="detail-source">${sourceProvenance(r)}${r.imageSource?`<br>Photo: <a href="${escape(r.imageSource)}" target="_blank" rel="noopener noreferrer">image source ↗</a>`:''}<br>Check race details with the organiser before making plans.</p></div>`;
- const dialog=$('#detail-dialog');const title=$('#detail-content h2');title.id='race-title';dialog.setAttribute('aria-labelledby','race-title');if(!dialog.open){dialogReturnTarget=document.activeElement;dialog.showModal();}dialog.scrollTop=0;
+ const dialog=$('#detail-dialog');const title=$('#detail-content h2');title.id='race-title';dialog.setAttribute('aria-labelledby','race-title');showDetailsDialog();dialog.scrollTop=0;
 }
+function showDetailsDialog(){const dialog=$('#detail-dialog');if(!dialog.open){const sidebar=$('#race-results');dialogReturnTarget=document.activeElement;dialogSidebarScroll=sidebar.getClientRects().length?sidebar.scrollTop:null;dialog.showModal();}}
 function openRace(id,{fromGroup=false}={}){
  if(fromGroup&&activeGroup){activeGroup.scrollTop=$('#detail-dialog').scrollTop;activeGroup.focusId=id;}
  else activeGroup=null;
@@ -129,7 +149,7 @@ function showGroup(m,{restore=false}={}){
  const places=[...new Set(m.items.map(r=>racePlace(r,'')).filter(Boolean))];
  $('#detail-content').innerHTML=`<div class="group-dialog-title"><span class="eyebrow">RACES IN THIS AREA</span><h2>${escape(places.length===1?places[0]:'More than one starting line.')}</h2><p>${number(m.total)} matching races.</p></div><div class="details-group-list">${m.items.map(groupCard).join('')}</div>${m.total>100?'<p class="small-note" style="padding:18px 28px">Showing the first 100. Narrow your dates to explore more.</p>':''}`;
  const dialog=$('#detail-dialog');$('#detail-content h2').id='race-title';dialog.setAttribute('aria-labelledby','race-title');
- if(!dialog.open){dialogReturnTarget=document.activeElement;dialog.showModal();}
+ showDetailsDialog();
  dialog.scrollTop=restore?activeGroup.scrollTop:0;
  if(restore){const target=[...dialog.querySelectorAll('[data-race]')].find(el=>el.dataset.race===activeGroup.focusId);target?.focus({preventScroll:true});}
 }
@@ -145,7 +165,7 @@ document.addEventListener('themechange',e=>globe.setTheme(e.detail));
 globe.load().then(()=>{if(sharedCamera)globe.map.jumpTo(sharedCamera);}).catch(error=>{const notice=document.createElement('div');notice.className='error-banner';notice.textContent='The detailed map could not load. You can still browse races worldwide.';$('.globe-panel').append(notice);filters.inView=false;runFilters();console.warn(error.message);});
 worker.onmessage=({data:m})=>{
  if(m.type==='ready'){
-   ready=true;globePointKey=null;meta=m.meta;$('#snapshot-label').textContent=`${['utmb','itra','worldsmarathons'].filter(p=>p==='utmb'||meta.sourceMeta?.[p]?.races).map(p=>{const stamp=meta.sourceMeta?.[p]?.fetchedAt||(p==='utmb'?meta.fetchedAt:null);return `${p==='worldsmarathons'?'Marathons':providerName(p)} ${stamp?displayDate(stamp.slice(0,10)):'date unavailable'}`;}).join(' · ')}`;
+   ready=true;globePointKey=null;meta=m.meta;$('#snapshot-label').textContent=`Data refreshed: ${['utmb','itra','worldsmarathons'].filter(p=>p==='utmb'||meta.sourceMeta?.[p]?.races).map(p=>{const stamp=meta.sourceMeta?.[p]?.fetchedAt||(p==='utmb'?meta.fetchedAt:null);return `${p==='worldsmarathons'?'Marathons':providerName(p)} ${stamp?displayDate(stamp.slice(0,10)):'date unavailable'}`;}).join(' · ')}`;
    const itra=meta.sourceMeta?.itra;$('#itra-status').textContent=itra?.races?`${number(itra.races)} ITRA courses · ${number(meta.mergeSummary?.merged||0)} matched with UTMB. ${itra.acquisition==='public-index'?`Selected indexed listings; live refresh unavailable. ${number(itra.coverage?.rated||0)} have Endurance Points; ${number(itra.coverage?.mountainRated||0)} have Mountain Level.`:itra.state==='unavailable'?'Refresh unavailable; showing the last saved data.':itra.coverage?.completeness==='calendar-count-verified'?`Rolling 12-month calendar · Updated ${displayDate(itra.fetchedAt.slice(0,10))}. ${number(itra.coverage.rated)} have Endurance Points; ${number(itra.coverage.mountainRated)} have Mountain Level.`:'Partial calendar coverage.'}`:'ITRA data is not available yet. UTMB races are ready to browse.';
    const wm=meta.sourceMeta?.worldsmarathons;$('#worldsmarathons-status').hidden=!wm?.races;
    $('#worldsmarathons-status').textContent=wm?.races?`${number(wm.races)} World’s Marathons listings · ${number(wm.mergeSummary?.merged||0)} matched. ${wm.state==='unavailable'?'Refresh unavailable; showing saved data.':`Updated ${displayDate(wm.fetchedAt.slice(0,10))} · Refreshes weekly.`}`:'';
@@ -162,10 +182,13 @@ worker.onmessage=({data:m})=>{
 };
 worker.onerror=()=>showError('Unable to start the race browser. Reload in an up-to-date browser.');
 form.addEventListener('submit',e=>e.preventDefault());
-form.addEventListener('input',e=>{const el=e.target;if(el.name==='country'){const s=new Set(filters.countries);if(el.checked)s.add(el.value);else s.delete(el.value);setFilter('countries',[...s]);}else if(Object.hasOwn(filters,el.name)){if(['from','to'].includes(el.name))filters.datePreset='';setFilter(el.name,el.value,false);}});
+form.addEventListener('input',e=>{const el=e.target;if(el.name==='country'||['sources','continents'].includes(el.name)){const key=el.name==='country'?'countries':el.name,s=new Set(filters[key]);if(el.checked)s.add(el.value);else s.delete(el.value);if(key==='sources'&&s.size<2)filters.sourceMatch='any';setFilter(key,[...s]);}else if(Object.hasOwn(filters,el.name)){if(['from','to'].includes(el.name)){filters.datePreset='';filters.months=[];}setFilter(el.name,el.value,false);}});
+$('#source-match-all').addEventListener('change',e=>setFilter('sourceMatch',e.target.checked?'all':'any'));
 form.addEventListener('change',e=>{if(e.target.tagName==='SELECT'&&Object.hasOwn(filters,e.target.name))setFilter(e.target.name,e.target.value);});
-$$('[data-when]').forEach(b=>b.addEventListener('click',()=>{filters.when=b.dataset.when;filters.datePreset='any';filters.from='';filters.to='';runFilters();}));
-$$('[data-date]').forEach(b=>b.addEventListener('click',()=>{filters.datePreset=b.dataset.date;if(b.dataset.date!=='any')filters.when='upcoming';Object.assign(filters,presetDates(b.dataset.date));runFilters();}));
+$$('[data-when]').forEach(b=>b.addEventListener('click',()=>{filters.when=b.dataset.when;filters.datePreset=filters.months.length?'':'any';filters.from='';filters.to='';runFilters();}));
+$$('[data-date]').forEach(b=>b.addEventListener('click',()=>{filters.months=[];filters.datePreset=b.dataset.date;if(b.dataset.date!=='any')filters.when='upcoming';Object.assign(filters,presetDates(b.dataset.date));runFilters();}));
+$('#month-options').addEventListener('click',e=>{const button=e.target.closest('[data-month]');if(!button)return;const selected=new Set(filters.months);if(selected.has(button.dataset.month))selected.delete(button.dataset.month);else selected.add(button.dataset.month);Object.assign(filters,{months:[...selected].sort(),datePreset:selected.size?'':'any',from:'',to:''});runFilters();});
+$('#months-clear').addEventListener('click',()=>{Object.assign(filters,{months:[],datePreset:'any',from:'',to:''});runFilters();});
 $$('[data-endurance]').forEach(b=>b.addEventListener('click',()=>{const s=new Set(filters.endurancePoints);if(s.has(b.dataset.endurance))s.delete(b.dataset.endurance);else s.add(b.dataset.endurance);setFilter('endurancePoints',[...s]);}));
 $$('[data-category]').forEach(b=>b.addEventListener('click',()=>{const s=new Set(filters.categories);if(s.has(b.dataset.category))s.delete(b.dataset.category);else s.add(b.dataset.category);setFilter('categories',[...s]);}));
 $$('[data-distance]').forEach(b=>b.addEventListener('click',()=>{[filters.distanceMin,filters.distanceMax]=b.dataset.distance.split(',');runFilters();}));
@@ -191,10 +214,10 @@ $('#about-open').addEventListener('click',()=>$('#about-dialog').showModal());$(
 $('#open-filters').setAttribute('aria-controls','filters-panel');$('#show-list').setAttribute('aria-controls','race-results');
 $('#open-filters').addEventListener('click',()=>{closePanels();$('#filters-panel').classList.add('open');panelReturnTarget=$('#open-filters');syncPanelAccessibility();$('#open-filters').setAttribute('aria-expanded','true');$('#search').focus();});
 $('#filters-close').addEventListener('click',()=>{closePanels();$('#open-filters').focus();});$('#filters-done').addEventListener('click',()=>{if(valid()){closePanels();$('#open-filters').focus();}});
-$('#show-list').addEventListener('click',()=>{closePanels();$('#race-results').classList.add('open');panelReturnTarget=$('#show-list');syncPanelAccessibility();$('#show-list').setAttribute('aria-expanded','true');$('#list-close').focus();updatePanelToggle();});$('#list-close').addEventListener('click',()=>{closePanels();$('#show-list').focus();});
+$('#show-list').addEventListener('click',()=>{closePanels();$('#race-results').classList.add('open');panelReturnTarget=$('#show-list');syncPanelAccessibility();$('#show-list').setAttribute('aria-expanded','true');$('#list-close').focus({preventScroll:true});updatePanelToggle();});$('#list-close').addEventListener('click',()=>{closePanels();$('#show-list').focus();});
 $('.skip-link').addEventListener('click',e=>{if(matchMedia('(max-width:800px)').matches){e.preventDefault();$('#show-list').click();}});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'){clearHover();$('.country-picker').open=false;if(!$$('dialog[open]').length){closePanels();panelReturnTarget?.focus();}}if(e.key==='/'&&!['INPUT','SELECT','TEXTAREA'].includes(document.activeElement.tagName)&&!$$('dialog[open]').length){e.preventDefault();if(matchMedia('(max-width:800px)').matches)$('#open-filters').click();$('#search').focus();}});
-window.addEventListener('hashchange',()=>{restoreURL();if(sharedCamera&&globe.ready)globe.map.jumpTo(sharedCamera);runFilters();if(selectedRaceId&&ready)openRace(selectedRaceId);});document.addEventListener('visibilitychange',()=>{if(!document.hidden&&ready){if(filters.datePreset&&filters.datePreset!=='any')Object.assign(filters,presetDates(filters.datePreset));runFilters();}});
+window.addEventListener('hashchange',()=>{restoreURL();if(sharedCamera&&globe.ready)globe.map.jumpTo(sharedCamera);runFilters();if(selectedRaceId&&ready)openRace(selectedRaceId);});
 if(matchMedia('(pointer:coarse)').matches)$('#globe-instruction').textContent='Drag to explore · Pinch to get closer';
 matchMedia('(max-width:800px)').addEventListener('change',()=>{updatePanelToggle();syncPanelAccessibility();});
 updatePanelToggle();syncPanelAccessibility();restoreURL();worker.postMessage({type:'init'});
@@ -217,7 +240,7 @@ async function shareCurrent(){writeURL();const url=location.href,title=selectedR
  $('#share-link').value=url;$('#share-dialog').showModal();$('#share-link').focus();$('#share-link').select();
 }
 $('#share-view').addEventListener('click',shareCurrent);$('#share-close').addEventListener('click',()=>$('#share-dialog').close());
-$('#detail-dialog').addEventListener('close',()=>{activeGroup=null;$('#detail-back').hidden=true;selectedRaceId=null;writeURL();if(dialogReturnTarget?.isConnected&&!dialogReturnTarget.closest('[inert]'))dialogReturnTarget.focus();else if(!matchMedia('(max-width:800px)').matches)globe.map?.getCanvas().focus();});
+$('#detail-dialog').addEventListener('close',()=>{activeGroup=null;$('#detail-back').hidden=true;selectedRaceId=null;writeURL();if(dialogReturnTarget?.isConnected&&!dialogReturnTarget.closest('[inert]'))dialogReturnTarget.focus({preventScroll:true});else if(!matchMedia('(max-width:800px)').matches)globe.map?.getCanvas().focus({preventScroll:true});if(dialogSidebarScroll!=null)$('#race-results').scrollTop=dialogSidebarScroll;});
 function syncPanelAccessibility(){
  const mobile=matchMedia('(max-width:800px)').matches,active=mobile?$('.filters.open,.results-panel.open'):null;
  $('.header').inert=!!active;

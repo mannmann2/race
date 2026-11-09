@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { synthetic } from './fixtures/synthetic.mjs';
 import { readFileSync, existsSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
-import { expandDataset, matches, sortRaces, groupLocations, safeUrl, localToday, presetDates, isWorldSeries, racesInView } from '../web/core.mjs';
+import { expandDataset, matches, sortRaces, groupLocations, safeUrl, localToday, presetDates, nextMonths, isWorldSeries, racesInView } from '../web/core.mjs';
 const snapshotPath=new URL('../web/data/races.json.gz',import.meta.url);
 const data=existsSync(snapshotPath)?JSON.parse(gunzipSync(readFileSync(snapshotPath))):synthetic;
 const races=expandDataset(data);
@@ -53,6 +53,23 @@ test('World Series uses source levels, including Majors and Finals, not a name h
  for(const level of ['serie','major','finale'])assert.ok(isWorldSeries({...fixture,extensions:{utmb:{level}}}));
  assert.equal(isWorldSeries({...fixture,eventName:'by UTMB',extensions:{utmb:{level:'qualifier'}}}),false);
  assert.equal(matches(fixture,{...base,worldSeries:true},'2026-11-08'),false);
+});
+test('month choices roll across years and match a union of exact calendar months',()=>{
+ assert.deepEqual(nextMonths('2026-11-30'),['2026-11','2026-12','2027-01','2027-02','2027-03','2027-04','2027-05','2027-06','2027-07','2027-08','2027-09','2027-10']);
+ assert.equal(nextMonths('2028-02-29').at(-1),'2029-01');
+ const filters={...base,months:['2027-01','2027-03']};
+ for(const date of ['2027-01-01','2027-01-31','2027-03-01','2027-03-31'])assert.ok(matches({...fixture,date},filters,'2026-11-09'),date);
+ for(const date of ['2026-01-10','2027-02-01','2027-02-28','2027-04-01',null])assert.equal(matches({...fixture,date},filters,'2026-11-09'),false,date);
+ assert.ok(matches({...fixture,date:'2027-02-28',dateEnd:'2027-03-02'},filters,'2026-11-09'));
+ assert.equal(matches({...fixture,date:'2027-01-01'},{...filters,countries:['US']},'2026-11-09'),false);
+});
+test('continents and sources each form a union; selected-source intersection is optional',()=>{
+ const shared={...fixture,sources:[{provider:'utmb',id:'1'},{provider:'itra',id:'2'}]};
+ assert.ok(matches(shared,{...base,continents:['Asia','Europe'],sources:['itra','worldsmarathons']},'2026-11-09'));
+ assert.equal(matches(shared,{...base,continents:['Asia','Africa']},'2026-11-09'),false);
+ assert.equal(matches(shared,{...base,sources:['worldsmarathons']},'2026-11-09'),false);
+ assert.ok(matches(shared,{...base,sources:['utmb','itra'],sourceMatch:'all'},'2026-11-09'));
+ assert.equal(matches(shared,{...base,sources:['utmb','worldsmarathons'],sourceMatch:'all'},'2026-11-09'),false);
 });
 test('viewport selection excludes unmapped and off-screen locations without losing the global data',()=>{
  const input=[{...fixture,locationId:'visible'},{...fixture,id:'away',locationId:'away'},{...fixture,id:'unknown',locationId:'visible',longitude:null}];

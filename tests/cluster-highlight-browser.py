@@ -76,6 +76,25 @@ with sync_playwright() as p:
  page.locator('#search').fill('No matching race')
  expect(page.locator('.empty-state')).to_be_visible()
  page.wait_for_function("testMap.getSource('race-highlight').serialize().data.features.length===0")
+ # A visible cluster can contain a location just beyond the horizon. Inspecting
+ # that member must outline its parent without moving the browsing camera.
+ page.evaluate("""async () => {
+  const {Globe}=await import('./globe.mjs'),draw=Globe.prototype.drawCounts;
+  Globe.prototype.drawCounts=function(){window.testGlobe=this;draw.call(this);};testMap.triggerRepaint();
+ }""")
+ page.wait_for_function('!!window.testGlobe')
+ page.evaluate("testMap.jumpTo({center:[0,0],zoom:1})")
+ page.evaluate("""() => {
+  const horizon=Array.from({length:90},(_,i)=>i).filter(lon=>!testMap.transform.isLocationOccluded(maplibregl.LngLat.convert([lon,0]))).at(-1);
+  window.horizonRace={id:'horizon-member',longitude:horizon+2,latitude:0};
+  testGlobe.highlight(null);
+  testGlobe.setPoints([horizon-4,horizon-3,horizon+2].map(lon=>({key:lon+',0',longitude:lon,latitude:0,count:1,locationIds:[]})));
+ }""")
+ page.wait_for_function("!testMap.isMoving() && testMap.isSourceLoaded('races')")
+ assert page.evaluate('!testGlobe.visibleScreenPoint([horizonRace.longitude,0])')
+ page.evaluate('testGlobe.highlight(horizonRace,{reveal:false})')
+ assert wait_highlight(page,'horizon-member')['properties']['markerKey'].startswith('cluster:')
+ assert page.evaluate('testMap.getCenter().lng===0 && testMap.getZoom()===1 && !testMap.isMoving()')
  assert not errors,errors
  print('Parent-cluster membership, same-location bubbles, both themes, rapid hover, focus, zoom regrouping, far-side reveal and clearing passed',flush=True)
  browser.close()

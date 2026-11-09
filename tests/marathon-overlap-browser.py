@@ -1,4 +1,5 @@
 """Verify actual three-source records and the light-mode surround on both layouts."""
+from ui_filters import select_sources
 import os
 from pathlib import Path
 from playwright.sync_api import sync_playwright, expect
@@ -21,7 +22,7 @@ with sync_playwright() as p:
         page.locator('#search').fill('Guatemala Impact Marathon Beast')
         expect(page.locator('#result-count')).to_have_text('1',timeout=30000)
         for source in ['worldsmarathons','utmb','itra','both','']:
-            page.locator('select[name=source]').select_option(source)
+            select_sources(page,source)
             expect(page.locator('#result-count')).to_have_text('1')
         if mobile:
             page.locator('#filters-done').click();page.locator('#show-list').click()

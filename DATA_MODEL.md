@@ -32,7 +32,7 @@ Source records are normalised before filtering. All distances are kilometres, el
 }
 ```
 
-`searchText` is an internal, accent-normalised index generated in the worker. It is excluded from UI payloads. `source` and `sourceId` identify the primary record for compatibility; `sources` contains **all** source records and links. `sources[].values` preserves original names, date, distance, elevation and locality. Provider acquisition/status metadata is retained in `sourceMeta`. Conflicts in dates, distances or elevation gains appear in `conflicts` and in the UI. Ratings live under their originating provider, never under a shared inferred classification.
+`searchText` is an internal, accent-normalised index generated in the worker. It is excluded from UI payloads. `source` and `sourceId` identify the primary record for compatibility; `sources` contains **all** source records and links. `sources[].values` preserves original names, date, distance, elevation and locality. Provider acquisition/status metadata is retained in `sourceMeta`. Differences in dates, distances or elevation gains remain in `conflicts` for provenance; the UI uses the primary values, preferring UTMB when available. Ratings live under their originating provider, never under a shared inferred classification.
 
 ## Event / edition / race
 
@@ -69,6 +69,12 @@ Optional `enrichment` is keyed by provider source race ID. Each entry may contai
 
 World Series filtering reads UTMB levels `serie`, `major` and `finale` exactly. A null category remains null and displays as No UTMB category. No source classification is inferred from names.
 
+Continent and source selections are arrays combined as unions within each filter. The optional source match mode requires every selected provider on the same canonical race. Older single-continent/source URLs, including `source=both`, remain supported.
+
+Specific-month filters store exact `YYYY-MM` values as a union, including event date ranges that overlap a selected month. They replace the preset/custom date range and persist in shared URLs. The picker offers the current calendar month and the following eleven, retaining older selected months when restoring a saved link.
+
+Opening a race from a map group leaves the camera in place. Closing details restores sidebar focus without scrolling, and returning from provider tabs only refreshes filters when the local calendar day changes or new data is available. Loaded sidebar pages remain intact during race inspection.
+
 The worker retains the global filtered/sorted set and derives viewport lists from it. Map marker data always uses the global set, so moving the map never erases races outside the prior viewport. Filter sequence and view revision numbers reject stale asynchronous responses and pagination after a view change. The default viewport filter excludes unknown locations; users can disable it to see the complete set.
 
 ## Refresh and persistence
@@ -103,7 +109,7 @@ The normalized source-independent race model remains the same. The composed sche
 
 `catalog-index.json` holds content-derived filenames, sizes, an acquisition cutoff, coverage and per-source freshness. Payloads land before this pointer changes. The worker starts with upcoming data and loads the archive on demand for historical filters or older race links. A failed background check preserves loaded data; failed archive requests return the user to upcoming browsing. Mutable index pointers are never served from stale precompressed copies.
 
-The source matcher now uses an explicitly named course suffix from a validated, matching-year ITRA URL to distinguish walking, relay, night, team and stage variants hidden by event-only calendar labels. It still requires a mutually unique course within an independently linked edition. Manually reviewed pairs, explicit separations and their evidence remain in `scripts/source-overrides.json`. Identified test records are excluded by exact source ID in `scripts/source-exclusions.json`; their raw source snapshots are retained on the host. No broad keyword suppression is applied.
+The source matcher now uses an explicitly named course suffix from a validated, matching-year ITRA URL to distinguish walking, relay, night, team and stage variants hidden by event-only calendar labels. It still requires a mutually unique course within an independently linked edition. Manually reviewed pairs, explicit separations and their evidence remain in `scripts/source-overrides.json`. Identified test records are excluded by exact provider race or event ID in `scripts/source-exclusions.json` before location resolution and matching. Event exclusions cover future dated editions; raw source snapshots are retained on the host. No broad keyword suppression is applied.
 
 ## Location verification
 

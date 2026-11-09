@@ -1,4 +1,9 @@
 {
   "itra:2026:113425": "Reviewed 2026-11-09: provider test record named testrace-9:badgpxfilename, event zdg.",
-  "itra:2026:121671": "Reviewed 2026-11-09: provider test record named testrace, event AdiTest1."
+  "itra:2026:121671": "Reviewed 2026-11-09: provider test record named testrace, event AdiTest1.",
+  "itra:2027:118896": "Reviewed 2026-11-09: AdiTest3 / testevent1 placeholder with inconsistent location details.",
+  "itra:2027:122030": "Reviewed 2026-11-09: test / dad placeholder listing in Agim, India.",
+  "worldsmarathons:event:internal-test-event": "Reviewed 2026-11-09: Internal Test Event placeholder in Stockholm; exclude all editions.",
+  "worldsmarathons:event:membership-test-event": "Reviewed 2026-11-09: Membership Test Event placeholder in Stockholm; exclude all editions.",
+  "worldsmarathons:event:rothwell-kebabathon-juoes-test": "Reviewed 2026-11-09: Rothwell Kebabathon-juöes test placeholder in Leeds; exclude all editions."
 }

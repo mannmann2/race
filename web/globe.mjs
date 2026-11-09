@@ -119,11 +119,11 @@ export class Globe {
   }
   async hover(e){const features=this.featuresAt(e.point);this.map.getCanvas().style.cursor=features.length?'pointer':'';const token=++this.hoverToken;if(!features.length){this.onHover(null);return;}try{const point=await this.featurePoint(features[0]);if(token===this.hoverToken&&point)this.onHover(point,e.point);}catch{this.onHover(null);}}
   async click(e){const feature=this.featuresAt(e.point)[0];if(!feature)return;const revision=this.viewRevision;try{const point=await this.featurePoint(feature);if(point&&revision===this.viewRevision)this.onSelect(point);}catch{}}
-  highlight(race){
+  highlight(race,{reveal=true}={}){
     this.highlightedRace=race;if(!this.ready)return;
     const coordinates=race?.longitude!=null&&race?.latitude!=null?[race.longitude,race.latitude]:null;
     this.queueHighlight();
-    if(coordinates&&!this.visibleScreenPoint(coordinates))this.map.easeTo({center:coordinates,zoom:this.map.getZoom(),duration:this.duration(450)});
+    if(reveal&&coordinates&&!this.visibleScreenPoint(coordinates))this.map.easeTo({center:coordinates,zoom:this.map.getZoom(),duration:this.duration(450)});
   }
   queueHighlight(){
     this.highlightRevision++;this.highlightDirty=!!this.highlightedRace;
@@ -135,7 +135,7 @@ export class Globe {
     if(!race||race.longitude==null||race.latitude==null)return;
     const key=`${race.longitude},${race.latitude}`;
     if(!this.pointByKey.has(key))return;
-    const position=this.visibleScreenPoint([race.longitude,race.latitude]);if(!position)return;
+    const position=this.map.project([race.longitude,race.latitude]);if(!Number.isFinite(position.x)||!Number.isFinite(position.y))return;
     // A whole-viewport rendered query can miss front-facing features on the globe.
     // Start with loaded bubbles, then confirm the matching bubble with a local hit.
     const seen=new Set(),features=this.map.querySourceFeatures('races').filter(f=>{

@@ -1,4 +1,5 @@
 """Real worker/UI with isolated course fixtures; never alters the race catalog."""
+from ui_filters import select_sources
 import gzip,json,os
 from pathlib import Path
 from playwright.sync_api import sync_playwright,expect
@@ -33,7 +34,7 @@ with sync_playwright() as p:
   if mobile:page.locator('#open-filters').click()
   expect(button).to_have_attribute('aria-pressed','true')
   for source,n in [('itra',1),('worldsmarathons',1),('utmb',4),('',5)]:
-   page.locator('select[name=source]').select_option(source);count(page,n)
+   select_sources(page,source);count(page,n)
   button.scroll_into_view_if_needed()
   box=button.bounding_box();assert box and box['width']>=30 and box['height']>=30
   assert page.evaluate('document.documentElement.scrollWidth<=innerWidth')

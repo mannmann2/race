@@ -1,4 +1,5 @@
 """End-to-end checks; run a local server and set TEST_URL for its address."""
+from ui_filters import select_continents
 import gzip,json,os,pathlib,time
 from playwright.sync_api import sync_playwright,expect
 BASE=os.environ.get('TEST_URL','http://127.0.0.1:4173').rstrip('/')+'/'
@@ -72,7 +73,7 @@ with sync_playwright() as p:
             page.locator('#in-view').uncheck();page.locator('#reset').click();page.locator('#in-view').uncheck();page.locator('[data-when="all"]').click();settle(page)
             expect(page.locator('#result-count')).to_have_text(f'{EXPECTED:,}')
             page.locator('#load-more').scroll_into_view_if_needed();page.locator('#load-more').click();expect(page.locator('.race-card')).to_have_count(120)
-            page.locator('select[name="continent"]').select_option('Europe');settle(page)
+            select_continents(page,['Europe']);settle(page)
             page.locator('.country-picker summary').click();page.locator('#country-options input[value="FR"]').check();page.locator('#country-options input[value="IT"]').check();page.locator('.country-picker summary').click();settle(page)
             assert page.evaluate("testResults.items.every(r=>r.continent==='Europe'&&['FR','IT'].includes(r.countryCode))")
             page.locator('[data-category="50k"]').click();settle(page)

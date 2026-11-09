@@ -15,6 +15,10 @@ export function presetDates(preset, today=localToday()) {
   const last=new Date(end.getFullYear(),end.getMonth()+1,0,12).getDate();
   end.setDate(Math.min(day,last));return {from:today,to:localToday(end)};
 }
+export function nextMonths(today=localToday()) {
+  const [year,month]=today.split('-').map(Number);
+  return Array.from({length:12},(_,i)=>localToday(new Date(year,month-1+i,1,12)).slice(0,7));
+}
 export function isWorldSeries(race) { return ['serie','major','finale'].includes(race.extensions?.utmb?.level); }
 export function sourceRecords(race) {
   return race.sources || [{provider:race.source,id:race.sourceId,url:race.sourceUrl}];
@@ -89,19 +93,21 @@ export function matches(race, filters, today) {
   if(terms.some(t=>!race.searchText.includes(t))) return false;
   if(filters.categories?.length && !filters.categories.some(c=>c==='42'?isMarathon(race):c===(race.extensions?.utmb?.category || 'other'))) return false;
   const providers=sourceRecords(race).map(s=>s.provider);
-  if(filters.source==='both' && !['utmb','itra'].every(s=>providers.includes(s)))return false;
-  if(filters.source && filters.source!=='both' && !providers.includes(filters.source))return false;
+  const selectedSources=Array.isArray(filters.sources)?filters.sources:filters.source==='both'?['utmb','itra']:filters.source?[filters.source]:[];
+  if(selectedSources.length && !(filters.sourceMatch==='all'||filters.source==='both'?selectedSources.every(s=>providers.includes(s)):selectedSources.some(s=>providers.includes(s))))return false;
   if(filters.worldsmarathonsSurface && (!race.extensions?.worldsmarathons||(race.extensions.worldsmarathons.surface||'unknown')!==filters.worldsmarathonsSurface))return false;
   const itra=race.extensions?.itra;
   if(filters.endurancePoints?.length && (itra?.endurancePoints==null || !filters.endurancePoints.map(Number).includes(itra.endurancePoints)))return false;
   for(const [key,test] of [['mountainMin',(v,b)=>v>=b],['mountainMax',(v,b)=>v<=b]])if(filters[key]!=='' && filters[key]!=null && (itra?.mountainLevel==null || !test(itra.mountainLevel,Number(filters[key]))))return false;
   if(filters.countries?.length && !filters.countries.includes(race.countryCode)) return false;
-  if(filters.continent && race.continent !== filters.continent) return false;
+  const continents=Array.isArray(filters.continents)?filters.continents:filters.continent?[filters.continent]:[];
+  if(continents.length && !continents.includes(race.continent)) return false;
   if(filters.worldSeries && !isWorldSeries(race)) return false;
   if(filters.when==='upcoming' && (!race.date || (race.dateEnd||race.date)<today)) return false;
   if(filters.when==='past' && (!race.date || (race.dateEnd||race.date)>=today)) return false;
   if(filters.from && (!race.date || (race.dateEnd||race.date)<filters.from)) return false;
   if(filters.to && (!race.date || race.date>filters.to)) return false;
+  if(filters.months?.length && (!race.date || !filters.months.some(month=>race.date.slice(0,7)<=month&&(race.dateEnd||race.date).slice(0,7)>=month)))return false;
   for(const [field,min,max] of [['distanceKm','distanceMin','distanceMax'],['elevationGainM','elevationMin','elevationMax']]) {
     if(filters[min]!=='' && filters[min]!=null && (race[field]==null || race[field]<Number(filters[min]))) return false;
     if(filters[max]!=='' && filters[max]!=null && (race[field]==null || race[field]>Number(filters[max]))) return false;

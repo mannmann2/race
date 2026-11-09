@@ -4,6 +4,7 @@ import { readFileSync, existsSync } from 'node:fs';
 import { gunzipSync } from 'node:zlib';
 import { combineRace, expandDataset, matches, groupLocations } from '../web/core.mjs';
 import { matchMarathons } from '../scripts/match-marathons.mjs';
+import { sourceExcluded } from '../scripts/source-exclusions.mjs';
 
 const base={id:'utmb:1',source:'utmb',sourceId:'1',name:'Fixture Alpine Marathon',eventName:'Fixture Alpine Marathon',date:'2027-05-01',datePrecision:'race',countryCode:'FR',place:'Paris',longitude:2.35,latitude:48.86,distanceKm:42.2,elevationGainM:500,sourceUrl:'https://utmb.world/race/1',extensions:{utmb:{category:'50k'}}};
 const wm={...base,id:'worldsmarathons:2027:fixture:marathon',source:'worldsmarathons',sourceId:'2027:fixture:marathon',sourceUrl:'https://worldsmarathons.com/marathon/fixture',datePrecision:'event-day',distanceKm:42.195,elevationGainM:null,extensions:{worldsmarathons:{surface:'road'}}};
@@ -32,10 +33,13 @@ test('live marathon snapshot has validated coverage, correct provenance and one 
  const snapshot=JSON.parse(readFileSync(new URL('../data/worldsmarathons-snapshot.json',import.meta.url)));
  const data=JSON.parse(gunzipSync(readFileSync(new URL('../web/data/catalog.json.gz',import.meta.url))));
  const races=expandDataset(data),marathons=races.filter(r=>matches(r,{source:'worldsmarathons'},'2000-01-01'));
+ const exclusions=JSON.parse(readFileSync(new URL('../scripts/source-exclusions.json',import.meta.url)));
+ const eligible=snapshot.races.filter(r=>!sourceExcluded(r,exclusions));
  assert.equal(snapshot.coverage.eventsDownloaded,snapshot.coverage.races+Object.values(snapshot.coverage.skipped).reduce((a,b)=>a+b,0));
  assert.equal(snapshot.races.length,snapshot.coverage.races+snapshot.coverage.archived);
- assert.equal(marathons.length,snapshot.races.length);
- assert.equal(new Set(marathons.flatMap(r=>r.sources.filter(s=>s.provider==='worldsmarathons').map(s=>s.id))).size,snapshot.races.length);
+ assert.equal(marathons.length,eligible.length);
+ assert.equal(new Set(marathons.flatMap(r=>r.sources.filter(s=>s.provider==='worldsmarathons').map(s=>s.id))).size,eligible.length);
+ for(const r of snapshot.races.filter(r=>sourceExcluded(r,exclusions)))assert.ok(!marathons.some(m=>m.sources.some(s=>s.provider===r.source&&s.id===r.sourceId)),r.id);
  assert.equal(groupLocations(marathons).reduce((n,p)=>n+p.count,0),marathons.filter(r=>r.longitude!=null).length);
  for(const race of snapshot.races){
   assert.ok(race.distanceKm>=42&&race.distanceKm<=42.3);assert.ok(race.date<=race.dateEnd);

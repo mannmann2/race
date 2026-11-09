@@ -2,6 +2,7 @@
 
 Fixtures are intercepted in this browser only; never written to the public data.
 """
+from ui_filters import select_sources
 import datetime
 import gzip
 import json
@@ -69,7 +70,7 @@ with sync_playwright() as p:
     context.on('page', lambda page: page.on('pageerror', lambda error: errors.append(str(error))))
     page = load(context)
     expect(page.locator('#itra-status')).to_contain_text('3 ITRA courses')
-    page.locator('select[name=source]').select_option('both')
+    select_sources(page,'both')
     count(page, 1)
     expect(page.locator('#races .grade-icon-utmb')).to_have_attribute('alt','UTMB 50K')
     expect(page.locator('#races .grade-icon-itra')).to_have_attribute('alt','ITRA 3 Endurance Points')
@@ -86,7 +87,7 @@ with sync_playwright() as p:
     assert page.locator('.detail-place').evaluate('el=>el.firstChild.textContent')=='Chamonix, France'
     page.screenshot(path=str(OUT / 'sources-detail-light.png'))
     page.locator('#detail-close').click()
-    page.locator('select[name=source]').select_option('')
+    select_sources(page,'')
     page.locator('[data-endurance="0"]').click()
     count(page, 1)
     expect(page.locator('#races')).to_contain_text('ITRA zero rating')
@@ -102,7 +103,7 @@ with sync_playwright() as p:
     expect(page.locator('[data-endurance="3"]')).to_have_attribute('aria-pressed', 'true')
     expect(page.locator('select[name=mountainMax]')).to_have_value('0')
     expect(page.locator('html')).to_have_attribute('data-theme', 'dark')
-    page.locator('select[name=source]').select_option('utmb')
+    select_sources(page,'utmb')
     count(page, 0)
     page.locator('#reset').click()
     expect(page.locator('[data-date="6m"]')).to_have_attribute('aria-pressed', 'true')
@@ -131,7 +132,7 @@ with sync_playwright() as p:
     context.on('page', lambda page: page.on('pageerror', lambda error: errors.append(str(error))))
     page = load(context)
     page.locator('#open-filters').tap()
-    page.locator('select[name=source]').select_option('itra')
+    select_sources(page,'itra')
     page.locator('[data-endurance="3"]').tap()
     page.locator('select[name=mountainMin]').select_option('6')
     page.locator('select[name=mountainMax]').select_option('6')
