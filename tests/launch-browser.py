@@ -44,7 +44,7 @@ with sync_playwright() as p:
   print(NAME+(': phone focus, sharing and dark mode passed' if mobile else ': fast initial payload, race deep links and desktop passed'),flush=True)
  # History is loaded on demand; a map failure must leave all data browsable.
  c=browser.new_context(viewport={'width':1280,'height':800});c.route('**/data/map-style.json',lambda r:r.abort())
- page=c.new_page();page.goto(BASE+'#when=all&datePreset=any&inView=0',wait_until='domcontentloaded');expect(page.locator('#races .race-card').first).to_be_visible(timeout=90000)
+ page=c.new_page();page.goto(BASE+'#when=past&datePreset=any&inView=0',wait_until='domcontentloaded');expect(page.locator('#races .race-card').first).to_be_visible(timeout=90000)
  expect(page.locator('.error-banner')).to_be_visible();assert not page.locator('#in-view').is_checked()
  count=page.locator('#result-count').inner_text();assert int(count.replace(',',''))>0
  page.locator('#about-open').click();expect(page.locator('#about-dialog')).to_have_attribute('aria-labelledby','about-title');expect(page.locator('#privacy-title')).to_be_visible()

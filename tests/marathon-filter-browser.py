@@ -22,7 +22,19 @@ with sync_playwright() as p:
   page=c.new_page();errors=[];page.on('pageerror',lambda e:errors.append(str(e)))
   page.goto(BASE+'#when=all&datePreset=any&inView=0',wait_until='domcontentloaded');count(page,7)
   if mobile:page.locator('#open-filters').click()
-  button=page.locator('[data-category="42"]');button.click();count(page,5)
+  expect(page.locator('[data-when]')).to_have_count(2)
+  expect(page.locator('[data-when="upcoming"]')).to_have_attribute('aria-pressed','true')
+  page.locator('[data-when="past"]').click();count(page,0)
+  page.locator('[data-when="upcoming"]').click();count(page,7)
+  expect(page.locator('#filters-panel .source-status')).to_have_count(0)
+  expect(page.get_by_role('heading',name='Race categories',exact=True)).to_be_visible()
+  button=page.get_by_role('button',name='Marathons',exact=True)
+  button.scroll_into_view_if_needed()
+  box=button.bounding_box();other=page.locator('[data-category="other"]').bounding_box();group=page.locator('.category-options').bounding_box()
+  assert box['y']>=other['y']+other['height'] and abs(box['width']-group['width'])<1
+  grades=[page.locator('[data-category="'+grade+'"]').bounding_box() for grade in ['20k','50k','100k','100m']]
+  assert max(b['y'] for b in grades)-min(b['y'] for b in grades)<1
+  button.click();count(page,5)
   expect(button).to_have_attribute('aria-pressed','true')
   expect(page.locator('#races')).to_contain_text('Marathon graded 20K')
   expect(page.locator('#races')).to_contain_text('Marathon graded 100K')

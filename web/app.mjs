@@ -86,7 +86,7 @@ function setFilter(key,value,immediate=true){filters[key]=value;clearTimeout(fil
 function restoreURL(){
  const p=new URLSearchParams(location.hash.slice(1));filters=defaults();selectedRaceId=raceFromURL(location.hash);sharedCamera=cameraFromURL(location.hash);
  for(const key of Object.keys(filters)){if(key==='locationId'||!p.has(key))continue;const v=p.get(key).slice(0,400);if(['categories','countries','endurancePoints','months','sources','continents'].includes(key))filters[key]=v.split(',').filter(Boolean);else if(['worldSeries','inView'].includes(key))filters[key]=v==='1';else filters[key]=v;}
- if(!['all','upcoming','past'].includes(filters.when))filters.when='upcoming';
+ if(!['upcoming','past'].includes(filters.when))filters.when='upcoming';
  filters.endurancePoints=filters.endurancePoints.filter(v=>/^[0-6]$/.test(v));
  if(!p.has('sources')&&p.has('source')){const source=p.get('source');filters.sources=source==='both'?['utmb','itra']:[source];if(source==='both')filters.sourceMatch='all';}
  filters.sources=[...new Set(filters.sources.filter(s=>['utmb','itra','worldsmarathons'].includes(s)))];
@@ -170,7 +170,7 @@ worker.onmessage=({data:m})=>{
    const wm=meta.sourceMeta?.worldsmarathons;$('#worldsmarathons-status').hidden=!wm?.races;
    $('#worldsmarathons-status').textContent=wm?.races?`${number(wm.races)} World’s Marathons listings · ${number(wm.mergeSummary?.merged||0)} matched. ${wm.state==='unavailable'?'Refresh unavailable; showing saved data.':`Updated ${displayDate(wm.fetchedAt.slice(0,10))} · Refreshes weekly.`}`:'';
    $('#country-options').innerHTML=meta.countries.map(c=>`<label><input type="checkbox" name="country" value="${escape(c.code)}">${escape(c.name)}</label>`).join('');
-   $('#about-stats').innerHTML=`<strong>${number(meta.coverage.races)} races</strong> · ${meta.coverage.from.slice(0,4)}–${meta.coverage.to.slice(0,4)}<br>UTMB snapshot: ${escape(displayDate(meta.fetchedAt.slice(0,10),true))}<br>${number(meta.coverage.races-meta.coverage.unmapped)} records have approximate locations.<br>${escape($('#itra-status').textContent)}<br>${escape($('#worldsmarathons-status').textContent)}`;updateSourceHealth();runFilters();if(deepLinkPending&&selectedRaceId){deepLinkPending=false;openRace(selectedRaceId);}
+   $('#about-stats').innerHTML=`<strong>${number(meta.coverage.races)} races</strong> · ${meta.coverage.from.slice(0,4)}–${meta.coverage.to.slice(0,4)}<br>UTMB snapshot: ${escape(displayDate(meta.fetchedAt.slice(0,10),true))}<br>${number(meta.coverage.races-meta.coverage.unmapped)} records have approximate locations.`;updateSourceHealth();runFilters();if(deepLinkPending&&selectedRaceId){deepLinkPending=false;openRace(selectedRaceId);}
  }else if(m.type==='results'||m.type==='view')handleResults(m);
  else if(m.type==='page'){if(m.seq!==seq||m.viewVersion!==viewVersion)return;pending=false;page=m.page;renderCards(m.items,true);$('#load-more').hidden=(page+1)*60>=total;$('#load-more').disabled=false;}
  else if(m.type==='detail'){if(m.requestId===detailRequest)detail(m.race);}

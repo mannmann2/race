@@ -52,7 +52,7 @@ with sync_playwright() as p:
   page.locator('#reset').click();count(page,5)
   expect(page.locator('[data-date="6m"]')).to_have_attribute('aria-pressed','true')
   # Shared selections remain explicit about year and survive their months ageing out.
-  page.goto(BASE+'#when=all&months=2026-01,2026-01,2027-13,bad&inView=0',wait_until='domcontentloaded');count(page,1)
+  page.goto(BASE+'#when=past&months=2026-01,2026-01,2027-13,bad&inView=0',wait_until='domcontentloaded');count(page,1)
   if mobile and page.locator('#open-filters').get_attribute('aria-expanded')!='true':page.locator('#open-filters').click()
   expect(page.get_by_role('button',name='January 2026',exact=True)).to_have_attribute('aria-pressed','true')
   assert not page.evaluate('document.documentElement.scrollWidth>innerWidth')

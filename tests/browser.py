@@ -1,10 +1,9 @@
 """End-to-end checks; run a local server and set TEST_URL for its address."""
 from ui_filters import select_continents
-import gzip,json,os,pathlib,time
+import os,pathlib,time
 from playwright.sync_api import sync_playwright,expect
 BASE=os.environ.get('TEST_URL','http://127.0.0.1:4173').rstrip('/')+'/'
 OUT=pathlib.Path(__file__).resolve().parents[1]/'test-results';OUT.mkdir(exist_ok=True)
-EXPECTED=int(json.loads(gzip.decompress((OUT.parent/'web/data/catalog.json.gz').read_bytes()))['coverage']['races'])
 HOOK="""
 let library;
 Object.defineProperty(window,'maplibregl',{configurable:true,get(){return library;},set(value){library=value;const Map=value.Map;value.Map=class extends Map{constructor(...args){super(...args);window.testMap=this;}};}});
@@ -69,9 +68,9 @@ with sync_playwright() as p:
             expect(page.locator('#race-results')).not_to_be_visible()
             page.locator('#results-toggle').click();page.wait_for_timeout(350);expect(page.locator('#race-results')).to_be_visible()
             print('Viewport and collapse passed',flush=True)
-            # Worldwide includes unknown locations, and all dates reach the full source dataset.
-            page.locator('#in-view').uncheck();page.locator('#reset').click();page.locator('#in-view').uncheck();page.locator('[data-when="all"]').click();settle(page)
-            expect(page.locator('#result-count')).to_have_text(f'{EXPECTED:,}')
+            # Worldwide includes unmapped races; past browsing loads the archive.
+            page.locator('#in-view').uncheck();page.locator('#reset').click();page.locator('#in-view').uncheck();page.locator('[data-when="past"]').click();settle(page)
+            assert page.evaluate("testResults.items.length>0 && testResults.items.every(r=>(r.dateEnd||r.date)<new Date().toISOString().slice(0,10))")
             page.locator('#load-more').scroll_into_view_if_needed();page.locator('#load-more').click();expect(page.locator('.race-card')).to_have_count(120)
             select_continents(page,['Europe']);settle(page)
             page.locator('.country-picker summary').click();page.locator('#country-options input[value="FR"]').check();page.locator('#country-options input[value="IT"]').check();page.locator('.country-picker summary').click();settle(page)
