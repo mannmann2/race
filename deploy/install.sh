@@ -27,7 +27,9 @@ install -m 0644 "$RACE_PROJECT_ROOT"/deploy/race-refresh.service /etc/systemd/sy
 install -m 0644 "$RACE_PROJECT_ROOT"/deploy/race-refresh.timer /etc/systemd/system/race-refresh.timer
 install -m 0644 "$RACE_PROJECT_ROOT"/deploy/race-health.service /etc/systemd/system/race-health.service
 install -m 0644 "$RACE_PROJECT_ROOT"/deploy/race-health.timer /etc/systemd/system/race-health.timer
+install -m 0644 "$RACE_PROJECT_ROOT"/deploy/race-itra.service /etc/systemd/system/race-itra.service
+install -m 0644 "$RACE_PROJECT_ROOT"/deploy/race-itra.timer /etc/systemd/system/race-itra.timer
 systemctl daemon-reload
-systemd-analyze verify /etc/systemd/system/race-atlas.service /etc/systemd/system/race-refresh.service /etc/systemd/system/race-health.service
+systemd-analyze verify /etc/systemd/system/race-atlas.service /etc/systemd/system/race-refresh.service /etc/systemd/system/race-health.service /etc/systemd/system/race-itra.service /etc/systemd/system/race-itra.timer
 # Restart only after activating and checking a staged release.
 echo 'Units installed. Activate a verified release, then restart race-atlas.service and enable its timers.'

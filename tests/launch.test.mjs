@@ -5,6 +5,8 @@ test('shared camera and race links validate input; source health follows each so
  assert.deepEqual(cameraFromURL('#view=6.8,45.9,6'),{center:[6.8,45.9],zoom:6});for(const s of ['#view=999,0,3','#view=0,0,99','#view=x,0,4'])assert.equal(cameraFromURL(s),null);
  assert.equal(raceFromURL('#race=itra%3A2027%3A123'),'itra:2027:123');assert.equal(raceFromURL('#race=javascript:foo'),null);
  assert.equal(sourceHealth({fetchedAt:'2026-11-08'},'utmb',new Date('2026-11-09')).stale,false);assert.equal(sourceHealth({fetchedAt:'2026-10-01'},'itra',new Date('2026-11-09')).stale,true);
+ assert.equal(sourceHealth({fetchedAt:'2026-11-08'},'utmb',new Date('2026-11-15')).stale,false);
+ assert.equal(sourceHealth({fetchedAt:'2026-11-08'},'utmb',new Date('2026-11-19')).stale,true);
  const partial=sourceHealth({state:'available',fetchedAt:'2026-11-08',detailRefreshError:'HTTP 403'},'itra',new Date('2026-11-09'));
  assert.equal(partial.failed,false);assert.equal(partial.detailsFailed,true);assert.equal(partial.stale,false);
  assert.equal(sourceHealth({state:'unavailable',fetchedAt:'2026-11-08'},'utmb',new Date('2026-11-09')).failed,true);

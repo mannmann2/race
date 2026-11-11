@@ -13,12 +13,22 @@ import time
 
 from itra import (ROOT, CALENDAR, BASE, FeedError, Document, first_text, parse_date,
                   parse_calendar, parse_detail, race_identity, safe_url, geocode, atomic_json)
+from itra_schedule import RequestBudget, detail_queue, load_json, write_changed, DETAIL_DAYS, SPACING_SECONDS
+
+class AccessLimited(FeedError):
+    def __init__(self, message, retry_after=None):
+        super().__init__(message)
+        self.retry_after = retry_after
 
 class DetailUnavailable(FeedError):
     pass
 
 
 POINTS = dict(zip('zero one two three four five six'.split(), range(7)))
+
+
+def now_utc():
+    return dt.datetime.now(dt.timezone.utc)
 
 
 def event_dates(text):
@@ -120,6 +130,9 @@ class Browser:
 
     def calendar(self, path):
         response = self.page.goto(BASE + path, wait_until='domcontentloaded', timeout=60000)
+        challenge = re.search(r'awswaf|captcha-container|Oops! Something Went Wrong', response.text(), re.I)
+        if response.status in (202, 403, 429) or challenge:
+            raise AccessLimited(f'ITRA returned HTTP {response.status}', response.headers.get('retry-after'))
         if response.status != 200:
             raise FeedError(f'ITRA returned HTTP {response.status}')
         self.page.wait_for_function('''() => typeof raceSearchJsonSidePopupNew !== 'undefined' &&
@@ -134,6 +147,7 @@ class Browser:
         print('ITRA: loading rolling calendar', flush=True)
         calendar = self.calendar('/Races/RaceCalendar')
         print('ITRA: loading map locations', flush=True)
+        time.sleep(10)
         markers = self.calendar('/Races/RaceMap')
         counts = re.search(r'([\d,]+)\s+events and\s+([\d,]+)\s+races found', calendar['counts'])
         if not counts:
@@ -146,17 +160,18 @@ class Browser:
             'mapCounts':markers['counts'].strip()}}
 
     def detail(self, race):
-        time.sleep(.7)
         if not self.page.url.startswith(BASE + '/'):
             response = self.page.goto(race['sourceUrl'], wait_until='domcontentloaded', timeout=60000)
-            result = {'status':response.status,'url':response.url,'text':response.text()}
+            result = {'status':response.status,'url':response.url,'text':response.text(),'retryAfter':response.headers.get('retry-after')}
         else:
             result = self.page.evaluate('''async url => {
-                const r=await fetch(url,{signal:AbortSignal.timeout(35000)});return {status:r.status,url:r.url,text:await r.text()};
+                const r=await fetch(url,{signal:AbortSignal.timeout(35000)});return {status:r.status,url:r.url,text:await r.text(),retryAfter:r.headers.get('Retry-After')};
             }''', race['sourceUrl'])
         if result['status'] in (404,410):
             raise DetailUnavailable(f"Course unavailable (HTTP {result['status']})")
-        if result['status'] != 200 or re.search(r'awswaf|captcha-container|Oops! Something Went Wrong', result['text'], re.I):
+        if result['status'] in (202, 403, 429) or re.search(r'awswaf|captcha-container|Oops! Something Went Wrong', result['text'], re.I):
+            raise AccessLimited(f"ITRA detail access failed (HTTP {result['status']})", result.get('retryAfter'))
+        if result['status'] != 200:
             raise FeedError(f"ITRA detail access failed (HTTP {result['status']})")
         try:
             if race_identity(result['url'], race['sourceId'][:4]) != race['sourceId']:
@@ -166,30 +181,60 @@ class Browser:
             raise DetailUnavailable(str(error)) from error
 
 
+class LazyBrowser:
+    def __enter__(self):
+        self.browser = None
+        return self
+
+    def get(self):
+        if self.browser is None:
+            browser = Browser()
+            browser.__enter__()
+            self.browser = browser
+        return self.browser
+
+    def capture(self):
+        return self.get().capture()
+
+    def detail(self, race):
+        return self.get().detail(race)
+
+    def __exit__(self, *args):
+        if self.browser is not None:
+            self.browser.__exit__(*args)
+
+
 def load_bulk(args, browser, now):
     path = args.cache / 'bulk-listings.json'
-    max_age = getattr(args, 'bulk_max_age_days', 0)
-    if not args.capture and max_age > 0 and path.exists():
-        try:
-            cached = json.loads(path.read_text())
-            captured = dt.datetime.fromisoformat(cached['metadata']['capturedAt'])
-            age = now - captured
-            rows = cached['races']
-            if (cached['schemaVersion'] == 1 and age >= dt.timedelta(0) and (now.date()-captured.date()).days < max_age
-                    and len(rows) == cached['metadata']['calendarDisplayedRaces']
-                    and len({r['id'] for r in rows}) == len(rows) and rows):
-                print('ITRA: reusing verified weekly bulk data; calendar not requested', flush=True)
-                return rows, cached['metadata']
-        except (ValueError, KeyError, TypeError):
-            pass
-    capture = json.loads(args.capture.read_text()) if args.capture else browser.capture()
+    max_age = getattr(args, 'bulk_max_age_days', 7)
+    cached = load_json(path, None)
+    if not args.capture and cached:
+        captured = dt.datetime.fromisoformat(cached['metadata']['capturedAt'])
+        rows = cached['races']
+        valid = (cached['schemaVersion'] == 1 and now >= captured
+                 and len(rows) == cached['metadata']['calendarDisplayedRaces']
+                 and len({r['id'] for r in rows}) == len(rows) and rows)
+        if valid and (getattr(args, 'details_only', False) or RequestBudget(args.cache).deferred_until(now, include_spacing=False)
+                      or (max_age > 0 and (now.date()-captured.date()).days < max_age)):
+            print('ITRA: reusing verified bulk data; calendar not requested', flush=True)
+            return rows, cached['metadata']
+    if getattr(args, 'details_only', False):
+        raise FeedError('A verified bulk calendar is required before enriching course details')
+    if not args.capture and RequestBudget(args.cache).deferred_until(now, include_spacing=False):
+        raise FeedError('ITRA requests are paused; waiting for the saved cooldown')
+    try:
+        capture = json.loads(args.capture.read_text()) if args.capture else browser.capture()
+    except Exception as error:
+        if not args.capture:
+            RequestBudget(args.cache).fail(str(error), now, blocked=isinstance(error, AccessLimited), retry=getattr(error, 'retry_after', None), scope='calendar')
+        raise
     races = normalize_capture(capture)
     atomic_json(path, {'schemaVersion':1,'metadata':capture['metadata'],'races':races})
     return races, capture['metadata']
 
 
 def import_races(args, browser=None):
-    now = dt.datetime.now(dt.timezone.utc)
+    now = now_utc()
     races, bulk_meta = load_bulk(args, browser, now)
     today = now.date().isoformat()
     cache = args.cache
@@ -200,41 +245,42 @@ def import_races(args, browser=None):
     failures = json.loads(failures_path.read_text()) if failures_path.exists() else {}
     old_path = cache / 'races.json'
     previous = json.loads(old_path.read_text()) if old_path.exists() else {'races':[]}
-    # Prioritise unseen courses, then changed listings, then oldest detail refreshes.
-    queue = sorted((r for r in races if (r.get('dateEnd') or r['date']) >= today), key=lambda r:(r['sourceId'] in details, details.get(r['sourceId'],{}).get('detailsFetchedAt',''), r['date'], r['id']))
-    refreshed = 0
+    budget = RequestBudget(cache)
+    queue = detail_queue(races, details, failures, today, now, fingerprint)
     attempted = 0
-    failure = None
+    until = budget.deferred_until(now)
+    # Avoid enriching listings when the bulk calendar needs refreshing first.
+    stale_bulk = (now - dt.datetime.fromisoformat(bulk_meta['capturedAt'])).days >= 14
+    if until:
+        print(f'ITRA: next request after {until.isoformat()}; no browser request made', flush=True)
     for race in queue:
-        saved = details.get(race['sourceId'])
-        if saved and saved.get('fingerprint') == fingerprint(race) and (now-dt.datetime.fromisoformat(saved['detailsFetchedAt'])).days < 14:
-            continue
-        failed = failures.get(race['sourceId'])
-        if failed and failed.get('fingerprint') == fingerprint(race) and (now-dt.datetime.fromisoformat(failed['attemptedAt'])).days < 1:
-            continue
-        if attempted >= args.detail_limit or browser is None:
+        if attempted >= args.detail_limit or browser is None or stale_bulk:
+            break
+        request_time = now_utc()
+        if not budget.reserve(request_time):
             break
         attempted += 1
         try:
             enriched = browser.detail(race)
-            enriched.update(detailsFetchedAt=dt.datetime.now(dt.timezone.utc).isoformat(), fingerprint=fingerprint(race))
+            finished = now_utc()
+            enriched.update(detailsFetchedAt=finished.isoformat(), fingerprint=fingerprint(race))
             details[race['sourceId']] = enriched
-            refreshed += 1
             failures.pop(race['sourceId'], None)
-            if refreshed % 25 == 0:
-                atomic_json(detail_path, details)
-                print(f'ITRA: {refreshed} course details refreshed', flush=True)
+            budget.success(finished)
+            write_changed(detail_path, details)
+            print(f'ITRA: refreshed {race["name"]} ({race["date"]})', flush=True)
         except DetailUnavailable as error:
-            failures[race['sourceId']] = {'attemptedAt':now.isoformat(),'fingerprint':fingerprint(race),'message':str(error)}
-            print(f'ITRA: skipping unavailable course {race["sourceId"]}: {error}', flush=True)
-            continue
+            budget.success(now_utc())
+            failures[race['sourceId']] = {'attemptedAt':request_time.isoformat(),'fingerprint':fingerprint(race),'message':str(error)}
+            print(f'ITRA: skipping unavailable course {race["sourceId"]} for {DETAIL_DAYS} days: {error}', flush=True)
         except Exception as error:
-            # Stop on access failures; preserve the verified bulk calendar and prior detail cache.
-            failure = str(error)
-            print(f'ITRA detail enrichment stopped: {error}', file=sys.stderr, flush=True)
+            budget.fail(str(error), request_time, blocked=isinstance(error, AccessLimited), retry=getattr(error, 'retry_after', None))
+            print(f'ITRA detail enrichment paused: {error}', file=sys.stderr, flush=True)
             break
-    atomic_json(detail_path, details)
-    atomic_json(failures_path, failures)
+    write_changed(detail_path, details)
+    write_changed(failures_path, failures)
+    failure = budget.state.get('lastError') if budget.state.get('lastErrorScope', 'detail') == 'detail' else None
+    next_attempt = budget.deferred_until(now_utc())
     result = []
     for listing in races:
         saved = details.get(listing['sourceId'])
@@ -248,12 +294,20 @@ def import_races(args, browser=None):
         'completeness':'calendar-count-verified', 'details':sum(r.get('detailsFetchedAt') is not None for r in result),
         'rated':sum(r['extensions']['itra']['endurancePoints'] is not None for r in result),
         'mountainRated':sum(r['extensions']['itra']['mountainLevel'] is not None for r in result),
-        'mapped':sum(r['longitude'] is not None for r in result), 'detailUnavailable':sum(r['sourceId'] in failures for r in result), 'detailRefreshError':failure}
+        'mapped':sum(r['longitude'] is not None for r in result), 'detailUnavailable':sum(r['sourceId'] in failures for r in result), 'detailRefreshError':failure,
+        'detailNextAttemptAt':next_attempt.isoformat() if next_attempt else None,
+        'detailPolicy':{'cacheDays':DETAIL_DAYS,'requestSpacingSeconds':SPACING_SECONDS}}
     snapshot = {'schemaVersion':1,'acquisition':'browser-calendar','fetchedAt':bulk_meta['capturedAt'], 'coverage':coverage,'races':combined}
-    atomic_json(old_path, snapshot)
-    atomic_json(ROOT / 'data/itra-snapshot.json', snapshot)
-    atomic_json(cache / 'status.json', {'state':'available','attemptedAt':now.isoformat(),
-        'message':'Calendar count verified; course details enrich incrementally.', 'detailRefreshError':failure})
+    write_changed(old_path, snapshot)
+    write_changed(ROOT / 'data/itra-snapshot.json', snapshot)
+    previous_status = load_json(cache / 'status.json', {})
+    bulk_changed = previous.get('fetchedAt') != bulk_meta['capturedAt']
+    state = 'unavailable' if previous_status.get('state') == 'unavailable' and not bulk_changed else 'available'
+    write_changed(cache / 'status.json', {'state':state,
+        'attemptedAt':now.isoformat() if bulk_changed else budget.state.get('lastAttemptAt') or previous_status.get('attemptedAt') or bulk_meta['capturedAt'],
+        'message':'Verified calendar; course details refresh gradually.', 'detailRefreshError':failure,
+        'detailNextAttemptAt':next_attempt.isoformat() if next_attempt else None,
+        'detailPolicy':{'cacheDays':DETAIL_DAYS,'requestSpacingSeconds':SPACING_SECONDS}})
     print(json.dumps(coverage), flush=True)
     return snapshot
 
@@ -262,8 +316,9 @@ def main():
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--cache',type=Path,default=ROOT/'.cache/itra')
     parser.add_argument('--capture',type=Path,help='Use a saved credential-free bulk capture (offline)')
-    parser.add_argument('--detail-limit',type=int,default=400)
-    parser.add_argument('--bulk-max-age-days',type=int,default=0,help='Reuse verified bulk listings for this many days; 0 forces acquisition')
+    parser.add_argument('--detail-limit',type=int,default=1)
+    parser.add_argument('--details-only',action='store_true',help='Use saved bulk listings; never request the calendar')
+    parser.add_argument('--bulk-max-age-days',type=int,default=7,help='Reuse verified bulk listings for this many days; 0 forces acquisition')
     args=parser.parse_args()
     args.cache.mkdir(parents=True,exist_ok=True)
     with (args.cache/'refresh.lock').open('w') as lock:
@@ -272,8 +327,11 @@ def main():
         try:
             if args.capture: import_races(args)
             else:
-                with Browser() as browser: import_races(args,browser)
+                with LazyBrowser() as browser: import_races(args,browser)
         except Exception as error:
+            if args.details_only:
+                print(f'ITRA detail worker failed: {error}', file=sys.stderr)
+                return 1
             atomic_json(args.cache/'status.json',{'state':'unavailable','attemptedAt':dt.datetime.now(dt.timezone.utc).isoformat(),
                 'message':'ITRA refresh failed; retaining the last verified calendar.'})
             print(f'ITRA refresh failed: {error}',file=sys.stderr)

@@ -1,0 +1,33 @@
+[Unit]
+Description=Gradually enrich ITRA course details
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=race-refresh
+Group=race-refresh
+WorkingDirectory=/srv/race
+Environment=RACE_PYTHON=/opt/race/venv/bin/python3
+Environment=PLAYWRIGHT_BROWSERS_PATH=/opt/race/browsers
+Environment=HOME=/var/lib/race-refresh
+Environment=XDG_CACHE_HOME=/var/cache/race-refresh
+StateDirectory=race-refresh
+CacheDirectory=race-refresh
+ExecStart=/opt/race/node/bin/node /srv/race/scripts/refresh-all.mjs --itra-details-only --publish
+TimeoutStartSec=15m
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=tmpfs
+BindReadOnlyPaths=/root/race:/srv/race
+ReadWritePaths=/srv/race/.cache /srv/race/web/data /srv/race/data /srv/race/.releases
+PrivateTmp=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+CapabilityBoundingSet=
+UMask=0022
+MemoryMax=2G
+CPUQuota=150%
+TasksMax=256

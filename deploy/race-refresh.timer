@@ -1,8 +1,8 @@
 [Unit]
-Description=Daily Race Atlas refresh
+Description=Check weekly calendar schedules during the day
 
 [Timer]
-OnCalendar=*-*-* 03:30:00 UTC
+OnCalendar=*-*-* 09:00:00 UTC
 RandomizedDelaySec=10m
 Persistent=true
 Unit=race-refresh.service

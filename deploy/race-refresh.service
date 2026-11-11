@@ -1,5 +1,5 @@
 [Unit]
-Description=Refresh and validate Race Atlas rolling calendar
+Description=Check and refresh Race Atlas calendars when due
 Wants=network-online.target
 After=network-online.target
 
@@ -14,7 +14,7 @@ Environment=HOME=/var/lib/race-refresh
 Environment=XDG_CACHE_HOME=/var/cache/race-refresh
 StateDirectory=race-refresh
 CacheDirectory=race-refresh
-ExecStart=/opt/race/node/bin/node /srv/race/scripts/refresh-all.mjs --publish --itra-bulk-max-age-days=7
+ExecStart=/opt/race/node/bin/node /srv/race/scripts/refresh-all.mjs --publish --if-due --detail-limit=0 --itra-bulk-max-age-days=7
 ExecStartPost=/opt/race/node/bin/node /srv/race/scripts/backup.mjs
 TimeoutStartSec=90m
 NoNewPrivileges=true

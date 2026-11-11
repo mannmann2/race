@@ -49,12 +49,14 @@ sudo systemctl restart race-atlas.service
 For initial server setup, `sudo bash deploy/install.sh` installs the runtimes, service users and units for `/root/race`. Install the browser’s Linux dependencies and `xvfb`/`xauth` first. After activating a release, enable the services:
 
 ```sh
-sudo systemctl enable --now race-atlas.service race-refresh.timer race-health.timer
+sudo systemctl enable --now race-atlas.service race-refresh.timer race-itra.timer race-health.timer
 ```
 
 ## Data refresh and monitoring
 
-The refresh timer runs daily at **03:30 UTC**, with up to 10 minutes of jitter. UTMB and ITRA course details refresh daily; ITRA’s bulk calendar and World’s Marathons refresh weekly. Date windows advance automatically.
+Bulk calendars refresh at most weekly. A lightweight schedule check runs at **09:00 UTC** each day, with up to 10 minutes of jitter; it contacts only providers that are due, respects ITRA cooldowns, and retries failed imports on later checks. Date filters advance automatically.
+
+A separate ITRA worker fetches at most one course page every 20 minutes. It reuses unchanged details for 60 days, prioritises new or changed courses, then refreshes the soonest races first. Ended races are skipped. Blocks pause requests for at least 48 hours; repeated failures extend the pause up to 14 days. The queue and cooldown survive restarts. No work or a cooldown means no browser requests.
 
 ```sh
 sudo systemctl start race-refresh.service       # refresh and publish now
@@ -63,7 +65,7 @@ journalctl -u race-refresh.service -n 60
 curl http://127.0.0.1:4173/healthz
 ```
 
-Failed imports retain the last verified data. Successful runs publish without restarting the website and save checksummed backups in `.cache/backups/`, keeping the latest 14. Health checks run every 15 minutes. Off-server backups and external alerts are not configured; optional settings are in [.env.example](.env.example).
+Failed imports retain the last verified data. Successful calendar runs publish without restarting the website and save checksummed backups in `.cache/backups/`, keeping the latest 14. Health checks run every 15 minutes. Off-server backups and external alerts are not configured; optional settings are in [.env.example](.env.example).
 
 ## About the data
 

@@ -1,0 +1,11 @@
+[Unit]
+Description=Spread ITRA course requests across the day
+
+[Timer]
+OnBootSec=10m
+OnUnitInactiveSec=20m
+RandomizedDelaySec=3m
+Unit=race-itra.service
+
+[Install]
+WantedBy=timers.target
