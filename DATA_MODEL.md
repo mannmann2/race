@@ -83,6 +83,8 @@ The worker retains the global filtered/sorted set and derives viewport lists fro
 
 Successful refreshes replace future listings within the current feed scope and retain ended editions for historical browsing. Missing future entries are removed, while future years are fetched from the provider rather than derived from old records. Calendar failure preserves the last good snapshot. Detail failure stops enrichment but permits the independently verified calendar to publish with unknown/stale detail fields explicitly dated.
 
+Source health distinguishes calendar refresh failures from optional course-detail failures. A detail access error does not mark a verified calendar unavailable; the interface and monitoring report the partial failure separately. Targeted provider retries preserve the other providers’ previous import results.
+
 The ITRA bulk calendar is downloaded every seven calendar days; daily course enrichment reuses the verified normalized bulk cache with its original `fetchedAt`. Failed weekly acquisition retains that cache and the published snapshot. The scheduled daily refresh atomically replaces `dist/data/catalog.json.gz`. Open clients reload data hourly; point caches are invalidated after reload. Relative presets are recomputed at local midnight or when returning to a tab, including leap days and year changes. Custom dates remain fixed.
 
 `data/itra-indexed-snapshot.json` and `data/itra-indexed.json` retain the historical 35-course search-index fixture for regression tests. These are not the production fallback. Their `public-index` acquisition, null `fetchedAt`, `retrievedAt`, and `indexAge` retain the original provenance.

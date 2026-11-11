@@ -19,7 +19,7 @@ const server=http.createServer(async(req,res)=>{
   if(pathname==='/healthz'){
    const index=JSON.parse(await readFile(resolve(base,'data/catalog-index.json'),'utf8'));
    await stat(resolve(base,'data',index.upcoming.url));
-   const body=JSON.stringify({status:'ok',release:base.split(sep).at(-1),catalogVersion:index.version,generatedAt:index.generatedAt,sources:Object.fromEntries(Object.entries(index.meta.sourceMeta||{}).map(([key,s])=>[key,{fetchedAt:s.fetchedAt,state:s.state||'available'}]))});
+   const body=JSON.stringify({status:'ok',release:base.split(sep).at(-1),catalogVersion:index.version,generatedAt:index.generatedAt,sources:Object.fromEntries(Object.entries(index.meta.sourceMeta||{}).map(([key,s])=>[key,{fetchedAt:s.fetchedAt,state:s.state||'available',...(s.detailRefreshError?{detailRefreshError:s.detailRefreshError}:{})}]))});
    res.writeHead(200,{'Content-Type':'application/json','Cache-Control':'no-store','Content-Length':Buffer.byteLength(body)});res.end(req.method==='HEAD'?undefined:body);return;
   }
   if(pathname.includes('\0')){res.writeHead(400).end();return;}

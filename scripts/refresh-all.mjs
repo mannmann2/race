@@ -7,11 +7,14 @@ import {publishCatalog,atomicWrite} from './catalog-assets.mjs';
 import {pruneData} from './prune.mjs';
 import {locked} from './lock.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url));await locked();
-const python=process.env.RACE_PYTHON||'python3',itraOnly=process.argv.includes('--itra-only'),marathonsOnly=process.argv.includes('--worldsmarathons-only');
+const python=process.env.RACE_PYTHON||'python3',itraOnly=process.argv.includes('--itra-only'),marathonsOnly=process.argv.includes('--worldsmarathons-only'),utmbOnly=process.argv.includes('--utmb-only');
 const detailArg=process.argv.find(a=>/^--detail-limit=\d+$/.test(a));
 const bulkArg=process.argv.find(a=>/^--itra-bulk-max-age-days=\d+$/.test(a))?.replace('--itra-bulk','--bulk');
 await mkdir(root+'.cache',{recursive:true});let failed=false;
-const results=[];
+const scripts=utmbOnly?['refresh.py']:marathonsOnly?['worldsmarathons.py']:itraOnly?['itra_browser.py']:['refresh.py','enrich.py','itra_browser.py','worldsmarathons.py'];
+// A targeted retry must preserve the other providers' recorded import results.
+let results=[];
+if(utmbOnly||itraOnly||marathonsOnly){try{const previous=JSON.parse(await readFile(root+'.cache/refresh-health.json','utf8'));results=(previous.results||[]).filter(r=>!scripts.includes(r.script));}catch(e){if(e.code!=='ENOENT')throw e;}}
 async function run(script,minutes){
  const browser=script==='itra_browser.py',args=browser?['-a',python,`scripts/${script}`,...(detailArg?[detailArg]:[]),...(bulkArg?[bulkArg]:[])]:[`scripts/${script}`,...(script==='worldsmarathons.py'&&process.argv.includes('--force')?['--max-age-days=0']:[])];
  return await new Promise(resolve=>{
@@ -20,11 +23,12 @@ async function run(script,minutes){
   child.once('error',()=>{});child.once('close',code=>{clearTimeout(timer);clearTimeout(killTimer);resolve({script,ok:code===0&&!timedOut,timedOut,finishedAt:new Date().toISOString()});});
  });
 }
-for(const script of marathonsOnly?['worldsmarathons.py']:itraOnly?['itra_browser.py']:['refresh.py','enrich.py','itra_browser.py','worldsmarathons.py']){
+for(const script of scripts){
  const result=await run(script,script==='itra_browser.py'?30:script==='enrich.py'?10:15);results.push(result);
  if(script==='refresh.py')await atomicWrite(root+'.cache/utmb-status.json',JSON.stringify({state:result.ok?'available':'unavailable',attemptedAt:result.finishedAt,message:result.ok?'Verified index downloaded.':'Refresh failed; retaining the last verified index.'}));
  if(!result.ok){failed=true;console.error(`${script} failed${result.timedOut?' (time limit)':''}; retaining its last verified data and continuing other sources.`);}
 }
+failed=results.some(r=>!r.ok);
 try{
  const {data}=await compose();
  if(process.argv.includes('--publish')){

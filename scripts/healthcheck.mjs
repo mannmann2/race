@@ -1,7 +1,7 @@
 import{readFile,mkdir}from'node:fs/promises';import{fileURLToPath}from'node:url';
 import{sourceHealth}from'../web/sharing.mjs';import{atomicWrite}from'./catalog-assets.mjs';
 const root=fileURLToPath(new URL('../',import.meta.url)),issues=[];let health;
-try{const r=await fetch(process.env.RACE_HEALTH_URL||'http://127.0.0.1:4173/healthz',{signal:AbortSignal.timeout(10000)});if(!r.ok)throw new Error(`HTTP ${r.status}`);health=await r.json();for(const [provider,source]of Object.entries(health.sources||{})){const h=sourceHealth(source,provider);if(h.failed||h.stale)issues.push(`${provider}: ${h.failed?'refresh unavailable':`${h.ageDays} days old`}`);}}
+try{const r=await fetch(process.env.RACE_HEALTH_URL||'http://127.0.0.1:4173/healthz',{signal:AbortSignal.timeout(10000)});if(!r.ok)throw new Error(`HTTP ${r.status}`);health=await r.json();for(const [provider,source]of Object.entries(health.sources||{})){const h=sourceHealth(source,provider);if(h.failed||h.stale)issues.push(`${provider}: ${h.failed?'refresh unavailable':`${h.ageDays} days old`}`);if(h.detailsFailed)issues.push(`${provider}: course detail refresh unavailable`);}}
 catch(e){issues.push('Website health check failed: '+e.message);}
 try{const r=JSON.parse(await readFile(root+'.cache/refresh-health.json','utf8'));if(r.state!=='ok')issues.push('Last import: '+r.state);if(Date.now()-Date.parse(r.finishedAt)>2*86400000)issues.push('No completed import in the last two days.');}catch{issues.push('No completed automatic import has been recorded.');}
 const report={checkedAt:new Date().toISOString(),state:issues.length?'degraded':'ok',issues,website:health};await mkdir(root+'.cache',{recursive:true});await atomicWrite(root+'.cache/health.json',JSON.stringify(report));
