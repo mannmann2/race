@@ -29,6 +29,11 @@ install -m 0644 "$RACE_PROJECT_ROOT"/deploy/race-health.service /etc/systemd/sys
 install -m 0644 "$RACE_PROJECT_ROOT"/deploy/race-health.timer /etc/systemd/system/race-health.timer
 install -m 0644 "$RACE_PROJECT_ROOT"/deploy/race-itra.service /etc/systemd/system/race-itra.service
 install -m 0644 "$RACE_PROJECT_ROOT"/deploy/race-itra.timer /etc/systemd/system/race-itra.timer
+install -d -o race-refresh -g race-refresh -m 0755 "$RACE_PROJECT_ROOT/.cache/geoip"
+PATH=/opt/race/node/bin:$PATH npm ci --ignore-scripts --omit=dev --prefix "$RACE_PROJECT_ROOT"
+for RACE_EXTRA_UNIT in race-geoip.service race-geoip.timer race-traffic-backup.service race-traffic-backup.timer; do
+ install -m 0644 "$RACE_PROJECT_ROOT/deploy/$RACE_EXTRA_UNIT" "/etc/systemd/system/$RACE_EXTRA_UNIT"
+done
 systemctl daemon-reload
 systemd-analyze verify /etc/systemd/system/race-atlas.service /etc/systemd/system/race-refresh.service /etc/systemd/system/race-health.service /etc/systemd/system/race-itra.service /etc/systemd/system/race-itra.timer
 # Restart only after activating and checking a staged release.

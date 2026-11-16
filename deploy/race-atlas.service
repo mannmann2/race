@@ -10,6 +10,11 @@ WorkingDirectory=/srv/race
 ExecStart=/opt/race/node/bin/node /srv/race/scripts/serve.mjs --production
 Environment=HOST=127.0.0.1
 Environment=PORT=4173
+Environment=RACE_TRAFFIC_DB=/var/lib/race-atlas/traffic.sqlite
+Environment=RACE_GEOIP_DB=/srv/race/.cache/geoip/city.mmdb
+Environment=RACE_PUBLIC_ORIGIN=https://race.slopmaxx.ing
+StateDirectory=race-atlas
+StateDirectoryMode=0750
 Restart=on-failure
 RestartSec=3
 NoNewPrivileges=true

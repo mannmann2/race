@@ -1,0 +1,9 @@
+[Unit]
+Description=Daily traffic database backup
+[Timer]
+OnCalendar=*-*-* 07:15:00 UTC
+RandomizedDelaySec=15m
+Persistent=true
+Unit=race-traffic-backup.service
+[Install]
+WantedBy=timers.target

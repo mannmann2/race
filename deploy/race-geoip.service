@@ -1,0 +1,19 @@
+[Unit]
+Description=Refresh the local Race Atlas IP-location database
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=race-refresh
+Group=race-refresh
+WorkingDirectory=/srv/race
+ExecStart=/opt/race/node/bin/node /srv/race/scripts/refresh-geoip.mjs
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=tmpfs
+BindReadOnlyPaths=/root/race:/srv/race
+ReadWritePaths=/srv/race/.cache/geoip
+PrivateTmp=true
+TimeoutStartSec=15m
+MemoryMax=512M

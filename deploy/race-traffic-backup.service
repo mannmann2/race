@@ -1,0 +1,17 @@
+[Unit]
+Description=Back up the Race Atlas traffic database
+After=race-atlas.service
+[Service]
+Type=oneshot
+User=race-atlas
+Group=race-atlas
+WorkingDirectory=/srv/race
+Environment=RACE_TRAFFIC_DB=/var/lib/race-atlas/traffic.sqlite
+ExecStart=/opt/race/node/bin/node /srv/race/scripts/backup-traffic.mjs
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=tmpfs
+BindReadOnlyPaths=/root/race:/srv/race
+ReadWritePaths=/var/lib/race-atlas
+PrivateTmp=true
+UMask=0077

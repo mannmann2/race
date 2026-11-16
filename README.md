@@ -6,7 +6,7 @@ Browse trail races and marathons on an interactive globe. Combines UTMB, ITRA an
 
 ## Run locally
 
-Requires Node.js 22+ and Python 3.10+. No npm dependencies to install.
+Requires Node.js 24+ and Python 3.10+. Run `npm ci` to install the local IP-database reader.
 
 ```sh
 # A fresh checkout needs sample data:
@@ -49,7 +49,9 @@ sudo systemctl restart race-atlas.service
 For initial server setup, `sudo bash deploy/install.sh` installs the runtimes, service users and units for `/root/race`. Install the browser’s Linux dependencies and `xvfb`/`xauth` first. After activating a release, enable the services:
 
 ```sh
-sudo systemctl enable --now race-atlas.service race-refresh.timer race-itra.timer race-health.timer
+sudo systemctl enable --now race-atlas.service race-refresh.timer race-itra.timer race-health.timer race-geoip.timer race-traffic-backup.timer
+sudo python3 deploy/configure-traffic-proxy.py
+sudo systemctl start race-geoip.service
 ```
 
 ## Data refresh and monitoring
@@ -74,3 +76,11 @@ Duplicates merge only when event, date and course evidence agree. Ambiguous matc
 Locations may represent a town or event rather than the exact start. Photos and ratings appear when supplied. Counts and source freshness are shown in the app.
 
 See [DATA_MODEL.md](DATA_MODEL.md) for the schema and matching rules, and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md) for credits. Independent project; not affiliated with the data providers. Confirm race details with organisers.
+
+## Traffic dashboard
+
+[Traffic dashboard](https://race.slopmaxx.ing/debug/) uses the owner's existing debug-page login. It shows daily visitor estimates, sessions, average active time, session spans and approximate country/city, with UK calendar dates. Collection begins when deployed; earlier visits cannot be reconstructed.
+
+The collector uses no cookies or persistent browser IDs. Raw IPs are looked up locally with DB-IP Lite and discarded; daily HMAC identifiers support estimates rather than an exact count of people. Background tabs, two-minute inactivity, known bots and privacy opt-outs are excluded from active time. Reloads and overlapping tabs are deduplicated. Visitors can disable measurement in About; the dashboard excludes its own browser by default.
+
+Production stores the SQLite database and its secret in `/var/lib/race-atlas/`, outside Git and application releases. Data is retained for 90 days; seven daily database backups are kept. The local city database updates monthly. `deploy/configure-traffic-proxy.py` configures the existing server's private route and trusted headers; a new host must supply its own debug credentials. The application trusts those headers only from its loopback proxy.

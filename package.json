@@ -24,6 +24,9 @@
     "prune": "node scripts/prune.mjs"
   },
   "engines": {
-    "node": ">=22"
+    "node": ">=24"
+  },
+  "dependencies": {
+    "maxmind": "5.1.0"
   }
 }

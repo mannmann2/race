@@ -32,3 +32,7 @@ Official UTMB category badges and ITRA Endurance Points badges are provider SVGs
 DM Sans and Manrope are self-hosted Google Fonts under the SIL Open Font License 1.1. Complete licences accompany the font files in `web/assets/fonts/`.
 
 Location verification also uses Natural Earth 1:10m Admin 0 country outlines (public domain) and GeoNames administrative names and cities500 (CC BY 4.0). Server-side derivatives and source references are in `scripts/geo/`.
+
+## Visitor location estimates
+
+The private traffic dashboard uses the [DB-IP Lite city database](https://db-ip.com/db/download/ip-to-city-lite), licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Its estimates have reduced coverage and accuracy. The dashboard links to DB-IP as required. The server reads it locally using the `maxmind` package (MIT); visitor IPs are not submitted to DB-IP.
